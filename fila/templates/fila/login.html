@@ -11,8 +11,15 @@
         <form method="post" class="card p-4 shadow-sm">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
-            <a href="{% url 'lista_fila' %}" class="btn btn-link mt-2">Voltar para a Fila</a>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Entrar</button>
+
+            <div class="d-flex justify-content-between mt-2" style="font-size: 0.9em;">
+                <a href="{% url 'password_reset' %}" class="text-decoration-none">Esqueceu a senha?</a>
+                <a href="{% url 'registro' %}" class="text-decoration-none fw-bold">Criar uma conta</a>
+            </div>
+
+            <hr>
+            <a href="{% url 'lista_fila' %}" class="btn btn-outline-secondary btn-sm w-100">Voltar para a Fila</a>
         </form>
     </div>
 </body>

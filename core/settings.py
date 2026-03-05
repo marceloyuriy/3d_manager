@@ -139,3 +139,7 @@ LOGIN_REDIRECT_URL = 'lista_fila'
 # Diz ao Django qual é a URL da nossa tela de login caso um usuário
 # deslogado tente acessar uma página protegida (como a de editar pedido).
 LOGIN_URL = 'login'
+
+# --- CONFIGURAÇÃO DE E-MAIL PARA DESENVOLVIMENTO ---
+# Imprime os e-mails de recuperação de senha direto no terminal (console) do Docker
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

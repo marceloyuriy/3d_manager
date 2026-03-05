@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # <-- IMPORTAÇÃO PARA OS AVISOS
-from django.utils import timezone  # <-- IMPORTAÇÃO PARA PEGAR A HORA ATUAL
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.utils import timezone
 from .models import ItemFila
 from .forms import NovaImpressaoForm, EdicaoGestorForm
 
@@ -70,3 +71,16 @@ def deletar_pedido(request, id):
 
     messages.success(request, f'O pedido "{nome}" foi removido da fila.')
     return redirect('lista_fila')
+
+def registro(request):
+    if request.method == 'POST':
+        # O Django já tem um formulário seguro e pronto para senhas!
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()  # Cria o usuário no banco de dados
+            messages.success(request, 'Conta criada com sucesso! Agora você pode fazer login.')
+            return redirect('login')  # Manda o usuário para a tela de login
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'fila/registro.html', {'form': form})
