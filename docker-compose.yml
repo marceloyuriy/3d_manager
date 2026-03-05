@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    # Comando para iniciar o servidor do Django no IP 0.0.0.0 e porta 8000
+    command: python manage.py runserver 0.0.0.0:8000
+    # Mapeia a porta 8000 do seu computador para a porta 8000 do contêiner
+    ports:
+      - "8000:8000"
+    # Cria um "volume" para que as alterações no seu código reflitam imediatamente no contêiner
+    volumes:
+      - .:/app

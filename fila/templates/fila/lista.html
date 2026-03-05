@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Impressão 3D</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">Creality K1 Max - Hub</span>
+            <div>
+                {% if request.user.is_authenticated %}
+                    <span class="text-white me-3">Olá, {{ request.user.username }}!</span>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light">Acesso Gestor</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <a href="{% url 'novo_pedido' %}" class="btn btn-primary mb-4 w-100 shadow-sm">+ Adicionar Novo Pedido à Fila</a>
+
+        <h4 class="text-primary">▶ Fila de Produção</h4>
+        <div class="card shadow-sm mb-4">
+            <table class="table table-hover mb-0">
+                <thead class="table-primary">
+                    <tr><th>Status</th><th>Prioridade</th><th>Peça</th><th>Prazo</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    {% for item in fila_ativa %}
+                    <tr>
+                        <td><strong>{{ item.get_status_display }}</strong></td>
+                        <td>{{ item.get_prioridade_display }}</td>
+                        <td>{{ item.nome_peca }}</td>
+                        <td>{{ item.prazo|date:"d/m/Y" }}</td>
+                        <td>
+                            {% if request.user.is_staff %}
+                                <a href="{% url 'editar_pedido' item.id %}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?');">Excluir</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %} <tr><td colspan="5" class="text-center">Nenhuma peça na fila no momento.</td></tr> {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="text-warning">⚠ Pendentes de Informação / Erro</h4>
+        <div class="card shadow-sm mb-4">
+            <table class="table table-hover mb-0">
+                <thead class="table-warning">
+                    <tr><th>Status</th><th>Peça</th><th>Solicitante</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                    {% for item in pendentes %}
+                    <tr>
+                        <td>{{ item.get_status_display }}</td>
+                        <td>{{ item.nome_peca }}</td>
+                        <td>{{ item.solicitante }}</td>
+                        <td>
+                            {% if request.user.is_staff %}
+                                <a href="{% url 'editar_pedido' item.id %}" class="btn btn-sm btn-warning">Revisar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %} <tr><td colspan="4" class="text-center">Tudo certo! Nenhuma pendência.</td></tr> {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="text-success">✔ Últimos 10 Concluídos</h4>
+        <div class="card shadow-sm mb-4">
+            <table class="table table-hover mb-0">
+                <thead class="table-success">
+                    <tr><th>Peça</th><th>Solicitante</th><th>Data/Hora de Conclusão</th></tr>
+                </thead>
+                <tbody>
+                    {% for item in concluidos %}
+                    <tr>
+                        <td>{{ item.nome_peca }}</td>
+                        <td>{{ item.solicitante }}</td>
+                        <td>{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
+                    </tr>
+                    {% empty %} <tr><td colspan="3" class="text-center">Nenhuma peça concluída ainda.</td></tr> {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
