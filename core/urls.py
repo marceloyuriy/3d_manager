@@ -4,7 +4,7 @@ from django.conf import settings # Importa as configurações (settings.py)
 from django.conf.urls.static import static # Ajuda a servir arquivos de mídia
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('gestao-secreta-3d/', admin.site.urls),
     path('', include('fila.urls')),
 ]
 
