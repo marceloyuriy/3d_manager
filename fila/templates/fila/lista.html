@@ -1,105 +1,328 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Impressão 3D</title>
+    <title>AeroRiver - Hub de Manufatura 3D</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            var(--aero-logo-dark): #334155;
+            var(--aero-logo-green): #2A9D8F;
+            --aero-accent-blue: #00B4D8;
+            --aero-success-vibrant: #26C088;
+            --aero-danger: #E76F51;
+            --bg-color: #F8FAFC;
+            --card-radius: 16px;
+            --border-color-soft: #F1F5F9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            padding-bottom: 50px;
+        }
+
+        .navbar-aero {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid var(--border-color-soft);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 1.25rem 0;
+        }
+
+        .navbar-brand-custom { font-weight: 700; font-size: 1.25rem; color: #334155; }
+        .hub-title-suffix { color: #2A9D8F; }
+
+        .operator-welcome { color: #64748B; font-size: 0.9rem; }
+        .operator-welcome strong { color: #334155; }
+
+        .btn-outline-dark-aero {
+            color: #334155;
+            border-color: #E2E8F0;
+            font-weight: 500;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+        .btn-outline-dark-aero:hover { background-color: #F8FAFC; border-color: #CBD5E1; }
+
+        .btn-aero-primary {
+            background: linear-gradient(135deg, var(--aero-accent-blue) 0%, #0394D2 100%);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            padding: 0.9rem;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-aero-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3); color: white; }
+
+        .card-aero {
+            border: none;
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            background: #ffffff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            overflow: hidden;
+        }
+        .card-aero:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.04); }
+
+        .card-header-clean {
+            background: transparent;
+            border-bottom: 1px solid var(--border-color-soft);
+            padding: 1.5rem 1.75rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-producao { color: var(--aero-accent-blue); }
+        .title-espera { color: #64748B; }
+        .title-pendente { color: var(--aero-danger); }
+        .title-concluido { color: var(--aero-success-vibrant); }
+
+        .status-led { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; }
+        .led-blue { background-color: var(--aero-accent-blue); box-shadow: 0 0 10px var(--aero-accent-blue); }
+
+        .table-aero { margin-bottom: 0; width: 100%; }
+        .table-aero th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94A3B8;
+            border-bottom: 2px solid var(--border-color-soft);
+            background: transparent;
+            padding: 1rem 1.75rem;
+        }
+        .table-aero td {
+            vertical-align: middle;
+            border-bottom: 1px solid #F1F5F9;
+            font-size: 0.95rem;
+            padding: 1.1rem 1.75rem;
+            color: #475569;
+        }
+        .table-aero tr:last-child td { border-bottom: none; }
+        .table-aero tbody tr:hover { background-color: #FBFDFE; }
+
+        .badge-aero-pill {
+            padding: 0.45em 1em;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .badge-pill-urgente { background-color: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+        .badge-pill-alta { background-color: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+        .badge-pill-normal { background-color: #F8FAFC; color: #64748B; border: 1px solid #E2E8F0; }
+        .badge-pill-baixa { background-color: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
+
+        /* --- ESTILOS DOS BOTÕES DE GESTOR --- */
+        .btn-acao-aero {
+            font-size: 0.8rem;
+            border-radius: 6px;
+            padding: 0.35rem 0.7rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-acao-blue {
+            color: var(--aero-accent-blue);
+            border: 1px solid var(--aero-accent-blue);
+            background-color: transparent;
+        }
+        .btn-acao-blue:hover { background-color: #F1FDFF; color: #0394D2; }
+
+        /* Novo botão vermelho de Excluir */
+        .btn-acao-danger {
+            color: var(--aero-danger);
+            border: 1px solid var(--aero-danger);
+            background-color: transparent;
+        }
+        .btn-acao-danger:hover { background-color: #FFF5F3; color: #C85A3D; }
+
+    </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand mb-0 h1">Creality K1 Max - Hub</span>
+<body>
+    <nav class="navbar navbar-light navbar-aero mb-5 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
+                <img src="{% static 'img/Logo.png' %}" alt="Logo AeroRiver" height="42" style="object-fit: contain;">
+                <span class="hub-title-suffix">AeroRiver</span> - Hub de Manufatura
+            </span>
             <div>
                 {% if request.user.is_authenticated %}
-                    <span class="text-white me-3">Olá, {{ request.user.username }}!</span>
+                    <span class="operator-welcome me-3">Boas-vindas, <strong>{{ request.user.username }}</strong></span>
                     <form action="{% url 'logout' %}" method="post" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-light">Sair</button>
+                        <button type="submit" class="btn btn-outline-dark-aero">Sair</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light">Acesso Gestor</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-dark-aero">Acesso Gestor</a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
     <div class="container">
-
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 mb-5" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% else %}#D97706{% endif %};" role="alert">
+                    <strong class="d-flex align-items-center gap-2">
+                        {% if message.tags == 'success' %}
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Sucesso:
+                        {% else %}
+                        ⚠ Atenção:
+                        {% endif %}
+                    </strong>
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
         {% endif %}
-        <a href="{% url 'novo_pedido' %}" class="btn btn-primary mb-4 w-100 shadow-sm">+ Adicionar Novo Pedido à Fila</a>
 
-        <h4 class="text-primary">▶ Fila de Produção</h4>
-        <div class="card shadow-sm mb-4">
-            <table class="table table-hover mb-0">
-                <thead class="table-primary">
-                    <tr><th>Status</th><th>Prioridade</th><th>Peça</th><th>Prazo</th><th>Ações</th></tr>
-                </thead>
-                <tbody>
-                    {% for item in fila_ativa %}
-                    <tr>
-                        <td><strong>{{ item.get_status_display }}</strong></td>
-                        <td>{{ item.get_prioridade_display }}</td>
-                        <td>{{ item.nome_peca }}</td>
-                        <td>{{ item.prazo|date:"d/m/Y" }}</td>
-                        <td>
-                            {% if request.user.is_staff %}
-                                <a href="{% url 'editar_pedido' item.id %}" class="btn btn-sm btn-warning">Editar</a>
-                                <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?');">Excluir</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %} <tr><td colspan="5" class="text-center">Nenhuma peça na fila no momento.</td></tr> {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <a href="{% url 'novo_pedido' %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Adicionar Novo Pedido à Fila
+        </a>
 
-        <h4 class="text-warning">⚠ Pendentes de Informação / Erro</h4>
-        <div class="card shadow-sm mb-4">
-            <table class="table table-hover mb-0">
-                <thead class="table-warning">
-                    <tr><th>Status</th><th>Peça</th><th>Solicitante</th><th>Ações</th></tr>
-                </thead>
-                <tbody>
-                    {% for item in pendentes %}
-                    <tr>
-                        <td>{{ item.get_status_display }}</td>
-                        <td>{{ item.nome_peca }}</td>
-                        <td>{{ item.solicitante }}</td>
-                        <td>
-                            {% if request.user.is_staff %}
-                                <a href="{% url 'editar_pedido' item.id %}" class="btn btn-sm btn-warning">Revisar</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %} <tr><td colspan="4" class="text-center">Tudo certo! Nenhuma pendência.</td></tr> {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <div class="row g-4 mb-5">
 
-        <h4 class="text-success">✔ Últimos 10 Concluídos</h4>
-        <div class="card shadow-sm mb-4">
-            <table class="table table-hover mb-0">
-                <thead class="table-success">
-                    <tr><th>Peça</th><th>Solicitante</th><th>Data/Hora de Conclusão</th></tr>
-                </thead>
-                <tbody>
-                    {% for item in concluidos %}
-                    <tr>
-                        <td>{{ item.nome_peca }}</td>
-                        <td>{{ item.solicitante }}</td>
-                        <td>{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
-                    </tr>
-                    {% empty %} <tr><td colspan="3" class="text-center">Nenhuma peça concluída ainda.</td></tr> {% endfor %}
-                </tbody>
-            </table>
+            <div class="col-lg-6">
+                <div class="card card-aero h-100">
+                    <div class="card-header-clean title-producao">
+                        <span class="status-led led-blue"></span> Imprimindo Agora
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-aero">
+                                <thead><tr><th>Peça</th><th>Prazo</th><th>Ações</th></tr></thead>
+                                <tbody>
+                                    {% for item in em_producao %}
+                                    <tr>
+                                        <td class="fw-bold text-dark">{{ item.nome_peca }}</td>
+                                        <td>{{ item.prazo|date:"d/m/Y" }}</td>
+                                        <td>
+                                            {% if request.user.is_staff %}
+                                                <div class="d-flex gap-2">
+                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">A K1 Max está aguardando ordens de voo.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card card-aero h-100">
+                    <div class="card-header-clean title-espera">
+                        ⏳ Fila de Espera
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-aero">
+                                <thead><tr><th>Prioridade</th><th>Peça</th><th>Prazo</th><th>Ações</th></tr></thead>
+                                <tbody>
+                                    {% for item in fila_espera %}
+                                    <tr>
+                                        <td>
+                                            {% if item.prioridade == 'U' %}<span class="badge-aero-pill badge-pill-urgente">Urgente</span>
+                                            {% elif item.prioridade == 'A' %}<span class="badge-aero-pill badge-pill-alta">Alta</span>
+                                            {% elif item.prioridade == 'B' %}<span class="badge-aero-pill badge-pill-baixa">Baixa</span>
+                                            {% else %}<span class="badge-aero-pill badge-pill-normal">Normal</span>{% endif %}
+                                        </td>
+                                        <td class="fw-medium">{{ item.nome_peca }}</td>
+                                        <td>{{ item.prazo|date:"d/m/Y" }}</td>
+                                        <td>
+                                            {% if request.user.is_staff %}
+                                                <div class="d-flex gap-2">
+                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="4" class="text-center text-muted py-5">Nenhuma peça na fila de produção.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card card-aero h-100">
+                    <div class="card-header-clean title-pendente">
+                        ⚠ Pendentes / Erro
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-aero">
+                                <thead><tr><th>Status</th><th>Peça</th><th>Ações</th></tr></thead>
+                                <tbody>
+                                    {% for item in pendentes %}
+                                    <tr>
+                                        <td><span class="fw-bold" style="color: var(--aero-danger);">{{ item.get_status_display }}</span></td>
+                                        <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
+                                        <td>
+                                            {% if request.user.is_staff %}
+                                                <div class="d-flex gap-2">
+                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Produção fluindo sem impedimentos.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card card-aero h-100">
+                    <div class="card-header-clean title-concluido">
+                        ✔ Últimos Concluídos
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-aero">
+                                <thead><tr><th>Peça</th><th>Solicitante</th><th>Conclusão</th></tr></thead>
+                                <tbody>
+                                    {% for item in concluidos %}
+                                    <tr>
+                                        <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
+                                        <td>{{ item.solicitante }}</td>
+                                        <td class="text-muted">{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Nenhuma peça concluída esta semana.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

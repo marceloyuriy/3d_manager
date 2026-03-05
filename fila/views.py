@@ -8,12 +8,25 @@ from .forms import NovaImpressaoForm, EdicaoGestorForm
 
 
 def lista_fila(request):
-    fila_ativa = ItemFila.objects.filter(status__in=['F', 'I']).order_by('prazo')
-    pendentes = ItemFila.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
-    concluidos = ItemFila.objects.filter(status='C').order_by('-data_conclusao')[
-        :10]  # Mudamos a ordenação para a conclusão mais recente!
+    # 1. EM PRODUÇÃO: Apenas o que está imprimindo agora
+    em_producao = ItemFila.objects.filter(status='I').order_by('prazo')
 
-    contexto = {'fila_ativa': fila_ativa, 'pendentes': pendentes, 'concluidos': concluidos}
+    # 2. FILA DE ESPERA: Apenas o que está aguardando
+    fila_espera = ItemFila.objects.filter(status='F').order_by('prazo')
+
+    # 3. PENDENTES: Pendente de informação ou Erro
+    pendentes = ItemFila.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+
+    # 4. CONCLUÍDOS: Os últimos 10
+    concluidos = ItemFila.objects.filter(status='C').order_by('-data_conclusao')[:10]
+
+    # Mandamos as 4 listas para o HTML
+    contexto = {
+        'em_producao': em_producao,
+        'fila_espera': fila_espera,
+        'pendentes': pendentes,
+        'concluidos': concluidos
+    }
     return render(request, 'fila/lista.html', contexto)
 
 
