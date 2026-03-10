@@ -64,7 +64,7 @@
         }
         .btn-aero-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3); color: white; }
 
-        /* --- NOVO ESTILO: BOTÕES DO HUB SELETOR --- */
+        /* --- ESTILO DOS BOTÕES DO HUB --- */
         .btn-hub {
             color: #64748B;
             border: 1px solid #CBD5E1;
@@ -221,6 +221,7 @@
                 </a>
             </div>
         </div>
+
         <a href="{% url 'novo_pedido' %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Adicionar Novo Pedido à Fila {{ setor_ativo }}
@@ -313,4 +314,47 @@
                                         <td>
                                             {% if request.user.is_staff %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero
+                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Produção fluindo sem impedimentos.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card card-aero h-100">
+                    <div class="card-header-clean title-concluido">
+                        ✔ Últimos Concluídos
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-aero">
+                                <thead><tr><th>Peça / Projeto</th><th>Solicitante</th><th>Conclusão</th></tr></thead>
+                                <tbody>
+                                    {% for item in concluidos %}
+                                    <tr>
+                                        <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
+                                        <td>{{ item.solicitante }}</td>
+                                        <td class="text-muted">{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
+                                    </tr>
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Nenhuma peça concluída esta semana.</td></tr> {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
