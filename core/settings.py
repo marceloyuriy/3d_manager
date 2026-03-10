@@ -101,6 +101,7 @@ if AXES_INSTALLED:
     AXES_FAILURE_LIMIT = 5
     AXES_COOLOFF_TIME = 1
     AXES_LOCKOUT_TEMPLATE = 'fila/lockout.html'
+    AXES_CLIENT_IP_CALLABLE = 'axes.helpers.get_client_ip_from_request'
 else:
     AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 
