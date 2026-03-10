@@ -41,9 +41,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.security.AdminIPAllowlistMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
-#if AXES_INSTALLED:
-    #MIDDLEWARE.append('axes.middleware.AxesMiddleware')
 
 ROOT_URLCONF = 'core.urls'
 
@@ -118,3 +117,11 @@ SECURE_HSTS_PRELOAD = os.getenv('DJANGO_HSTS_PRELOAD', 'False').lower() == 'true
 
 ADMIN_SITE_PATH = os.getenv('DJANGO_ADMIN_PATH', 'portal-gestor-aero-2026')
 ADMIN_ALLOWED_IPS = [ip.strip() for ip in os.getenv('DJANGO_ADMIN_ALLOWED_IPS', '127.0.0.1,::1').split(',') if ip.strip()]
+
+# ==========================================
+# LENDO O IP REAL ATRÁS DO PROXY (NGINX/DOCKER)
+# ==========================================
+AXES_META_PRECEDENCE = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
