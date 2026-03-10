@@ -222,10 +222,12 @@
             </div>
         </div>
 
-        <a href="{% url 'novo_pedido' %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Adicionar Novo Pedido à Fila {{ setor_ativo }}
-        </a>
+        {% if pode_editar %}
+            <a href="{% if setor_ativo == '3D' %}{% url 'novo_pedido_3d' %}{% elif setor_ativo == 'Router' %}{% url 'novo_pedido_router' %}{% else %}{% url 'novo_pedido_cad' %}{% endif %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Adicionar Novo Pedido à Fila {{ setor_ativo }}
+            </a>
+        {% endif %}
 
         <div class="row g-4 mb-5">
 
@@ -244,10 +246,18 @@
                                         <td class="fw-bold text-dark">{{ item.nome_peca }}</td>
                                         <td>{{ item.prazo|date:"d/m/Y" }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -281,10 +291,18 @@
                                         <td class="fw-medium">{{ item.nome_peca }}</td>
                                         <td>{{ item.prazo|date:"d/m/Y" }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -312,10 +330,18 @@
                                         <td><span class="fw-bold" style="color: var(--aero-danger);">{{ item.get_status_display }}</span></td>
                                         <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
