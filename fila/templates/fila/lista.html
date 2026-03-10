@@ -221,7 +221,7 @@
                 </a>
             </div>
         </div>
-        <a href="{% url 'novo_pedido' %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
+        <a href="{% url 'novo_pedido' setor_slug %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Adicionar Novo Pedido à Fila {{ setor_ativo }}
         </a>
@@ -245,8 +245,8 @@
                                         <td>
                                             {% if request.user.is_staff %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    <a href="{% url 'editar_pedido' setor_slug item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' setor_slug item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -282,8 +282,8 @@
                                         <td>
                                             {% if request.user.is_staff %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    <a href="{% url 'editar_pedido' setor_slug item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                    <a href="{% url 'deletar_pedido' setor_slug item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -313,4 +313,4 @@
                                         <td>
                                             {% if request.user.is_staff %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero
+                                                    <a href="{% url 'editar_pedido' setor_slug item.id %}" class="btn btn-acao-aero

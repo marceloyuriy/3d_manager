@@ -5,7 +5,46 @@ from django.contrib import messages
 from django.utils import timezone
 
 from .models import Pedido3D, PedidoRouter, PedidoCAD
-from .forms import NovaImpressao3DForm, EdicaoGestor3DForm
+from .forms import (
+    NovaImpressao3DForm,
+    EdicaoGestor3DForm,
+    NovoRouterForm,
+    EdicaoGestorRouterForm,
+    NovoCADForm,
+    EdicaoGestorCADForm,
+)
+
+
+SETORES = {
+    '3d': {
+        'nome': 'Impressão 3D',
+        'tag': '3D',
+        'model': Pedido3D,
+        'novo_form': NovaImpressao3DForm,
+        'edicao_form': EdicaoGestor3DForm,
+        'lista_url': 'lista_fila',
+    },
+    'router': {
+        'nome': 'Router CNC',
+        'tag': 'Router',
+        'model': PedidoRouter,
+        'novo_form': NovoRouterForm,
+        'edicao_form': EdicaoGestorRouterForm,
+        'lista_url': 'lista_router',
+    },
+    'cad': {
+        'nome': 'CAD ↔ Manufatura',
+        'tag': 'CAD',
+        'model': PedidoCAD,
+        'novo_form': NovoCADForm,
+        'edicao_form': EdicaoGestorCADForm,
+        'lista_url': 'lista_cad',
+    },
+}
+
+
+def _setor_config(setor):
+    return SETORES.get(setor, SETORES['3d'])
 
 
 # --- 1. VIEW DA FILA 3D ---
@@ -20,7 +59,8 @@ def lista_3d(request):
         'fila_espera': fila_espera,
         'pendentes': pendentes,
         'concluidos': concluidos,
-        'setor_ativo': '3D' # <-- Esta etiqueta avisa o HTML para pintar o botão 3D!
+        'setor_ativo': '3D',
+        'setor_slug': '3d',
     }
     return render(request, 'fila/lista.html', contexto)
 
@@ -37,7 +77,8 @@ def lista_router(request):
         'fila_espera': fila_espera,
         'pendentes': pendentes,
         'concluidos': concluidos,
-        'setor_ativo': 'Router' # <-- Etiqueta da Router
+        'setor_ativo': 'Router',
+        'setor_slug': 'router',
     }
     return render(request, 'fila/lista.html', contexto)
 
@@ -53,43 +94,50 @@ def lista_cad(request):
         'fila_espera': fila_espera,
         'pendentes': pendentes,
         'concluidos': concluidos,
-        'setor_ativo': 'CAD' # <-- Etiqueta do CAD
+        'setor_ativo': 'CAD',
+        'setor_slug': 'cad',
     }
     return render(request, 'fila/lista.html', contexto)
 
 
 @login_required
-def novo_pedido(request):
+def novo_pedido(request, setor='3d'):
+    config = _setor_config(setor)
+    form_class = config['novo_form']
+
     if request.method == 'POST':
-        # Substituímos pelo novo formulário da 3D
-        form = NovaImpressao3DForm(request.POST, request.FILES)
+        form = form_class(request.POST, request.FILES)
         if form.is_valid():
             pedido = form.save(commit=False)
             pedido.solicitante = request.user.username
             pedido.save()
 
-            return redirect('lista_fila')
+            return redirect(config['lista_url'])
     else:
-        form = NovaImpressao3DForm()
+        form = form_class()
 
     contexto = {
         'form': form,
-        'titulo': 'Novo Pedido 3D'
+        'titulo': f"Novo Pedido - {config['nome']}",
+        'setor_slug': setor,
+        'lista_url': config['lista_url'],
     }
     return render(request, 'fila/form.html', contexto)
 
 
 @login_required
-def editar_pedido(request, id):
+def editar_pedido(request, setor, id):
     if not request.user.is_staff:
         return redirect('lista_fila')
 
-    # Substituímos ItemFila por Pedido3D
-    item = get_object_or_404(Pedido3D, id=id)
+    config = _setor_config(setor)
+    model = config['model']
+    form_class = config['edicao_form']
+
+    item = get_object_or_404(model, id=id)
 
     if request.method == 'POST':
-        # Substituímos pelo novo formulário de edição da 3D
-        form = EdicaoGestor3DForm(request.POST, request.FILES, instance=item)
+        form = form_class(request.POST, request.FILES, instance=item)
         if form.is_valid():
             item_salvo = form.save(commit=False)
 
@@ -101,25 +149,36 @@ def editar_pedido(request, id):
             item_salvo.save()
 
             messages.success(request, f'O pedido "{item_salvo.nome_peca}" foi atualizado com sucesso!')
-            return redirect('lista_fila')
+            return redirect(config['lista_url'])
     else:
-        form = EdicaoGestor3DForm(instance=item)
+        form = form_class(instance=item)
 
-    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Editando: {item.nome_peca}'})
+    return render(
+        request,
+        'fila/form.html',
+        {
+            'form': form,
+            'titulo': f"Editando ({config['nome']}): {item.nome_peca}",
+            'setor_slug': setor,
+            'lista_url': config['lista_url'],
+        },
+    )
 
 
 @login_required
-def deletar_pedido(request, id):
+def deletar_pedido(request, setor, id):
     if not request.user.is_staff:
         return redirect('lista_fila')
 
-    # Substituímos ItemFila por Pedido3D
-    item = get_object_or_404(Pedido3D, id=id)
+    config = _setor_config(setor)
+    model = config['model']
+
+    item = get_object_or_404(model, id=id)
     nome = item.nome_peca
     item.delete()
 
     messages.success(request, f'O pedido "{nome}" foi removido da fila.')
-    return redirect('lista_fila')
+    return redirect(config['lista_url'])
 
 
 def registro(request):

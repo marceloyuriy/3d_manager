@@ -4,14 +4,14 @@ from . import views
 
 urlpatterns = [
     # --- HUB MULTI-FILAS ---
-    path('', views.lista_3d, name='lista_fila'), # A página inicial abre a 3D por padrão
+    path('', views.lista_3d, name='lista_fila'),
     path('router/', views.lista_router, name='lista_router'),
     path('cad/', views.lista_cad, name='lista_cad'),
 
-    # --- AÇÕES (Por enquanto apontam para a 3D. Em breve faremos dinâmico) ---
-    path('novo/', views.novo_pedido, name='novo_pedido'),
-    path('editar/<int:id>/', views.editar_pedido, name='editar_pedido'),
-    path('deletar/<int:id>/', views.deletar_pedido, name='deletar_pedido'),
+    # --- AÇÕES POR SETOR ---
+    path('<slug:setor>/novo/', views.novo_pedido, name='novo_pedido'),
+    path('<slug:setor>/editar/<int:id>/', views.editar_pedido, name='editar_pedido'),
+    path('<slug:setor>/deletar/<int:id>/', views.deletar_pedido, name='deletar_pedido'),
 
     # --- LOGIN, LOGOUT E REGISTRO ---
     path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
