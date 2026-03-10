@@ -26,7 +26,6 @@ urlpatterns = [
     # --- LOGIN E REGISTRO ---
     path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='lista_fila'), name='logout'),
-    path('registro/', views.registro, name='registro'),
 
     # --- RECUPERAÇÃO DE SENHA ---
     path('recuperar-senha/', auth_views.PasswordResetView.as_view(template_name='fila/recuperar_senha.html'), name='password_reset'),

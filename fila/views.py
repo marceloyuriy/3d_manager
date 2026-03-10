@@ -9,7 +9,7 @@ from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
                     NovoCADForm, EdicaoGestorCADForm)
 
-# --- FUNÇÃO DO SEGURANÇA (VERIFICA O CRACHÁ) ---
+# --- FUNÇÃO DO SEGURANÇA ---
 def tem_permissao(user, setor):
     if not user.is_authenticated:
         return False
@@ -21,6 +21,7 @@ def tem_permissao(user, setor):
 # ==========================================
 # VIEWS DO HUB (LISTAGEM)
 # ==========================================
+@login_required
 def lista_3d(request):
     em_producao = Pedido3D.objects.filter(status='I').order_by('prazo')
     fila_espera = Pedido3D.objects.filter(status='F').order_by('prazo')
@@ -34,7 +35,7 @@ def lista_3d(request):
         'pode_editar': tem_permissao(request.user, '3D') # <--- Enviando a permissão pro HTML!
     }
     return render(request, 'fila/lista.html', contexto)
-
+@login_required
 def lista_router(request):
     em_producao = PedidoRouter.objects.filter(status='I').order_by('prazo')
     fila_espera = PedidoRouter.objects.filter(status='F').order_by('prazo')
@@ -48,7 +49,7 @@ def lista_router(request):
         'pode_editar': tem_permissao(request.user, 'Router')
     }
     return render(request, 'fila/lista.html', contexto)
-
+@login_required
 def lista_cad(request):
     em_producao = PedidoCAD.objects.filter(status='I').order_by('prazo')
     fila_espera = PedidoCAD.objects.filter(status='F').order_by('prazo')
@@ -202,18 +203,3 @@ def deletar_pedido_cad(request, id):
     item.delete()
     messages.success(request, 'Projeto removido da fila CAD.')
     return redirect('lista_cad')
-
-
-# ==========================================
-# REGISTRO PADRÃO
-# ==========================================
-def registro(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Conta criada com sucesso! Agora você pode fazer login.')
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'fila/registro.html', {'form': form})
