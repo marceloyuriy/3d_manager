@@ -3,44 +3,80 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.utils import timezone
-from .models import ItemFila
-from .forms import NovaImpressaoForm, EdicaoGestorForm
+
+from .models import Pedido3D, PedidoRouter, PedidoCAD
+from .forms import NovaImpressao3DForm, EdicaoGestor3DForm
 
 
-def lista_fila(request):
-    # 1. EM PRODUÇÃO: Apenas o que está imprimindo agora
-    em_producao = ItemFila.objects.filter(status='I').order_by('prazo')
+# --- 1. VIEW DA FILA 3D ---
+def lista_3d(request):
+    em_producao = Pedido3D.objects.filter(status='I').order_by('prazo')
+    fila_espera = Pedido3D.objects.filter(status='F').order_by('prazo')
+    pendentes = Pedido3D.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    concluidos = Pedido3D.objects.filter(status='C').order_by('-data_conclusao')[:10]
 
-    # 2. FILA DE ESPERA: Apenas o que está aguardando
-    fila_espera = ItemFila.objects.filter(status='F').order_by('prazo')
-
-    # 3. PENDENTES: Pendente de informação ou Erro
-    pendentes = ItemFila.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
-
-    # 4. CONCLUÍDOS: Os últimos 10
-    concluidos = ItemFila.objects.filter(status='C').order_by('-data_conclusao')[:10]
-
-    # Mandamos as 4 listas para o HTML
     contexto = {
         'em_producao': em_producao,
         'fila_espera': fila_espera,
         'pendentes': pendentes,
-        'concluidos': concluidos
+        'concluidos': concluidos,
+        'setor_ativo': '3D' # <-- Esta etiqueta avisa o HTML para pintar o botão 3D!
+    }
+    return render(request, 'fila/lista.html', contexto)
+
+# --- 2. VIEW DA FILA ROUTER ---
+def lista_router(request):
+    # Dica: No futuro colocaremos aqui a trava de segurança (if user in group)
+    em_producao = PedidoRouter.objects.filter(status='I').order_by('prazo')
+    fila_espera = PedidoRouter.objects.filter(status='F').order_by('prazo')
+    pendentes = PedidoRouter.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    concluidos = PedidoRouter.objects.filter(status='C').order_by('-data_conclusao')[:10]
+
+    contexto = {
+        'em_producao': em_producao,
+        'fila_espera': fila_espera,
+        'pendentes': pendentes,
+        'concluidos': concluidos,
+        'setor_ativo': 'Router' # <-- Etiqueta da Router
+    }
+    return render(request, 'fila/lista.html', contexto)
+
+# --- 3. VIEW DA FILA CAD ---
+def lista_cad(request):
+    em_producao = PedidoCAD.objects.filter(status='I').order_by('prazo')
+    fila_espera = PedidoCAD.objects.filter(status='F').order_by('prazo')
+    pendentes = PedidoCAD.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    concluidos = PedidoCAD.objects.filter(status='C').order_by('-data_conclusao')[:10]
+
+    contexto = {
+        'em_producao': em_producao,
+        'fila_espera': fila_espera,
+        'pendentes': pendentes,
+        'concluidos': concluidos,
+        'setor_ativo': 'CAD' # <-- Etiqueta do CAD
     }
     return render(request, 'fila/lista.html', contexto)
 
 
+@login_required
 def novo_pedido(request):
     if request.method == 'POST':
-        form = NovaImpressaoForm(request.POST, request.FILES)
+        # Substituímos pelo novo formulário da 3D
+        form = NovaImpressao3DForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            # MENSAGEM DE SUCESSO!
-            messages.success(request, 'Novo pedido adicionado à fila com sucesso!')
+            pedido = form.save(commit=False)
+            pedido.solicitante = request.user.username
+            pedido.save()
+
             return redirect('lista_fila')
     else:
-        form = NovaImpressaoForm()
-    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido'})
+        form = NovaImpressao3DForm()
+
+    contexto = {
+        'form': form,
+        'titulo': 'Novo Pedido 3D'
+    }
+    return render(request, 'fila/form.html', contexto)
 
 
 @login_required
@@ -48,27 +84,26 @@ def editar_pedido(request, id):
     if not request.user.is_staff:
         return redirect('lista_fila')
 
-    item = get_object_or_404(ItemFila, id=id)
+    # Substituímos ItemFila por Pedido3D
+    item = get_object_or_404(Pedido3D, id=id)
 
     if request.method == 'POST':
-        form = EdicaoGestorForm(request.POST, request.FILES, instance=item)
+        # Substituímos pelo novo formulário de edição da 3D
+        form = EdicaoGestor3DForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
-            # commit=False salva no Python primeiro, antes de enviar para o banco de dados
             item_salvo = form.save(commit=False)
 
-            # REGRA INTELIGENTE: Se o status for Concluído e não tiver data, preenchemos com o momento atual
             if item_salvo.status == 'C' and not item_salvo.data_conclusao:
                 item_salvo.data_conclusao = timezone.now()
-            # Se o status não for 'C', limpamos a data de conclusão (caso tenha sido alterado por engano)
             elif item_salvo.status != 'C':
                 item_salvo.data_conclusao = None
 
-            item_salvo.save()  # Agora sim, salvamos no banco!
+            item_salvo.save()
 
             messages.success(request, f'O pedido "{item_salvo.nome_peca}" foi atualizado com sucesso!')
             return redirect('lista_fila')
     else:
-        form = EdicaoGestorForm(instance=item)
+        form = EdicaoGestor3DForm(instance=item)
 
     return render(request, 'fila/form.html', {'form': form, 'titulo': f'Editando: {item.nome_peca}'})
 
@@ -78,21 +113,22 @@ def deletar_pedido(request, id):
     if not request.user.is_staff:
         return redirect('lista_fila')
 
-    item = get_object_or_404(ItemFila, id=id)
-    nome = item.nome_peca  # Guardamos o nome para mostrar na mensagem
+    # Substituímos ItemFila por Pedido3D
+    item = get_object_or_404(Pedido3D, id=id)
+    nome = item.nome_peca
     item.delete()
 
     messages.success(request, f'O pedido "{nome}" foi removido da fila.')
     return redirect('lista_fila')
 
+
 def registro(request):
     if request.method == 'POST':
-        # O Django já tem um formulário seguro e pronto para senhas!
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Cria o usuário no banco de dados
+            form.save()
             messages.success(request, 'Conta criada com sucesso! Agora você pode fazer login.')
-            return redirect('login')  # Manda o usuário para a tela de login
+            return redirect('login')
     else:
         form = UserCreationForm()
 

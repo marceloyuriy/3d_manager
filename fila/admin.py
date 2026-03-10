@@ -1,10 +1,20 @@
 from django.contrib import admin
-from .models import ItemFila # Importa o modelo que criamos
+from .models import Pedido3D, PedidoRouter, PedidoCAD
 
-# Registra o modelo no painel de administração
-@admin.register(ItemFila)
-class ItemFilaAdmin(admin.ModelAdmin):
-    # Essa linha define quais colunas vão aparecer na lista do painel para facilitar a visualização
+# --- ADMIN DA IMPRESSÃO 3D ---
+@admin.register(Pedido3D)
+class Pedido3DAdmin(admin.ModelAdmin):
     list_display = ('nome_peca', 'solicitante', 'prioridade', 'status', 'prazo')
-    # Adiciona filtros laterais super úteis
+    list_filter = ('status', 'prioridade')
+
+# --- ADMIN DA ROUTER CNC ---
+@admin.register(PedidoRouter)
+class PedidoRouterAdmin(admin.ModelAdmin):
+    list_display = ('nome_peca', 'solicitante', 'prioridade', 'status', 'prazo')
+    list_filter = ('status', 'prioridade')
+
+# --- ADMIN DO CAD ---
+@admin.register(PedidoCAD)
+class PedidoCADAdmin(admin.ModelAdmin):
+    list_display = ('nome_peca', 'solicitante', 'prioridade', 'status', 'prazo')
     list_filter = ('status', 'prioridade')
