@@ -148,8 +148,13 @@ LOGIN_REDIRECT_URL = 'lista_fila'
 LOGIN_URL = 'login'
 
 # --- CONFIGURAÇÃO DE E-MAIL PARA DESENVOLVIMENTO ---
-# Imprime os e-mails de recuperação de senha direto no terminal (console) do Docker
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# --- CONFIGURAÇÃO DE E-MAIL REAL (SMTP) ---
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # Ou o seu provedor
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'seu-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'sua-senha-de-app' # Senha específica gerada no Google
 
 # ==========================================
 # CONFIGURAÇÕES DE SEGURANÇA (AXES - ANTI FORÇA BRUTA)

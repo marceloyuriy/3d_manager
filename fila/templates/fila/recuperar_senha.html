@@ -1,20 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Recuperar Senha</title>
+    <title>Recuperar Senha - AeroRiver</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #334155; }
+        .card-aero { border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); background: white; }
+        .btn-aero { background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%); color: white; border: none; font-weight: 600; border-radius: 10px; padding: 0.8rem; transition: all 0.3s; }
+        .btn-aero:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3); color: white; }
+        .form-control { border-radius: 8px; border: 1px solid #E2E8F0; padding: 0.7rem; }
+        .form-control:focus { border-color: #2A9D8F; box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15); }
+    </style>
 </head>
-<body class="bg-light d-flex align-items-center vh-100">
-    <div class="container" style="max-width: 400px;">
-        <div class="card p-4 shadow-sm">
-            <h4 class="mb-3 text-center">Esqueceu a senha?</h4>
-            <p class="text-muted small">Digite seu endereço de e-mail (caso tenha cadastrado um) e enviaremos instruções para criar uma nova senha.</p>
+<body class="d-flex align-items-center vh-100">
+    <div class="container" style="max-width: 420px;">
+        <div class="card card-aero p-4 p-md-5">
+            <div class="text-center mb-4">
+                <span style="font-size: 1.5rem; font-weight: 700; color: #334155;">✈️ <span style="color: #2A9D8F;">AeroRiver</span></span>
+                <h5 class="mt-3 fw-bold">Esqueceu a senha?</h5>
+            </div>
+            <p class="text-muted small text-center mb-4">Digite seu e-mail abaixo. Se ele estiver cadastrado, enviaremos instruções para criar uma nova senha.</p>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary w-100">Enviar e-mail</button>
-                <a href="{% url 'login' %}" class="btn btn-link w-100 text-center mt-2">Cancelar</a>
+                <div class="mb-4">
+                    {{ form.email }}
+                </div>
+                <button type="submit" class="btn btn-aero w-100 mb-3">Enviar e-mail de recuperação</button>
+                <div class="text-center">
+                    <a href="{% url 'login' %}" class="text-decoration-none small text-muted hover-green">Voltar para o Login</a>
+                </div>
             </form>
         </div>
     </div>

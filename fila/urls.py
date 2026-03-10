@@ -27,9 +27,26 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='lista_fila'), name='logout'),
 
-    # --- RECUPERAÇÃO DE SENHA ---
-    path('recuperar-senha/', auth_views.PasswordResetView.as_view(template_name='fila/recuperar_senha.html'), name='password_reset'),
-    path('recuperar-senha/enviado/', auth_views.PasswordResetDoneView.as_view(template_name='fila/senha_enviada.html'), name='password_reset_done'),
-    path('recuperar-senha/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='fila/nova_senha.html'), name='password_reset_confirm'),
-    path('recuperar-senha/concluido/', auth_views.PasswordResetCompleteView.as_view(template_name='fila/senha_concluida.html'), name='password_reset_complete'),
+    # --- LOGIN E LOGOUT ---
+    path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+
+    # --- ALTERAR SENHA (USUÁRIO LOGADO) ---
+    path('alterar-senha/', auth_views.PasswordChangeView.as_view(template_name='fila/alterar_senha.html'),
+         name='password_change'),
+    path('alterar-senha/concluido/',
+         auth_views.PasswordChangeDoneView.as_view(template_name='fila/alterar_senha_concluido.html'),
+         name='password_change_done'),
+
+    # --- RECUPERAÇÃO DE SENHA (ESQUECI A SENHA) ---
+    path('recuperar-senha/', auth_views.PasswordResetView.as_view(template_name='fila/recuperar_senha.html'),
+         name='password_reset'),
+    path('recuperar-senha/enviado/', auth_views.PasswordResetDoneView.as_view(template_name='fila/senha_enviada.html'),
+         name='password_reset_done'),
+    path('recuperar-senha/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(template_name='fila/nova_senha.html'),
+         name='password_reset_confirm'),
+    path('recuperar-senha/concluido/',
+         auth_views.PasswordResetCompleteView.as_view(template_name='fila/senha_concluida.html'),
+         name='password_reset_complete'),
 ]
