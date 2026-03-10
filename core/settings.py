@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
     'fila',
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -148,3 +150,30 @@ LOGIN_URL = 'login'
 # --- CONFIGURAÇÃO DE E-MAIL PARA DESENVOLVIMENTO ---
 # Imprime os e-mails de recuperação de senha direto no terminal (console) do Docker
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# ==========================================
+# CONFIGURAÇÕES DE SEGURANÇA (AXES - ANTI FORÇA BRUTA)
+# ==========================================
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AXES_FAILURE_LIMIT = 5      # Bloqueia após 5 tentativas erradas
+AXES_COOLOFF_TIME = 1       # Fica bloqueado por 1 hora
+AXES_LOCKOUT_TEMPLATE = 'fila/lockout.html' # (Opcional) Tela customizada de bloqueio
+
+# ==========================================
+# CABEÇALHOS DE SEGURANÇA (HTTP)
+# ==========================================
+# Impede que o seu site seja aberto dentro de um iframe de outro site (Clickjacking)
+X_FRAME_OPTIONS = "DENY"
+
+# Força o navegador a respeitar o tipo de arquivo, evitando injeção de scripts
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Ativa o filtro XSS do próprio navegador do usuário
+SECURE_BROWSER_XSS_FILTER = True
+
+# NOTA: Só ativaremos SESSION_COOKIE_SECURE e CSRF_COOKIE_SECURE
+# quando você tiver um Domínio com HTTPS (SSL) configurado na AWS!
