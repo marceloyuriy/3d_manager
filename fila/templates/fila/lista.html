@@ -64,6 +64,26 @@
         }
         .btn-aero-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3); color: white; }
 
+        /* --- ESTILO DOS BOTÕES DO HUB --- */
+        .btn-hub {
+            color: #64748B;
+            border: 1px solid #CBD5E1;
+            background-color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-hub:hover {
+            background-color: #F1F5F9;
+            color: #334155;
+        }
+        .btn-hub.active {
+            background-color: var(--aero-accent-blue);
+            color: #FFFFFF;
+            border-color: var(--aero-accent-blue);
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.1);
+        }
+
         .card-aero {
             border: none;
             border-radius: var(--card-radius);
@@ -125,7 +145,6 @@
         .badge-pill-normal { background-color: #F8FAFC; color: #64748B; border: 1px solid #E2E8F0; }
         .badge-pill-baixa { background-color: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
 
-        /* --- ESTILOS DOS BOTÕES DE GESTOR --- */
         .btn-acao-aero {
             font-size: 0.8rem;
             border-radius: 6px;
@@ -141,7 +160,6 @@
         }
         .btn-acao-blue:hover { background-color: #F1FDFF; color: #0394D2; }
 
-        /* Novo botão vermelho de Excluir */
         .btn-acao-danger {
             color: var(--aero-danger);
             border: 1px solid var(--aero-danger);
@@ -152,7 +170,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-light navbar-aero mb-5 shadow-sm">
+    <nav class="navbar navbar-light navbar-aero mb-4 shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
                 <img src="{% static 'img/Logo.png' %}" alt="Logo AeroRiver" height="42" style="object-fit: contain;">
@@ -175,7 +193,7 @@
     <div class="container">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 mb-5" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% else %}#D97706{% endif %};" role="alert">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 mb-4" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% else %}#D97706{% endif %};" role="alert">
                     <strong class="d-flex align-items-center gap-2">
                         {% if message.tags == 'success' %}
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -190,37 +208,61 @@
             {% endfor %}
         {% endif %}
 
-        <a href="{% url 'novo_pedido' %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Adicionar Novo Pedido à Fila
-        </a>
+        <div class="d-flex justify-content-center mb-4 mt-2">
+            <div class="btn-group shadow-sm" role="group" aria-label="Seletor de Filas" style="border-radius: 12px; overflow: hidden;">
+                <a href="{% url 'lista_fila' %}" class="btn btn-hub {% if setor_ativo == '3D' %}active{% endif %}">
+                    🖨️ Impressão 3D
+                </a>
+                <a href="{% url 'lista_router' %}" class="btn btn-hub {% if setor_ativo == 'Router' %}active{% endif %}">
+                    ⚙️ Router CNC
+                </a>
+                <a href="{% url 'lista_cad' %}" class="btn btn-hub {% if setor_ativo == 'CAD' %}active{% endif %}">
+                    📐 Projeto CAD
+                </a>
+            </div>
+        </div>
+
+        {% if pode_editar %}
+            <a href="{% if setor_ativo == '3D' %}{% url 'novo_pedido_3d' %}{% elif setor_ativo == 'Router' %}{% url 'novo_pedido_router' %}{% else %}{% url 'novo_pedido_cad' %}{% endif %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Adicionar Novo Pedido à Fila {{ setor_ativo }}
+            </a>
+        {% endif %}
 
         <div class="row g-4 mb-5">
 
             <div class="col-lg-6">
                 <div class="card card-aero h-100">
                     <div class="card-header-clean title-producao">
-                        <span class="status-led led-blue"></span> Imprimindo Agora
+                        <span class="status-led led-blue"></span> Em Produção
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-aero">
-                                <thead><tr><th>Peça</th><th>Prazo</th><th>Ações</th></tr></thead>
+                                <thead><tr><th>Peça / Projeto</th><th>Prazo</th><th>Ações</th></tr></thead>
                                 <tbody>
                                     {% for item in em_producao %}
                                     <tr>
                                         <td class="fw-bold text-dark">{{ item.nome_peca }}</td>
                                         <td>{{ item.prazo|date:"d/m/Y" }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
                                     </tr>
-                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">A K1 Max está aguardando ordens de voo.</td></tr> {% endfor %}
+                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Nenhum item em produção neste setor.</td></tr> {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -236,7 +278,7 @@
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-aero">
-                                <thead><tr><th>Prioridade</th><th>Peça</th><th>Prazo</th><th>Ações</th></tr></thead>
+                                <thead><tr><th>Prioridade</th><th>Peça / Projeto</th><th>Prazo</th><th>Ações</th></tr></thead>
                                 <tbody>
                                     {% for item in fila_espera %}
                                     <tr>
@@ -249,15 +291,23 @@
                                         <td class="fw-medium">{{ item.nome_peca }}</td>
                                         <td>{{ item.prazo|date:"d/m/Y" }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
                                     </tr>
-                                    {% empty %} <tr><td colspan="4" class="text-center text-muted py-5">Nenhuma peça na fila de produção.</td></tr> {% endfor %}
+                                    {% empty %} <tr><td colspan="4" class="text-center text-muted py-5">Nenhum item na fila de produção.</td></tr> {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -273,17 +323,25 @@
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-aero">
-                                <thead><tr><th>Status</th><th>Peça</th><th>Ações</th></tr></thead>
+                                <thead><tr><th>Status</th><th>Peça / Projeto</th><th>Ações</th></tr></thead>
                                 <tbody>
                                     {% for item in pendentes %}
                                     <tr>
                                         <td><span class="fw-bold" style="color: var(--aero-danger);">{{ item.get_status_display }}</span></td>
                                         <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
                                         <td>
-                                            {% if request.user.is_staff %}
+                                            {% if pode_editar %}
                                                 <div class="d-flex gap-2">
-                                                    <a href="{% url 'editar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
-                                                    <a href="{% url 'deletar_pedido' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% if setor_ativo == '3D' %}
+                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% elif setor_ativo == 'Router' %}
+                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% else %}
+                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Editar</a>
+                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                    {% endif %}
                                                 </div>
                                             {% endif %}
                                         </td>
@@ -304,7 +362,7 @@
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-aero">
-                                <thead><tr><th>Peça</th><th>Solicitante</th><th>Conclusão</th></tr></thead>
+                                <thead><tr><th>Peça / Projeto</th><th>Solicitante</th><th>Conclusão</th></tr></thead>
                                 <tbody>
                                     {% for item in concluidos %}
                                     <tr>
