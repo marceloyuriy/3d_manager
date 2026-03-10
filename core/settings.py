@@ -42,7 +42,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.security.AdminIPAllowlistMiddleware',
 ]
-if AXES_INSTALLED:
+#if AXES_INSTALLED:
     #MIDDLEWARE.append('axes.middleware.AxesMiddleware')
 
 ROOT_URLCONF = 'core.urls'
