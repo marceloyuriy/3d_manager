@@ -3,93 +3,112 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Acesso - AeroRiver 3D</title>
+    <title>Acesso Restrito - AeroRiver Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --aero-logo-dark: #334155;
-            --aero-logo-green: #2A9D8F;
-            --aero-accent-blue: #00B4D8;
-            --bg-color: #F8FAFC;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: #334155;
+            background-color: #F8FAFC;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            height: 100vh;
+            margin: 0;
+            color: #334155;
         }
-        .auth-card {
+        .login-card {
             background: #ffffff;
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            padding: 3rem 2.5rem;
             width: 100%;
             max-width: 420px;
-            padding: 3rem 2.5rem;
-            text-align: center;
         }
-        .btn-aero-primary {
-            background: linear-gradient(135deg, var(--aero-accent-blue) 0%, #0394D2 100%);
+        .aero-title {
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+        .aero-title span { color: #2A9D8F; } /* Verde AeroRiver */
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #64748B;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #E2E8F0;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: #2A9D8F;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
+        }
+
+        .btn-aero-green {
+            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
             color: white;
             font-weight: 600;
             border: none;
             border-radius: 10px;
-            padding: 0.8rem;
+            padding: 0.9rem;
+            width: 100%;
+            font-size: 1.05rem;
             transition: all 0.3s ease;
+            margin-top: 1rem;
         }
-        .btn-aero-primary:hover {
+        .btn-aero-green:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
             color: white;
         }
-        .form-control {
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
-            border-color: #E2E8F0;
-        }
-        .form-control:focus {
-            border-color: var(--aero-accent-blue);
-            box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.15);
-        }
-        .auth-links a {
-            color: var(--aero-logo-dark);
+
+        .forgot-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94A3B8;
             text-decoration: none;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: color 0.2s;
         }
-        .auth-links a:hover { color: var(--aero-accent-blue); }
+        .forgot-link:hover { color: #2A9D8F; }
     </style>
 </head>
 <body>
-    <div class="auth-card">
+    <div class="login-card">
+        <div class="aero-title">✈️ <span>AeroRiver</span> Hub</div>
 
-        <p class="text-muted mb-4 small">Acesso ao Hub de Manufatura Aditiva</p>
-
-        <form method="post" class="text-start">
+        <form method="post">
             {% csrf_token %}
-
             {% if form.errors %}
-                <div class="alert alert-danger p-2 small text-center" style="border-radius: 8px;">Utilizador ou palavra-passe incorretos.</div>
+                <div class="alert alert-danger" style="font-size: 0.85rem; border-radius: 8px; border:none; background-color: #FEF2F2; color:#DC2626;">
+                    <strong>Erro:</strong> Usuário ou senha incorretos.
+                </div>
             {% endif %}
 
             <div class="mb-3">
-                {{ form.as_p }}
+                <label class="form-label">USUÁRIO</label>
+                <input type="text" name="username" class="form-control" required autofocus placeholder="Digite o seu login">
             </div>
 
-            <button type="submit" class="btn btn-aero-primary w-100 mb-3 mt-2">Acessar o Sistema</button>
-
-            <div class="d-flex justify-content-between auth-links small mt-3">
-                <a href="{% url 'password_reset' %}">Esqueci a palavra-passe</a>
+            <div class="mb-4">
+                <label class="form-label">SENHA</label>
+                <input type="password" name="password" class="form-control" required placeholder="••••••••">
             </div>
 
-            <hr class="my-4" style="border-color: #E2E8F0;">
-            <a href="{% url 'lista_fila' %}" class="btn btn-light w-100" style="border-radius: 10px; font-weight: 600; color: #64748B; border: 1px solid #E2E8F0;">Voltar para a Fila</a>
+            <button type="submit" class="btn btn-aero-green">Acessar Sistema</button>
         </form>
+
+        <a href="{% url 'password_reset' %}" class="forgot-link">Esqueci a minha palavra-passe</a>
     </div>
 </body>
 </html>

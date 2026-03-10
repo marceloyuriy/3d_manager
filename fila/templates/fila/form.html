@@ -11,7 +11,7 @@
         :root {
             --aero-logo-dark: #334155;
             --aero-logo-green: #2A9D8F;
-            --aero-accent-blue: #00B4D8;
+            --aero-accent-green: #2A9D8F;
             --bg-color: #F8FAFC;
             --card-radius: 16px;
             --border-color-soft: #F1F5F9;
@@ -41,7 +41,7 @@
             background: #ffffff;
         }
         .btn-aero-primary {
-            background: linear-gradient(135deg, var(--aero-accent-blue) 0%, #0394D2 100%);
+            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
             color: white;
             font-weight: 600;
             border: none;
@@ -51,7 +51,17 @@
         }
         .btn-aero-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+            color: white;
+        }
+
+        .btn-outline-aero-green {
+            color: var(--aero-logo-green);
+            border: 1px solid var(--aero-logo-green);
+            background-color: transparent;
+        }
+        .btn-outline-aero-green:hover {
+            background-color: var(--aero-logo-green);
             color: white;
         }
 
@@ -63,8 +73,8 @@
             color: #475569;
         }
         .form-control:focus, .form-select:focus {
-            border-color: var(--aero-accent-blue);
-            box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.15);
+            border-color: var(--aero-accent-green);
+            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
         }
         form p {
             margin-bottom: 1.2rem;
@@ -76,8 +86,7 @@
     <nav class="navbar navbar-light navbar-aero mb-5 shadow-sm">
         <div class="container">
             <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
-                <img src="{% static 'img/Logo.png' %}" alt="Logo AeroRiver" height="42" style="object-fit: contain;">
-                <span><span class="hub-title-suffix">AeroRiver</span> - Hub de Manufatura</span>
+                <span class="hub-title-suffix" style="font-size: 1.5rem;">✈️ AeroRiver</span> - Hub de Manufatura
             </span>
         </div>
     </nav>
@@ -92,7 +101,7 @@
                         {% csrf_token %}
 
                         {% if form.non_field_errors %}
-                            <div class="alert alert-danger" style="border-radius: 8px; font-weight: 500;">
+                            <div class="alert alert-danger" style="border-radius: 8px; font-weight: 500; background-color: #FEF2F2; color:#DC2626; border: none;">
                                 {{ form.non_field_errors }}
                             </div>
                         {% endif %}
@@ -103,9 +112,9 @@
 
                                 <div class="d-flex flex-wrap gap-2">
                                     {% if form.instance.arquivo_impressao %}
-                                        <a href="{{ form.instance.arquivo_impressao.url }}" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-2" download>
+                                        <a href="{{ form.instance.arquivo_impressao.url }}" class="btn btn-sm btn-outline-aero-green d-flex align-items-center gap-2" download>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                            Baixar Arquivo 3D
+                                            Baixar Arquivo
                                         </a>
                                     {% else %}
                                         <span class="text-muted small d-flex align-items-center">Nenhum ficheiro físico enviado.</span>
@@ -114,7 +123,7 @@
                                     {% if form.instance.link_fusion %}
                                         <a href="{{ form.instance.link_fusion }}" target="_blank" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2">
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                            Abrir Link Fusion 360
+                                            Abrir Link de Projeto
                                         </a>
                                     {% endif %}
                                 </div>
