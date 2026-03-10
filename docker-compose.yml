@@ -3,11 +3,23 @@ version: '3.8'
 services:
   web:
     build: .
-    # Comando para iniciar o servidor do Django no IP 0.0.0.0 e porta 8000
-    command: python manage.py runserver 0.0.0.0:8000
-    # Mapeia a porta 8000 do seu computador para a porta 8000 do contêiner
-    ports:
-      - "8000:8000"
-    # Cria um "volume" para que as alterações no seu código reflitam imediatamente no contêiner
+    # Agora usamos o Gunicorn! Muito mais rápido e seguro.
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    # Removemos a porta daqui! O Django agora fica escondido na rede interna do Docker.
     volumes:
       - .:/app
+    # Precisamos garantir que o Nginx tenha acesso às pastas estáticas
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  nginx:
+    image: nginx:latest
+    # Expomos a porta 80 padrão da internet
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/app/static
+      - ./media:/app/media
+    depends_on:
+      - web
