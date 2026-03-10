@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<hwsettings name="global">
+    <section name="HyperWorks">
+        <section name="25.0.0.28">
+            <section name="HyperworksGeneral">
+                <entry name="ASSEMBLY_WIZARD_FILE" value="C:/Program Files/Altair/2025.1/hwdesktop/hw/mdl/mdllib/Example_wizard/assembly.wzd" type="string"/>
+                <entry name="EXTERNAL_COLUMN_READER" value="C:/Program Files/Altair/2025.1/hwdesktop/io/abf_readers/bin/win64/hgtextcolumn.exe" type="string"/>
+                <entry name="GLOBALOPTIONS/hm/colormode" value="Automatic" type="string"/>
+                <entry name="HM_STARTUP_PROFILE" value="OptiStruct-" type="string"/>
+                <entry name="HW_HWPLOT_QUICK_QUERY_ENABLED" value="false" type="string"/>
+                <entry name="HW_UNIT_SCALING" value="true" type="string"/>
+                <entry name="MDL_STDINC_FILE" value="C:/Program Files/Altair/2025.1/hwdesktop/hw/mdl/mdllib/std_inc.mdl" type="string"/>
+                <entry name="MV_Embedded_Frame_Time" value="false" type="string"/>
+                <entry name="REPORT_LOG_FILE" value="C:/Users/marce/.reports" type="string"/>
+                <entry name="TASK_WIZARD_FILE" value="C:/Program Files/Altair/2025.1/hwdesktop/hw/mdl/mdllib/Example_wizard/task.wzd" type="string"/>
+                <entry name="USE_PREFS" value="Example Wizard" type="string"/>
+                <entry name="WIZARD_LIB_DIR" value="C:/Program Files/Altair/2025.1/hwdesktop/hw/mdl/mdllib/Example_wizard" type="string"/>
+                <entry name="comps_qas_enabled" value="1" type="string"/>
+                <entry name="comps_qas_method" value="property" type="string"/>
+                <entry name="connectors_qas_enabled" value="1" type="string"/>
+                <entry name="connectors_qas_method" value="surface" type="string"/>
+                <entry name="elems_qas_enabled" value="1" type="string"/>
+                <entry name="elems_qas_method" value="by face" type="string"/>
+                <entry name="feedges_qas_enabled" value="1" type="string"/>
+                <entry name="feedges_qas_method" value="by edge" type="string"/>
+                <entry name="fefaces_qas_enabled" value="1" type="string"/>
+                <entry name="fefaces_qas_method" value="by face" type="string"/>
+                <entry name="laminates_qas_enabled" value="1" type="string"/>
+                <entry name="laminates_qas_method" value="ply" type="string"/>
+                <entry name="lines_qas_enabled" value="1" type="string"/>
+                <entry name="lines_qas_method" value="by path" type="string"/>
+                <entry name="loads_qas_enabled" value="1" type="string"/>
+                <entry name="loads_qas_method" value="by collector" type="string"/>
+                <entry name="mats_qas_enabled" value="1" type="string"/>
+                <entry name="mats_qas_method" value="parts" type="string"/>
+                <entry name="modules_qas_enabled" value="1" type="string"/>
+                <entry name="modules_qas_method" value="subsystems" type="string"/>
+                <entry name="nodes_qas_enabled" value="1" type="string"/>
+                <entry name="nodes_qas_method" value="by path" type="string"/>
+                <entry name="plies_qas_enabled" value="1" type="string"/>
+                <entry name="plies_qas_method" value="laminate" type="string"/>
+                <entry name="points_qas_enabled" value="1" type="string"/>
+                <entry name="points_qas_method" value="surface" type="string"/>
+                <entry name="props_qas_enabled" value="1" type="string"/>
+                <entry name="props_qas_method" value="parts" type="string"/>
+                <entry name="solids_qas_enabled" value="1" type="string"/>
+                <entry name="solids_qas_method" value="by collector" type="string"/>
+                <entry name="surfs_qas_enabled" value="1" type="string"/>
+                <entry name="surfs_qas_method" value="by collector" type="string"/>
+                <entry name="systs_qas_enabled" value="1" type="string"/>
+                <entry name="systs_qas_method" value="by collector" type="string"/>
+                <entry name="tags_qas_enabled" value="1" type="string"/>
+                <entry name="tags_qas_method" value="parts" type="string"/>
+                <section name="HyperGraph3D">
+                    <entry name="axis_xcolor_idx" value="18" type="string"/>
+                    <entry name="axis_ycolor_idx" value="55" type="string"/>
+                    <entry name="axis_zcolor_idx" value="22" type="string"/>
+                    <entry name="background2_idx" value="31" type="string"/>
+                    <entry name="background_idx" value="98" type="string"/>
+                    <entry name="default_mat_shininess" value="64" type="string"/>
+                    <entry name="draw_model_title" value="1" type="string"/>
+                    <entry name="draw_triad" value="1" type="string"/>
+                    <entry name="foreground_idx" value="103" type="string"/>
+                    <entry name="frame_idx" value="66" type="string"/>
+                    <entry name="light_position_x" value="0" type="string"/>
+                    <entry name="light_position_y" value="0" type="string"/>
+                    <entry name="light_position_z" value="0.3f" type="string"/>
+                    <entry name="meshlinecolor_idx" value="0" type="string"/>
+                    <entry name="simplify_bgfg_on_capture" value="1" type="string"/>
+                    <entry name="specular_color_idx" value="11" type="string"/>
+                    <entry name="zoom_factor" value="1.20" type="string"/>
+                </section>
+                <section name="HyperMesh">
+                    <entry name="1d_at_centroid" value="0" type="string"/>
+                    <entry name="CAD_topology_revision_auto_remesh_layers" value="-1" type="string"/>
+                    <entry name="CAD_topology_revision_remesh_tetra_mesh" value="0" type="string"/>
+                    <entry name="Settings" value="    namespace eval ::HM_Framework::Settings::Export {};
+    set ::HM_Framework::Settings::Export::FE_mergeStarterAndEngineFile {0};
+    set ::HM_Framework::Settings::Export::FE_activeTransformations {0};
+    set ::HM_Framework::Settings::Export::overwritePrompt {1};
+    set ::HM_Framework::Settings::Export::FE_removeSuppressedInclude {0};
+    set ::HM_Framework::Settings::Export::FE_autoExportEngineFile {1};
+    set ::HM_Framework::Settings::Export::FE_repeatKeywordTitles {0};
+    set ::HM_Framework::Settings::Export::FE_i10FormatType {Set &apos;i10=y&apos; in *KEYWORD};
+    set ::HM_Framework::Settings::Export::FE_parameterSuffix {1};
+    set ::HM_Framework::Settings::Export::p_performance_preset {0};
+    set ::HM_Framework::Settings::Export::FE_ExportasSolverAssembly {0};
+    set ::HM_Framework::Settings::Export::exportShow {1};
+    set ::HM_Framework::Settings::Export::FE_exportOptimizationFile {0};
+    set ::HM_Framework::Settings::Export::FE_exportOnlyEngineFile {0};
+    set ::HM_Framework::Settings::Export::FE_autoCreateProperty {0};
+    set ::HM_Framework::Settings::Export::FE_LongEqualSFormat {0};
+    set ::HM_Framework::Settings::Export::FE_ExportFormatType {Standard};
+    namespace eval ::HM_Framework::Settings::Import {};
+    set ::HM_Framework::Settings::Import::FE_createSubsystems {0};
+    set ::HM_Framework::Settings::Import::FE_zonelaminate {1};
+    set ::HM_Framework::Settings::Import::FE_readCommentsPatran {1};
+    set ::HM_Framework::Settings::Import::FE_convertSPC1toSPC {0};
+    set ::HM_Framework::Settings::Import::FE_ImportasSolverAssembly {0};
+    set ::HM_Framework::Settings::Import::FE_partsetHierarchy {0};
+    set ::HM_Framework::Settings::Import::FE_topoEdgeFeatureMethod {2};
+    set ::HM_Framework::Settings::Import::FE_PreserveNodes {Preserve};
+    set ::HM_Framework::Settings::Import::FE_readCommentsAnsa {1};
+    set ::HM_Framework::Settings::Import::FE_systemCollectors {0};
+    set ::HM_Framework::Settings::Import::FE_ConstrainedRigidBodies {0};
+    set ::HM_Framework::Settings::Import::FE_materialMetadata {1};
+    set ::HM_Framework::Settings::Import::FE_readStress {1};
+    set ::HM_Framework::Settings::Import::FE_checkUnsupportedFieldsLines {0};
+    set ::HM_Framework::Settings::Import::FE_topoNoWiresState {1};
+    set ::HM_Framework::Settings::Import::FE_readCommentsFEMap {1};
+    set ::HM_Framework::Settings::Import::FE_clearPreserveNodes {0};
+    set ::HM_Framework::Settings::Import::FE_offsetVals {None};
+    set ::HM_Framework::Settings::Import::FE_elementToPropRatio {0};
+    set ::HM_Framework::Settings::Import::FE_driveMappingTable {};
+    set ::HM_Framework::Settings::Import::FE_deleteDuplicateSystems {0};
+    set ::HM_Framework::Settings::Import::FE_readPCLGruppe {1};
+    set ::HM_Framework::Settings::Import::FE_solverMasses {0};
+    set ::HM_Framework::Settings::Import::FE_overwriteState {0};
+    set ::HM_Framework::Settings::Import::FE_contactSurfaces {0};
+    set ::HM_Framework::Settings::Import::FE_importComments {0};
+    set ::HM_Framework::Settings::Import::FE_crossSections {0};
+    set ::HM_Framework::Settings::Import::FE_topoAutoSolidsState {1};
+    set ::HM_Framework::Settings::Import::FE_topoAllowOpenFeaturesState {0};
+    set ::HM_Framework::Settings::Import::FE_readInitialBrickData {1};
+    set ::HM_Framework::Settings::Import::FE_importMixElementIds {0};
+    set ::HM_Framework::Settings::Import::FE_idmgrState {1};
+    set ::HM_Framework::Settings::Import::FE_include {Preserve};
+    set ::HM_Framework::Settings::Import::FE_assignproperty_import {HyperMesh comments};
+    set ::HM_Framework::Settings::Import::FE_organizeElements {0};
+    set ::HM_Framework::Settings::Import::FE_MPI_Unit {Meters};
+    set ::HM_Framework::Settings::Import::FE_ByOneCompOpt {One Component Across Includes};
+    set ::HM_Framework::Settings::Import::FE_propertyVal {By HyperMesh comments};
+    set ::HM_Framework::Settings::Import::FE_retainElset {1};
+    set ::HM_Framework::Settings::Import::FE_singleCollector {1};
+    set ::HM_Framework::Settings::Import::FE_opendir {};
+    set ::HM_Framework::Settings::Import::FE_topoDetectFeaturesState {1};
+    set ::HM_Framework::Settings::Import::FE_skipHyperbeamMessages {1};
+    array set ::HM_Framework::Settings::Import::FE_entVals {STATEEQUATIONS_SKIP 1 TABLES_SKIP 1 CONTACTGROUPS_SKIP 1 SYSTCOLS_SKIP 1 CONTROLVOLS_SKIP 1 SETS_SKIP 1 CONSTRAINEDRIGIDBODY_SKIP 1 ELEMENTCLUSTERS_SKIP 1 MEMBERSECTIONS_SKIP 1 INTERFACELINKINGS_SKIP 1 PRETENSIONERS_SKIP 1 PLOTS_SKIP 1 DAMPINGS_SKIP 1 AXISYMMETRIES_SKIP 1 RIGIDBODIES_SKIP 1 SENSORS_SKIP 1 MEMBERJOINTS_SKIP 1 SOLVERMASSES_SKIP 1 PRIMITIVES_SKIP 1 PARAMETERS_SKIP 1 TERMINATIONS_SKIP 1 PLIES_SKIP 1 ELEMS_SKIP 1 INITIALSTATES_SKIP 1 LAMINATES_SKIP 1 MATERIALBEHAVIORS_SKIP 1 CROSSSECTIONS_SKIP 1 ALETANKTESTS_SKIP 1 INTERFACECOMPONENT_SKIP 1 PHYSICALQUANTITIES_SKIP 1 TITLES_SKIP 1 EXTRANODES_SKIP 1 INITIALGEOMETRIES_SKIP 1 ALEREFERENCESYSTEMCURVES_SKIP 1 ACCELEROMETERS_SKIP 1 INTEGRATIONRULES_SKIP 1 BEAMSECTS_SKIP 1 OPTIMIZATION_SKIP 1 SYSTEMS_SKIP 1 ALEREFERENCESYSTEMSWITCHES_SKIP 1 CURVES_SKIP 1 HOURGLASS_SKIP 1 FRICTIONS_SKIP 1 RETRACTORS_SKIP 1 EQUATIONS_SKIP 1 LOADCOLS_SKIP 1 FREQUENCIES_SKIP 1 PERTURBATIONS_SKIP 1 MEMBERS_SKIP 1 VECTORCOLS_SKIP 1 BEAMSECTCOLS_SKIP 1 COMMENTS_SKIP 1 ALEREFERENCESYSTEMGROUPS_SKIP 1 BLOCKS_SKIP 1 CONTACTBEHAVIORS_SKIP 1 TAGS_SKIP 1 CONTACTSURFS_SKIP 1 LOADSTEPS_SKIP 1 SECTIONS_SKIP 1 CONSTRAINTS_SKIP 1 GROUPS_SKIP 1 CLEARANCES_SKIP 1 NODES_SKIP 1 SLIPRINGS_SKIP 1 BEHAVIORS_SKIP 1 ASSEMS_SKIP 1 ALESMOOTHINGS_SKIP 1 COMPONENTS_SKIP 1 OUTPUTBLOCKS_SKIP 1 MATERIALS_SKIP 1 FAILURES_SKIP 1 ALEFSIPROJECTIONS_SKIP 1 GEOMETRICREPRESENTATIONS_SKIP 1 PROPERTIES_SKIP 1 MEMBERSEGMENTS_SKIP 1 VECTORS_SKIP 1 CONNECTORS_SKIP 1 CONTROLCARDS_SKIP 1 ALEREFERENCESYSTEMNODES_SKIP 1 POSITIONS_SKIP 1 RIGIDWALLS_SKIP 1 LOADS_SKIP 1 ELEMENTBEHAVIORS_SKIP 1 TIMESTEPCONTROLS_SKIP 1 BOM_SUBSYSTEMS_SKIP 1 BOM_PARTS_SKIP 1};
+    set ::HM_Framework::Settings::Import::FE_vectorCollectors {0};
+    set ::HM_Framework::Settings::Import::FE_convertContact {1};
+    set ::HM_Framework::Settings::Import::FE_ignoreLegacyPropHmComments {0};
+    set ::HM_Framework::Settings::Import::FE_topoVertexAngle {60};
+    set ::HM_Framework::Settings::Import::FE_boxes_dis {0};
+    set ::HM_Framework::Settings::Import::FE_rigidWalls {0};
+    set ::HM_Framework::Settings::Import::FE_loadCollectors {0};
+    set ::HM_Framework::Settings::Import::FE_type {Custom};
+    set ::HM_Framework::Settings::Import::importShow {1};
+    set ::HM_Framework::Settings::Import::FE_ratioVal {3.0};
+    set ::HM_Framework::Settings::Import::FE_readCommentsEngineeringentities {1};
+    set ::HM_Framework::Settings::Import::FE_ConstrainedNodes {0};
+    set ::HM_Framework::Settings::Import::FE_readOptimizationFile {0};
+    set ::HM_Framework::Settings::Import::FE_assemblyOnIncludes {0};
+    set ::HM_Framework::Settings::Import::FE_topoEnabled {1};
+    set ::HM_Framework::Settings::Import::FE_readStrain {1};
+    set ::HM_Framework::Settings::Import::FE_plotelElements {0};
+    set ::HM_Framework::Settings::Import::FE_importType {Child};
+    set ::HM_Framework::Settings::Import::FE_partHierarchy {1};
+    set ::HM_Framework::Settings::Import::FE_topoCreateState {0};
+    set ::HM_Framework::Settings::Import::FE_importVals {All};
+    set ::HM_Framework::Settings::Import::FE_generateElemsIdPerInclude {0};
+    set ::HM_Framework::Settings::Import::FE_organizeOrphanEntities {0};
+    set ::HM_Framework::Settings::Import::FE_Alesmoothings {0};
+    set ::HM_Framework::Settings::Import::FE_Accelero {0};
+    set ::HM_Framework::Settings::Import::FE_activeTransformations {1};
+    set ::HM_Framework::Settings::Import::FE_errorsState {1};
+    set ::HM_Framework::Settings::Import::FE_deleteDuplicateNodes {0};
+    set ::HM_Framework::Settings::Import::FE_expandSets {0};
+    set ::HM_Framework::Settings::Import::FE_constraints {1};
+    set ::HM_Framework::Settings::Import::FE_expandLoad {0};
+    set ::HM_Framework::Settings::Import::FE_systemTolerance {1e-6};
+    set ::HM_Framework::Settings::Import::FE_block {0};
+    set ::HM_Framework::Settings::Import::FE_nodeTolerance {1e-6};
+    set ::HM_Framework::Settings::Import::FE_genericMaterial {0};
+    set ::HM_Framework::Settings::Import::FE_resolveNmap {0};
+    set ::HM_Framework::Settings::Import::FE_initialGeometries {0};
+    set ::HM_Framework::Settings::Import::FE_topoEdgeAngle {30};
+    set ::HM_Framework::Settings::Import::FE_includeImport {0};
+    set ::HM_Framework::Settings::Import::FE_expandFormulaSetId {1};
+    set ::HM_Framework::Settings::Import::FE_readInitialShellData {1};
+    set ::HM_Framework::Settings::Import::FE_skipIncludeStamp {1};
+    set ::HM_Framework::Settings::Import::FE_mapTitleName {0};
+    set ::HM_Framework::Settings::Import::FE_displayoptions {None};
+    set ::HM_Framework::Settings::Import::FE_topoNoCompBoundsState {1};
+    set ::HM_Framework::Settings::Import::FE_readEngine {1};
+    set ::HM_Framework::Settings::Import::FE_nativeReader {1};
+    set ::HM_Framework::Settings::Import::FE_slipRings {0};
+    set ::HM_Framework::Settings::Import::FE_constrainedNodesAndRigidBodies {0};
+    set ::HM_Framework::Settings::Import::FE_importIds {0};
+    set ::HM_Framework::Settings::Import::FE_rectractors {0};
+    set ::HM_Framework::Settings::Import::FE_HM_Unit {Millimeters};
+    array set ::HM_Framework::Settings::p_createdlg {property:Name {} systemcollector:SameAs {} assembly:Color 5 property:material:SameAs {} material:Type all property:SameAsOpt {} property:CardImage none assembly:CardImgOpt selectType closedlg 1 vectorcollector:CardImgOpt selectType property:material:NameIdOption Name systemcollector:Name {} component:material:SameAs {} property:SameAs {} property:Type all component:property:Assign 0 component:property:ThicknessSelected 0 loadcollector:SameAs {} beamsectioncollector:CardImgOpt selectType material:CardImage none material:SameAsOpt 0 component:CardImgOpt selectType component:material:Name {} plot:AxisType standard systemcollector:CardImgOpt selectType systemcollector:Type all property:material:CardImgOpt selectType plot:Name {} material:CardImgOpt selectType beamsectioncollector:Name {} component:Color 5 property:material:SameAsOpt 0 property:material:CardImage none component:property:Name {} component:property:Thickness 0 component:material:Type all component:material:CardImgOpt selectType component:property:BeamSectSelected 0 property:BeamSectName {} property:material:Assign 0 beamsectioncollector:SameAs {} beamsectioncollector:Type all vectorcollector:Name {} component:property:Type all property:material:Color 5 component:SameAs {} loadcollector:Color 5 component:property:CardImage none component:property:SameAsOpt 0 beamsectioncollector:Color 5 loadcollector:Name {} systemcollector:SameAsOpt 0 systemcollector:CardImage none component:material:Assign 0 material:SameAs {} property:BeamSectSelected 0 plot:SameAsName {} plot:SameAsOpt selectType vectorcollector:Type all cardedit 1 component:property:BeamSect none property:material:Name {} vectorcollector:SameAsOpt 0 vectorcollector:CardImage none component:SameAsOpt 0 component:CardImage none component:property:Color 5 component:material:CardImage none component:material:SameAsOpt 0 loadcollector:Type all property:ThicknessSelected 0 systemcollector:Color 5 component:material:NameIdOption Name property:Color 5 component:property:SameAs {} component:property:BeamSectName {} property:material:Type all property:BeamSect none vectorcollector:Color 5 component:property:NameIdOption Name assembly:SameAs {} component:material:Color 5 vectorcollector:SameAs {} component:Name {} loadcollector:CardImage none loadcollector:SameAsOpt 0 assembly:CardImage none beamsectioncollector:SameAsOpt 0 beamsectioncollector:CardImage none material:Color 5 property:CardImgOpt selectType material:Name {} property:Thickness 0 assembly:Name {} loadcollector:CardImgOpt selectType component:property:CardImgOpt selectType};
+    set ::HM_Framework::Settings::p_show_profile_dialog_at_startup {1};
+    set ::HM_Framework::Settings::p_favorite_panels {};
+    set ::HM_Framework::Settings::p_show_hidden_entity_dialog {1};
+    set ::HM_Framework::Settings::modelviewtypeunity {toc};
+    array set ::HM_Framework::Settings::Br3ModelTOCFolderState {};
+    array set ::HM_Framework::Settings::Br3TOC {subsystemtoc|showhideentities 0 contenttoc|showhideentities 0 includetoc|showhideentities 0};
+    array set ::HM_Framework::Settings::p_global_options {p_filterwithcontent true p_autosort 0 p_InvokeBrowserOnDoubleClick 1 p_activefiltermode true p_treelines 0 p_bgstripes 0 p_InvokeCreateDialog 0 p_autoscroll 1 p_Autofit 0};
+    array set ::HM_Framework::Settings::p_intelliselect_options {};
+    array set ::HM_Framework::Settings::p_local_options {p_SaveViewWithMask 1 p_deleteAdvancedGuiStatus 0 p_IncludeDisplyWithXref 0 p_ShowAttached 1 p_AutoColorVisMode 1 p_HideAttached 0};
+    array set ::HM_Framework::Settings::p_warningdlg {organizeEntsDlg 1 organizeNodes 1 organizeLoads 1 organizeCompsNodes 1 organizeVects 1 organizeGroupNodes 1 dirprop_removal true organizeElems 1 organizeSysts 1 organizeBeamsects 1 organizeCompsElems 1 organizeEquations 1 organizeGroupElems 1 organizeParentType {}};
+    array set ::HM_Framework::Settings::ConfigureBrowser {};
+    namespace eval ::HM_Framework::Settings::PartBrowser {};
+    namespace eval ::HM_Framework::Settings::Subsystems {};
+    set ::HM_Framework::Settings::Subsystems::OptiStruct.MoveOptions {Component {Node {1 Move} Element {1 {Not Applicable}} Property {1 Move} Material {1 Move}} Property {Material {1 Move}} Material {Curve {1 Move}} Loadcol {Load {1 {Not Applicable}}} Systcol {System {1 {Not Applicable}}} Vectorcol {Vector {1 {Not Applicable}}} Beamsectcol {Beamsection {1 {Not Applicable}}}};
+    array set ::HM_Framework::Settings::_viewColumns {};
+    array set ::HM_Framework::Settings::_columnInfo {};
+    array set ::HM_Framework::Settings::_viewColumnOrder {};
+    array set ::HM_Framework::Settings::_viewRecentColumns {};
+    namespace eval ::HM_Framework::Settings::NVH {};
+    set ::HM_Framework::Settings::NVH::p_vm_current_wsdir {};
+    set ::HM_Framework::Settings::NVH::p_vm_cache_directory {};
+    set ::HM_Framework::Settings::NVH::p_vm_xml_file {};
+    set ::HM_Framework::Settings::NVH::p_vm_current_version {};
+    set ::HM_Framework::Settings::NVH::p_vm_current_branch {};
+    set ::HM_Framework::Settings::NVH::p_vm_current_user {};
+    set ::HM_Framework::Settings::NVH::p_vm_server_url {};
+    set ::HM_Framework::Settings::NVH::p_vm_current_project {};
+    set ::HM_Framework::Settings::NVH::p_vm_servers {};
+" type="string"/>
+                    <entry name="a2" value="1" type="string"/>
+                    <entry name="a3" value="1" type="string"/>
+                    <entry name="abaqus_layer_mode" value="0" type="string"/>
+                    <entry name="allow_resultsubcase_entity_creation" value="0" type="string"/>
+                    <entry name="alt_lmb_rmb_binding" value="Pan" type="string"/>
+                    <entry name="alt_mmb_binding" value="CircleZoom" type="string"/>
+                    <entry name="alt_rmb_binding" value="Toolbelt" type="string"/>
+                    <entry name="angle_increment_charts" value="1" type="string"/>
+                    <entry name="application" value="HyperMesh" type="string"/>
+                    <entry name="application_vertical" value="OptiStruct" type="string"/>
+                    <entry name="auto_bs_thickness" value="1" type="string"/>
+                    <entry name="auto_cleanuptol" value="1" type="string"/>
+                    <entry name="auto_nodetol" value="1" type="string"/>
+                    <entry name="auto_stitching_mode" value="1" type="string"/>
+                    <entry name="autoupdate_sets" value="0" type="string"/>
+                    <entry name="background_color_gradient" value="0" type="string"/>
+                    <entry name="big_cursors" value="0" type="string"/>
+                    <entry name="bitmap_animation" value="0" type="string"/>
+                    <entry name="block_error_messages" value="0" type="string"/>
+                    <entry name="block_messages" value="0" type="string"/>
+                    <entry name="block_redraw" value="0" type="string"/>
+                    <entry name="blockreview" value="1" type="string"/>
+                    <entry name="blue_auto_color_range_max" value="200" type="string"/>
+                    <entry name="blue_auto_color_range_min" value="40" type="string"/>
+                    <entry name="br_entities_threshold" value="1000" type="string"/>
+                    <entry name="br_floatingee_graphics_threshold" value="10000" type="string"/>
+                    <entry name="br_partbrowser_show_components" value="1" type="string"/>
+                    <entry name="bs_thickness" value="0.1" type="string"/>
+                    <entry name="cadupdate_parameter_immediate" value="1" type="string"/>
+                    <entry name="checkcommand" value="1" type="string"/>
+                    <entry name="cleanup_params" value="fileversion 70;;#flags:;;geometry_cleanup_flag	 1;meshing_flag	 5;;#mesh:;;element_size	 10;element_type	 2;mesh_align	 3;element_order	 1;surf_component	 1;feature_angle	 25;;# Holes Design Table: ;;holes_table_begin;;# General switches: ;;appl_surf(1);appl_solid(1);appl_remove(1);appl_seed(1);appl_radmodif(1);appl_washer(1);appl_cordsfiles(0);appl_preserve_vrts(1);abs_fixed_nodes_count_max(0);narrow_slots_type(2);slots_squaretip_maxwidth(  L*1.4 );slots_squaretip_maxchorddev(  -1 );appl_rmv_rad_trims_verts(1);appl_rmv_washer_loops(1);appl_flanged_suppr(1);flanged_suppr_height(1.5);;autolinks_for_missed_washer(1);fix_user_washer_nodes(1);fixed_nodes_count_max(18);appl_rmv_extring(1);appl_flanged(1);appl_flanged_extend(1);solid_tube_diams_ratio_max(2.5);solid_tube_cross_sect_size_max(100);;# holes design records: ;;shape(1) rad(0,4)  do action(1);shape(1) rad(4,30)  do action(0) elems(6) washer(1) layers(auto) ;shape(2) width(0,1.9) length(0,14)  do action(1);shape(2) width(0,1.9) length(14,-1)  do action(0) elems(auto) mesh_ptrn(3) ;shape(2) width(1.9,8) length(1.9,-1)  do action(0) elems(auto) mesh_ptrn(2) ;shape(2) width(8,14) length(8,-1)  do action(0) elems(6) mesh_ptrn(2) ;shape(2) width(14,60) length(14,-1)  do action(0) elems(6) washer(1) layers(auto) ;shape(62) eq_diam(0,8)  do action(1);rad(0,4) solid(1)  do action(1);rad(4,6) solid(1)  do action(0) elems(4) ;rad(6,30) solid(1)  do action(0) elems(6) ;;holes_table_end;;;#edge fillets:;;edge_fillet_recognition	 1;max_fillet_radius	 9;;;; #surface fillets;;surface_fillet_table_begin;;surface_fillet_recognition(1);minimize_transitions(1);;rad(2.8,6.5) wid(4.31,10.2) do elems(1) ;rad(6.5,15) wid(10.2,24) do elems(2) ;;surface_fillet_table_end;;#delete duplicates:;;del_dupl_surfs_flag	 1;del_dupl_surfs_tol	 -1;;#edges stitch:;;edges_stitch_flags	 2;max_edges_stitch_tol	 -1;;#fix overlaping surfs:;;fix_overlapsurfs_flag	 1;overlapsurfs_maxtangangle	 -1;;#narrow surfs:;;merge_narrow_surfs	 1;narrow_surfs_merge_width Lmin*0.67;narrow_surfs_sharp_edge_merge_width Lmin*0.67;;#beads:;;beads_suppression	 1;beads_recognition	 1;minimal_beads_height	 2;beads_treat_flags	 0;;#flanges:;;flange_recognition	 1;flange_elements_across	 2;flange_max_width	 35;flange_min_width	 5;flanges_treat_flags	 1;flange_max_remove_width	 -1;;#tria_reduction:;;appl_tria_reduction	 1;common_mesh_flow	 1;;#thin solids:;;extract_thinsolids	 0;midsurf_method	 3;thinsolid_ratio	 0.3;max_thickness	 15;extract_feature_angle	 25;pre_midsurf_cleanup	 0;direct_midmesh	 0;ignore_flat_edges	 1;flatten_connections	 1;step_offset_mode	 0;defeat_open_width_factor_on	 1;defeat_open_width_factor	 0.5;supp_proxim_edges_on	 1;supp_proxim_edges	 0.9;combine_nonmanifold_on	 1;combine_nonmanifold	 0.4;fillet_treatment_on	 1;fillet_treatment_factor	 0.6;defeature_ribs_width_on	 1;defeature_ribs_width	 0.9;midmesh_extract_elem_size	 10;;#logo:;;remove_logo	 1;logo_max_size	 30;logo_max_height	 1.5;logo_min_concavity	 2;;#threads:;;threads_removal	 0;threads_toremove_max_depth	 0;threads_replacediametertype	 -2;;#element cleanup:;;folded_elems_angle	 150;smooth_elems_target	 0.2;fillets_mesh_flow	 0;;#smoothening across edge option:;;failed_elems_cleanup_flgs	 8;move_nodes_across_feature_edges	 1;featureedge_nodes_moveacross_max L*0.1;move_nodes_across_free_edges	 1;freeedge_nodes_moveacross_max L*0.05;move_nodes_across_t_edges	 0;tedge_nodes_moveacross_max L*0.025;;#correct warped elements:;;move_normal_flag	 0;move_normal_dist	 10;divide_warped_quads	 1;aggressive_elems_quality_correction	 0;ignore_comps_boundary	 0;gen_topology_prepare_flags	 7;create_feature_entities	 1;use_wildcards_for_compsnames	 0;;cleanup_tolerances	 auto;;suppress_features_rate	 0;feat_charsize_method	 0;custom_feat_suppr_maxangle	 25;uncond_constr_lines_suppress	 0;aggressive_fillet_lines_suppress	 0;ext_mesh_api_id 	 0;ext_mesh_api_db_path 	 ;ext_mesh_api_query_params 	 ;cleanup_control_modes 66004" type="string"/>
+                    <entry name="coincident_picking" value="0" type="string"/>
+                    <entry name="color_set" value="1" type="string"/>
+                    <entry name="condense_xml_options" value="Single Line" type="string"/>
+                    <entry name="constraint_handle" value="0" type="string"/>
+                    <entry name="constraint_label" value="0" type="string"/>
+                    <entry name="constraint_node_limit" value="10000" type="string"/>
+                    <entry name="create_deformation_plot" value="0" type="string"/>
+                    <entry name="ctrl_lmb_rmb_binding" value="Pan" type="string"/>
+                    <entry name="ctrl_mmb_binding" value="Rotate" type="string"/>
+                    <entry name="ctrl_rmb_binding" value="Pan" type="string"/>
+                    <entry name="default_geom_feature_angle" value="22.5" type="string"/>
+                    <entry name="delete_assemblies_children" value="0" type="string"/>
+                    <entry name="delete_attachments_realization" value="0" type="string"/>
+                    <entry name="delete_connectors_realised_fe" value="0" type="string"/>
+                    <entry name="delete_engineering_realised_fe" value="1" type="string"/>
+                    <entry name="delete_included_contents" value="0" type="string"/>
+                    <entry name="delete_line_with_elements" value="0" type="string"/>
+                    <entry name="delete_part_contents" value="1" type="string"/>
+                    <entry name="delete_sketch_realized" value="0" type="string"/>
+                    <entry name="delete_solids_with_elements" value="0" type="string"/>
+                    <entry name="delete_solids_with_surfaces" value="0" type="string"/>
+                    <entry name="delete_subsystem_contents" value="1" type="string"/>
+                    <entry name="delete_surface_with_elements" value="0" type="string"/>
+                    <entry name="delete_surface_with_solids" value="0" type="string"/>
+                    <entry name="display_color-0" value="16711935" type="string"/>
+                    <entry name="display_color-1" value="255" type="string"/>
+                    <entry name="display_color-10" value="65793" type="string"/>
+                    <entry name="display_color-11" value="32" type="string"/>
+                    <entry name="display_color-12" value="16758111" type="string"/>
+                    <entry name="display_color-13" value="10724259" type="string"/>
+                    <entry name="display_color-14" value="16740145" type="string"/>
+                    <entry name="display_color-15" value="5338606" type="string"/>
+                    <entry name="display_color-16" value="6338511" type="string"/>
+                    <entry name="display_color-17" value="2915637" type="string"/>
+                    <entry name="display_color-18" value="-16776961" type="string"/>
+                    <entry name="display_color-19" value="-16711936" type="string"/>
+                    <entry name="display_color-2" value="65280" type="string"/>
+                    <entry name="display_color-20" value="-65536" type="string"/>
+                    <entry name="display_color-21" value="11" type="string"/>
+                    <entry name="display_color-22" value="255" type="string"/>
+                    <entry name="display_color-23" value="16711935" type="string"/>
+                    <entry name="display_color-24" value="16711680" type="string"/>
+                    <entry name="display_color-25" value="255" type="string"/>
+                    <entry name="display_color-26" value="65280" type="string"/>
+                    <entry name="display_color-27" value="65535" type="string"/>
+                    <entry name="display_color-28" value="13421772" type="string"/>
+                    <entry name="display_color-29" value="13421772" type="string"/>
+                    <entry name="display_color-3" value="16758111" type="string"/>
+                    <entry name="display_color-4" value="65535" type="string"/>
+                    <entry name="display_color-5" value="16777215" type="string"/>
+                    <entry name="display_color-6" value="255" type="string"/>
+                    <entry name="display_color-7" value="65280" type="string"/>
+                    <entry name="display_color-8" value="65535" type="string"/>
+                    <entry name="display_color-9" value="10724259" type="string"/>
+                    <entry name="display_detailed_info_limit_value" value="35" type="string"/>
+                    <entry name="display_detailed_info_value" value="0" type="string"/>
+                    <entry name="display_import_errors" value="1" type="string"/>
+                    <entry name="displayscale" value="0" type="string"/>
+                    <entry name="dynamic_center_of_rotation" value="1" type="string"/>
+                    <entry name="elem_config_color-bar2" value="65535" type="string"/>
+                    <entry name="elem_config_color-gap" value="9343691" type="string"/>
+                    <entry name="elem_config_color-hex20" value="13077578" type="string"/>
+                    <entry name="elem_config_color-hex8" value="16743587" type="string"/>
+                    <entry name="elem_config_color-ice" value="5425230" type="string"/>
+                    <entry name="elem_config_color-mass" value="15509337" type="string"/>
+                    <entry name="elem_config_color-penta15" value="1520107" type="string"/>
+                    <entry name="elem_config_color-penta6" value="1558686" type="string"/>
+                    <entry name="elem_config_color-plot" value="1520107" type="string"/>
+                    <entry name="elem_config_color-pyramid13" value="2915637" type="string"/>
+                    <entry name="elem_config_color-pyramid5" value="5425230" type="string"/>
+                    <entry name="elem_config_color-quad4" value="9057790" type="string"/>
+                    <entry name="elem_config_color-quad8" value="13077578" type="string"/>
+                    <entry name="elem_config_color-rbe3" value="2915637" type="string"/>
+                    <entry name="elem_config_color-rigid" value="15496086" type="string"/>
+                    <entry name="elem_config_color-rod" value="12172799" type="string"/>
+                    <entry name="elem_config_color-spring" value="7526900" type="string"/>
+                    <entry name="elem_config_color-tetra10" value="13065854" type="string"/>
+                    <entry name="elem_config_color-tetra4" value="6891719" type="string"/>
+                    <entry name="elem_config_color-tria3" value="16758111" type="string"/>
+                    <entry name="elem_config_color-tria6" value="1572553" type="string"/>
+                    <entry name="elem_config_color-weld" value="6614106" type="string"/>
+                    <entry name="elem_config_color_0" value="15509337" type="string"/>
+                    <entry name="elem_config_color_1" value="1520107" type="string"/>
+                    <entry name="elem_config_color_10" value="7274081" type="string"/>
+                    <entry name="elem_config_color_11" value="12172799" type="string"/>
+                    <entry name="elem_config_color_12" value="5425230" type="string"/>
+                    <entry name="elem_config_color_13" value="9343691" type="string"/>
+                    <entry name="elem_config_color_14" value="16758111" type="string"/>
+                    <entry name="elem_config_color_15" value="9057790" type="string"/>
+                    <entry name="elem_config_color_16" value="1572553" type="string"/>
+                    <entry name="elem_config_color_17" value="13077578" type="string"/>
+                    <entry name="elem_config_color_18" value="6891719" type="string"/>
+                    <entry name="elem_config_color_19" value="1558686" type="string"/>
+                    <entry name="elem_config_color_2" value="6614106" type="string"/>
+                    <entry name="elem_config_color_20" value="16743587" type="string"/>
+                    <entry name="elem_config_color_21" value="13065854" type="string"/>
+                    <entry name="elem_config_color_22" value="1520107" type="string"/>
+                    <entry name="elem_config_color_23" value="13077578" type="string"/>
+                    <entry name="elem_config_color_24" value="5425230" type="string"/>
+                    <entry name="elem_config_color_25" value="2915637" type="string"/>
+                    <entry name="elem_config_color_3" value="15496086" type="string"/>
+                    <entry name="elem_config_color_4" value="2915637" type="string"/>
+                    <entry name="elem_config_color_5" value="7526900" type="string"/>
+                    <entry name="elem_config_color_6" value="15481065" type="string"/>
+                    <entry name="elem_config_color_7" value="1539428" type="string"/>
+                    <entry name="elem_config_color_8" value="1567931" type="string"/>
+                    <entry name="elem_config_color_9" value="65535" type="string"/>
+                    <entry name="element_handle" value="0" type="string"/>
+                    <entry name="elems1d_criteria" value=" 1 {Min Size 1D}              1           10.000                      2.000               0     59      0; 2 {Max Size 1D}              1           10.000                     30.000               0     39      1; 3 {Time Step 1D}             0            1.000                      0.250               0      5      2;" type="string"/>
+                    <entry name="elems2d_criteria" value=" 0 penalty value              0.00    0.00    0.80    1.00   10.00 ;  1 min length        1 1.0  10.000   9.000   4.000   2.000   1.000    1   59    0 ;  2 max length        1 1.0  10.000  12.000  15.000  20.000  30.000    0   39    1 ;  3 aspect ratio      1 1.0   1.000   2.000   4.400   5.000  10.000    6   41    2 ;  4 warpage           1 1.0   0.000   5.000  13.000  15.000  30.000    6   56    3 ;  5 max angle quad    1 1.0  90.000 110.000 134.000 140.000 160.000    6   28    4 ;  6 min angle quad    1 1.0  90.000  70.000  46.000  40.000  20.000    6   61    5 ;  7 max angle tria    1 1.0  60.000  80.000 112.000 120.000 150.000    6   19    6 ;  8 min angle tria    1 1.0  60.000  50.000  34.000  30.000  15.000    6   22    7 ;  9 skew              1 1.0   0.000  10.000  34.000  40.000  70.000    6   46    8 ; 10 jacobian          1 1.0   1.000   0.900   0.700   0.600   0.300    0   57    9 ; 11 chordal dev       0 1.0   0.000   0.300   0.800   1.000   2.000    6   29   10 ; 12 taper             1 1.0   0.000   0.200   0.500   0.600   0.900    6   53   11 ; 13 % of trias        1 1.0   0.000   6.000  10.000  15.000  20.000    0    0   -1 ; 14 QI color legend            32      32       7       6       3           3   -1 ; 15 time_step         0        10.000                       0.01            6   59   12 ; 16 area_skew         0        10.000                      0.500            0   39   13 ; 17 cell_squish       0        10.000                      0.600            0   53   14 ; 18 equi_skew         0        10.000                      0.600            0   34   15 ;   Global_solver 6 ;;src_file_name ;" type="string"/>
+                    <entry name="elems3d_criteria" value=" 0 {Penalty value}                         0.000    0.010    0.800    1.000   10.000; 1 {Min Size}                 1    2.00   10.000    8.000    4.000    2.000    0.500      2     59      0; 2 {Max Size}                 1    1.00   10.000   15.000   25.000   30.000   50.000      0     39      1; 3 {Tet Collapse}             1    1.00    1.000    0.900    0.600    0.100    0.000      0     57      2; 4 {Vol Skew}                 1    1.00    0.000    0.100    0.600    0.950    1.000      0     41      3; 5 {Aspect Ratio}             1    1.00    1.000    3.000    5.000    8.000   12.000      0     53      4; 6 {Skew}                     1    1.00    0.000   10.000   55.000   60.000   90.000      0     46      5; 7 {Vol AR}                   1    1.00    1.000    3.000    5.000    8.000   12.000      0     28      6; 8 {Warpage}                  1    2.00    0.000    5.000   15.000   20.000   90.000      0     56      7; 9 {Max Face Angle Quad}      1    1.00   90.000  120.000  140.000  146.000  180.000      0     21      8;10 {Min Face Angle Quad}      1    1.00   90.000   60.000   40.000   17.000    0.000      0     25      9;11 {Max Face Angle Tria}      1    1.00   60.000   80.000  140.000  146.000  180.000      0     22     10;12 {Min Face Angle Tria}      1    1.00   60.000   50.000   20.000   17.000    0.000      0     19     11;13 {Jacobian}                 1    1.00    1.000    0.900    0.700    0.500    0.000      0     19     12;14 {Cell Squish}              1    1.00    0.000    0.100    0.600    0.900    1.000      0     22     13;15 {Equia Skew}               1    1.00    0.000   10.000   55.000   60.000   90.000      0     29     14;16 {Orthogonality}            0    1.00    1.000    0.500    0.250    0.200    0.050      0     21     15;17 {Size Ratio}               0    1.00    0.770    0.500    0.250    0.100    0.050      0      4     16;18 {Time Step}                0            1.000                      0.250               0      5     17;" type="string"/>
+                    <entry name="entity_highlighting" value="1" type="string"/>
+                    <entry name="export_solverdeck_representation_save" value="0" type="string"/>
+                    <entry name="fe_geometry_auto_remesh" value="2" type="string"/>
+                    <entry name="fe_geometry_auto_remesh_layers" value="1" type="string"/>
+                    <entry name="fe_geometry_stl_order" value="1" type="string"/>
+                    <entry name="fe_geometry_stl_quality" value="5" type="string"/>
+                    <entry name="fe_geometry_stl_resolution" value="normal" type="string"/>
+                    <entry name="fe_geometry_stl_trias_only" value="1" type="string"/>
+                    <entry name="feature_angle" value="30" type="string"/>
+                    <entry name="fixed_point_handle" value="0" type="string"/>
+                    <entry name="forcetextblack" value="0" type="string"/>
+                    <entry name="g_ce_Cwelddisplaystatus" value="0" type="string"/>
+                    <entry name="g_ce_ae_label_display" value="0" type="string"/>
+                    <entry name="g_ce_ae_primitive_display" value="1" type="string"/>
+                    <entry name="g_ce_aspect_ratio_option" value="0" type="string"/>
+                    <entry name="g_ce_aspect_ratio_value" value="30" type="string"/>
+                    <entry name="g_ce_auto_load_control" value="1" type="string"/>
+                    <entry name="g_ce_autocreate_attachments" value="0" type="string"/>
+                    <entry name="g_ce_bl_connection_angle" value="10" type="string"/>
+                    <entry name="g_ce_boltcylinderdisplaystatus" value="1" type="string"/>
+                    <entry name="g_ce_boltcylinderdisplaytransparency" value="8" type="string"/>
+                    <entry name="g_ce_calculation_changes" value="0" type="string"/>
+                    <entry name="g_ce_colorby" value="0" type="string"/>
+                    <entry name="g_ce_colorbyauto" value="1" type="string"/>
+                    <entry name="g_ce_consider_custom_metadata_mapping" value="0" type="string"/>
+                    <entry name="g_ce_consider_link_for_review" value="0" type="string"/>
+                    <entry name="g_ce_considerboltcolinearity" value="0" type="string"/>
+                    <entry name="g_ce_control_config" value="0" type="string"/>
+                    <entry name="g_ce_control_file_path" value="C:/Users/marce/Documents/controller_defaults.hm" type="string"/>
+                    <entry name="g_ce_control_id" value="0" type="string"/>
+                    <entry name="g_ce_control_keep" value="Keep incoming attributes" type="string"/>
+                    <entry name="g_ce_control_name" value="1" type="string"/>
+                    <entry name="g_ce_custom_metadata_file_path" value="C:/Users/marce/Documents/MetadataMapping.txt" type="string"/>
+                    <entry name="g_ce_equia_skew_option" value="1" type="string"/>
+                    <entry name="g_ce_equia_skew_value" value="0.8" type="string"/>
+                    <entry name="g_ce_jacobian_option" value="0" type="string"/>
+                    <entry name="g_ce_jacobian_value" value="0.2" type="string"/>
+                    <entry name="g_ce_line_vertex_angle" value="45" type="string"/>
+                    <entry name="g_ce_linked_connector" value="1" type="string"/>
+                    <entry name="g_ce_linked_entity" value="0" type="string"/>
+                    <entry name="g_ce_long_weld_length" value="50" type="string"/>
+                    <entry name="g_ce_lt_connection_angle" value="60" type="string"/>
+                    <entry name="g_ce_org_option" value="0" type="string"/>
+                    <entry name="g_ce_physical_changes" value="0" type="string"/>
+                    <entry name="g_ce_realization_connector" value="1" type="string"/>
+                    <entry name="g_ce_realization_link" value="1" type="string"/>
+                    <entry name="g_ce_se_auto_register" value="0" type="string"/>
+                    <entry name="g_ce_se_cleanup_delete" value="0" type="string"/>
+                    <entry name="g_ce_se_cleanup_unrealize" value="0" type="string"/>
+                    <entry name="g_ce_seam_extra_link_num" value="5" type="string"/>
+                    <entry name="g_ce_seam_link_conservation" value="minimum needed links" type="string"/>
+                    <entry name="g_ce_seam_re_applyon_realization" value="0" type="string"/>
+                    <entry name="g_ce_shell_thickness_off_for_solids" value="1" type="string"/>
+                    <entry name="g_ce_short_weld_length" value="30" type="string"/>
+                    <entry name="g_ce_showlegend" value="0" type="string"/>
+                    <entry name="g_ce_size" value="4" type="string"/>
+                    <entry name="g_ce_spot_extra_link_num" value="5" type="string"/>
+                    <entry name="g_ce_spot_link_conservation" value="minimum needed links" type="string"/>
+                    <entry name="g_ce_spot_normal_link_determine" value="0" type="string"/>
+                    <entry name="g_ce_spot_re_applyon_realization" value="0" type="string"/>
+                    <entry name="g_ce_subsystem_org_option" value="2" type="string"/>
+                    <entry name="g_ce_warpage_option" value="0" type="string"/>
+                    <entry name="g_ce_warpage_value" value="5" type="string"/>
+                    <entry name="g_ce_weld_database_file_path" value="C:/Users/marce/Documents/weld_S355_SDZ.dbs" type="string"/>
+                    <entry name="g_prev_profile_name" value="HyperMesh" type="string"/>
+                    <entry name="g_profile_name" value="OptiStruct" type="string"/>
+                    <entry name="g_profile_path" value="C:/Program Files/Altair/2025.1/hwdesktop/hm/scripts/UserProfiles/OptiStruct/OptiStruct.tcl" type="string"/>
+                    <entry name="g_template_path" value="C:/Program Files/Altair/2025.1/hwdesktop/templates/feoutput/optistruct/optistruct" type="string"/>
+                    <entry name="g_unity_profile_name" value="HyperworksGeneral" type="string"/>
+                    <entry name="geom_cleanup_tol" value="0.01" type="string"/>
+                    <entry name="geometry_create_mesh_mode" value="Freeform" type="string"/>
+                    <entry name="geometry_create_mode" value="CAD" type="string"/>
+                    <entry name="geometry_organize_mode" value="Original" type="string"/>
+                    <entry name="graphic_tooltips" value="1" type="string"/>
+                    <entry name="graphics_engine" value="0" type="string"/>
+                    <entry name="graphics_optimize_view_ctrl" value="0" type="string"/>
+                    <entry name="graphics_simplification_component" value="0" type="string"/>
+                    <entry name="graphics_simplification_mode" value="0" type="string"/>
+                    <entry name="green_auto_color_range_max" value="200" type="string"/>
+                    <entry name="green_auto_color_range_min" value="40" type="string"/>
+                    <entry name="guidebar_dock" value="Docked" type="string"/>
+                    <entry name="hmbr::SHIOattached" value="1" type="string"/>
+                    <entry name="hmbr::deleteassociation" value="0" type="string"/>
+                    <entry name="hmbr::hideattached" value="0" type="string"/>
+                    <entry name="hmpost_xt_update_on" value="0" type="string"/>
+                    <entry name="hv_launch_flag" value="0" type="string"/>
+                    <entry name="includeReferences" value="Include_references" type="string"/>
+                    <entry name="include_constraints" value="0" type="string"/>
+                    <entry name="include_elements" value="0" type="string"/>
+                    <entry name="item17push" value="0" type="string"/>
+                    <entry name="last_simulation_current" value="0" type="string"/>
+                    <entry name="legend_allow_background_transparency" value="1" type="string"/>
+                    <entry name="legend_colormap_divergent" value="0" type="string"/>
+                    <entry name="legend_include_screen_capturing" value="1" type="string"/>
+                    <entry name="legend_position" value="-10 -10 -10" type="string"/>
+                    <entry name="line_handle" value="0" type="string"/>
+                    <entry name="lmb_rmb_binding" value="Pan" type="string"/>
+                    <entry name="load_handle" value="0" type="string"/>
+                    <entry name="load_new_scaling" value="0" type="string"/>
+                    <entry name="load_solver_label" value="1" type="string"/>
+                    <entry name="load_visual_vector" value="0" type="string"/>
+                    <entry name="mb_ask_delete_table_on_exit" value="0" type="string"/>
+                    <entry name="mb_color" value="4" type="string"/>
+                    <entry name="mb_csv_separator" value="0" type="string"/>
+                    <entry name="mb_display_expression" value="0" type="string"/>
+                    <entry name="mb_hvcolor" value="6" type="string"/>
+                    <entry name="mb_numeric_format" value="0" type="string"/>
+                    <entry name="mb_numeric_precision" value="2" type="string"/>
+                    <entry name="mb_query_id_order" value="0" type="string"/>
+                    <entry name="mb_show_subcase_simulation_in_col_header" value="1" type="string"/>
+                    <entry name="mb_update_hm_on_table_cell_edit" value="1" type="string"/>
+                    <entry name="mb_userdir_path" value="C:/Users/marce/AppData/Local/Temp/MatrixBrowser/MBUsersDirectory" type="string"/>
+                    <entry name="mb_visible_rows" value="50" type="string"/>
+                    <entry name="mesh_transparency" value="5" type="string"/>
+                    <entry name="mixed_property_warning" value="1" type="string"/>
+                    <entry name="mmb_binding" value="Rotate" type="string"/>
+                    <entry name="morph_parameters_mode" value="Model File" type="string"/>
+                    <entry name="morph_parameters_update_model" value="1" type="string"/>
+                    <entry name="mouse_append_mode" value="0" type="string"/>
+                    <entry name="mouse_empty_clear" value="1" type="string"/>
+                    <entry name="mouse_mapping" value="Default" type="string"/>
+                    <entry name="mouse_over_highlighting" value="1" type="string"/>
+                    <entry name="move_autocal_incr" value="1" type="string"/>
+                    <entry name="move_rot_incr" value="0" type="string"/>
+                    <entry name="move_trans_incr" value="0" type="string"/>
+                    <entry name="nearby_output_entities" value="{ELEMS}" type="string"/>
+                    <entry name="nearby_radius" value="2" type="string"/>
+                    <entry name="nearby_selected_operation" value="1" type="string"/>
+                    <entry name="node_tolerance" value="0.1" type="string"/>
+                    <entry name="number_cpu" value="1" type="string"/>
+                    <entry name="numeric_precision" value="2" type="string"/>
+                    <entry name="numeric_style" value="0" type="string"/>
+                    <entry name="pdm_check_latest_partrev" value="0" type="string"/>
+                    <entry name="pdm_check_latest_partrev_interval" value="60" type="string"/>
+                    <entry name="pick_tolerance" value="20" type="string"/>
+                    <entry name="ply_link_color_and_orientation" value="0" type="string"/>
+                    <entry name="pr_auto_preserve_connections" value="0" type="string"/>
+                    <entry name="pr_box_approach_node_set" value="0" type="string"/>
+                    <entry name="pr_custom_bbox_for_equivalence" value="1" type="string"/>
+                    <entry name="pr_delete_src_comp" value="1" type="string"/>
+                    <entry name="pr_invoke_model_checker" value="0" type="string"/>
+                    <entry name="pr_keep_src_comp_cardimage" value="1" type="string"/>
+                    <entry name="pr_keep_src_comp_id" value="1" type="string"/>
+                    <entry name="pr_keep_src_comp_name" value="1" type="string"/>
+                    <entry name="pr_keep_src_ent_type" value="0" type="string"/>
+                    <entry name="pr_keep_src_include" value="1" type="string"/>
+                    <entry name="pr_keep_src_mat" value="1" type="string"/>
+                    <entry name="pr_keep_src_prop" value="1" type="string"/>
+                    <entry name="pr_merge_nodes" value="0" type="string"/>
+                    <entry name="pr_prefix_basename_suffix_based_name_pairing" value="0" type="string"/>
+                    <entry name="pr_retain_plotel_elem_nodeIds_from_src_comp" value="0" type="string"/>
+                    <entry name="pr_show_component_pairing" value="0" type="string"/>
+                    <entry name="quick_topo_selection" value="1" type="string"/>
+                    <entry name="rdata_memory_clean" value="0" type="string"/>
+                    <entry name="realize_abq_surface" value="0" type="string"/>
+                    <entry name="realize_loads" value="0" type="string"/>
+                    <entry name="red_auto_color_range_max" value="200" type="string"/>
+                    <entry name="red_auto_color_range_min" value="40" type="string"/>
+                    <entry name="result_file_validation_ignore" value="0" type="string"/>
+                    <entry name="retain_element_values" value="0" type="string"/>
+                    <entry name="retain_loads" value="0" type="string"/>
+                    <entry name="retain_segments" value="0" type="string"/>
+                    <entry name="review_node_size" value="6" type="string"/>
+                    <entry name="review_text_lod_threshold" value="3" type="string"/>
+                    <entry name="rmb_binding" value="Pan" type="string"/>
+                    <entry name="rq_csv_separator" value="0" type="string"/>
+                    <entry name="rq_export_idpool" value="0" type="string"/>
+                    <entry name="rq_numeric_format" value="0" type="string"/>
+                    <entry name="rq_numeric_precision" value="2" type="string"/>
+                    <entry name="rq_omegat" value="0" type="string"/>
+                    <entry name="rq_poissons_ratio" value="0.5" type="string"/>
+                    <entry name="rq_print_header" value="1" type="string"/>
+                    <entry name="scale_color" value="#494949" type="string"/>
+                    <entry name="scale_position" value="bottom" type="string"/>
+                    <entry name="scale_width" value="S" type="string"/>
+                    <entry name="select_cpu" value="Auto" type="string"/>
+                    <entry name="shi_eng_connected_entities" value="0" type="string"/>
+                    <entry name="shi_eng_realized_entities" value="1" type="string"/>
+                    <entry name="shift_lmb_rmb_binding" value="Pan" type="string"/>
+                    <entry name="shift_mmb_binding" value="Rotate" type="string"/>
+                    <entry name="shift_rmb_binding" value="Rotate" type="string"/>
+                    <entry name="show_delete_associated_dialog" value="1" type="string"/>
+                    <entry name="show_entity_selector_value" value="id" type="string"/>
+                    <entry name="show_ids" value="0" type="string"/>
+                    <entry name="show_ids_on_review" value="0" type="string"/>
+                    <entry name="show_legacy_pulldowns" value="0" type="string"/>
+                    <entry name="show_line_dir" value="0" type="string"/>
+                    <entry name="show_model_title" value="0" type="string"/>
+                    <entry name="shrink_factor" value="0.2" type="string"/>
+                    <entry name="sketcher_2D_view" value="0" type="string"/>
+                    <entry name="sketcher_auto_align_axes" value="0" type="string"/>
+                    <entry name="sketcher_constraint_display_size" value="0" type="string"/>
+                    <entry name="sketcher_create_nested_holes" value="0" type="string"/>
+                    <entry name="sketcher_fillet_radius" value="0.01" type="string"/>
+                    <entry name="sketcher_gridspacing_imperial_1" value="0.0015875" type="string"/>
+                    <entry name="sketcher_gridspacing_imperial_2" value="0.00635" type="string"/>
+                    <entry name="sketcher_gridspacing_imperial_3" value="0.0254" type="string"/>
+                    <entry name="sketcher_gridspacing_imperial_4" value="0.3048" type="string"/>
+                    <entry name="sketcher_gridspacing_imperial_5" value="0.9144" type="string"/>
+                    <entry name="sketcher_gridspacing_metric_1" value="0.001" type="string"/>
+                    <entry name="sketcher_gridspacing_metric_2" value="0.01" type="string"/>
+                    <entry name="sketcher_gridspacing_metric_3" value="0.1" type="string"/>
+                    <entry name="sketcher_gridspacing_metric_4" value="1" type="string"/>
+                    <entry name="sketcher_gridspacing_metric_5" value="10" type="string"/>
+                    <entry name="sketcher_merge_adjacent_faces" value="0" type="string"/>
+                    <entry name="sketcher_merge_points" value="1" type="string"/>
+                    <entry name="sketcher_realize_mode" value="2" type="string"/>
+                    <entry name="sketcher_set_variable_edit_mode" value="0" type="string"/>
+                    <entry name="sketcher_shade_closed_regions" value="1" type="string"/>
+                    <entry name="sketcher_show_center_points" value="1" type="string"/>
+                    <entry name="sketcher_show_constraint_toolbar" value="1" type="string"/>
+                    <entry name="sketcher_show_constraints" value="1" type="string"/>
+                    <entry name="sketcher_show_construction_aides" value="0" type="string"/>
+                    <entry name="sketcher_show_construction_lines" value="0" type="string"/>
+                    <entry name="sketcher_show_construction_of_arcs" value="1" type="string"/>
+                    <entry name="sketcher_show_dimensions" value="1" type="string"/>
+                    <entry name="sketcher_show_grid" value="1" type="string"/>
+                    <entry name="sketcher_show_legend" value="0" type="string"/>
+                    <entry name="sketcher_show_points" value="1" type="string"/>
+                    <entry name="sketcher_show_projection_curves" value="1" type="string"/>
+                    <entry name="sketcher_show_variables_in_dims" value="0" type="string"/>
+                    <entry name="sketcher_units_scale_data" value="1" type="string"/>
+                    <entry name="sketcher_unitsystem_template" value="2" type="string"/>
+                    <entry name="sketcher_update_in_inspire" value="1" type="string"/>
+                    <entry name="sketcher_view_along_normal" value="1" type="string"/>
+                    <entry name="small_deformation" value="1" type="string"/>
+                    <entry name="snap_circle_center" value="0" type="string"/>
+                    <entry name="snap_element_centroid" value="0" type="string"/>
+                    <entry name="snap_element_edge" value="0" type="string"/>
+                    <entry name="snap_element_mid_edge" value="0" type="string"/>
+                    <entry name="snap_feature_hole_center" value="1" type="string"/>
+                    <entry name="snap_global_xyz" value="1" type="string"/>
+                    <entry name="snap_line_end" value="1" type="string"/>
+                    <entry name="snap_line_line_intersect" value="1" type="string"/>
+                    <entry name="snap_line_middle" value="1" type="string"/>
+                    <entry name="snap_mesh_node" value="1" type="string"/>
+                    <entry name="snap_on" value="1" type="string"/>
+                    <entry name="snap_on_empty_space" value="1" type="string"/>
+                    <entry name="snap_on_tangent_extension" value="1" type="string"/>
+                    <entry name="snap_perp_from_line" value="1" type="string"/>
+                    <entry name="snap_perp_from_surf" value="1" type="string"/>
+                    <entry name="snap_perp_to_line" value="1" type="string"/>
+                    <entry name="snap_perp_to_surf" value="1" type="string"/>
+                    <entry name="snap_surf_center" value="1" type="string"/>
+                    <entry name="snap_surf_line_intersect" value="1" type="string"/>
+                    <entry name="snap_system_center" value="1" type="string"/>
+                    <entry name="snap_tangent_from_line" value="1" type="string"/>
+                    <entry name="snap_tangent_to_line" value="1" type="string"/>
+                    <entry name="solvermass_graphics" value="0" type="string"/>
+                    <entry name="solvermass_handle" value="0" type="string"/>
+                    <entry name="surface_uv_lines" value="2" type="string"/>
+                    <entry name="sweep_mode" value="45" type="string"/>
+                    <entry name="sync_idle_with_browser_view" value="always" type="string"/>
+                    <entry name="thick_1d_lines" value="1" type="string"/>
+                    <entry name="thick_mesh_lines" value="0" type="string"/>
+                    <entry name="topology_edge_display_color-0" value="255" type="string"/>
+                    <entry name="topology_edge_display_color-1" value="65280" type="string"/>
+                    <entry name="topology_edge_display_color-2" value="65535" type="string"/>
+                    <entry name="topology_edge_display_color-3" value="16758111" type="string"/>
+                    <entry name="topology_edge_display_mode-0" value="1" type="string"/>
+                    <entry name="topology_edge_display_mode-1" value="1" type="string"/>
+                    <entry name="topology_edge_display_mode-2" value="1" type="string"/>
+                    <entry name="topology_edge_display_mode-3" value="1" type="string"/>
+                    <entry name="topology_solid_edge_display_color-0" value="255" type="string"/>
+                    <entry name="topology_solid_edge_display_color-1" value="65280" type="string"/>
+                    <entry name="topology_solid_edge_display_color-2" value="65535" type="string"/>
+                    <entry name="topology_solid_edge_display_color-3" value="16758111" type="string"/>
+                    <entry name="undo_resultsubcase_entity" value="0" type="string"/>
+                    <entry name="view_acceleration" value="0" type="string"/>
+                </section>
+                <section name="MotionView">
+                    <entry name="axis_drawn_view_cube" value="2" type="string"/>
+                    <entry name="axis_xcolor_idx" value="2" type="string"/>
+                    <entry name="axis_ycolor_idx" value="3" type="string"/>
+                    <entry name="axis_zcolor_idx" value="4" type="string"/>
+                    <entry name="background2_idx" value="10" type="string"/>
+                    <entry name="background_idx" value="31" type="string"/>
+                    <entry name="check_DOF" value="false" type="string"/>
+                    <entry name="check_data" value="false" type="string"/>
+                    <entry name="check_files" value="false" type="string"/>
+                    <entry name="check_general" value="false" type="string"/>
+                    <entry name="create_subfolder" value="false" type="string"/>
+                    <entry name="default_mat_shininess" value="64" type="string"/>
+                    <entry name="draw_model_title" value="1" type="string"/>
+                    <entry name="draw_triad" value="1" type="string"/>
+                    <entry name="enable_label" value="true" type="string"/>
+                    <entry name="first_level_hierarchy" value="false" type="string"/>
+                    <entry name="foreground_idx" value="103" type="string"/>
+                    <entry name="front_face_orientation_view_cube" value="2" type="string"/>
+                    <entry name="geometry_style_view_cube" value="0" type="string"/>
+                    <entry name="gradient_type" value="vertical" type="string"/>
+                    <entry name="light_mode" value="multiple" type="string"/>
+                    <entry name="light_position_x" value="0" type="string"/>
+                    <entry name="light_position_y" value="0" type="string"/>
+                    <entry name="light_position_z" value="0.3f" type="string"/>
+                    <entry name="locate_view_cube" value="0" type="string"/>
+                    <entry name="meshlinecolor_idx" value="0" type="string"/>
+                    <entry name="offline_run_file_type" value="python" type="string"/>
+                    <entry name="parametric_editbox_color_idx" value="28" type="string"/>
+                    <entry name="reflector_show_view_cube" value="0" type="string"/>
+                    <entry name="rotation_angle_view_cube" value="15.0" type="string"/>
+                    <entry name="rotator_show_view_cube" value="1" type="string"/>
+                    <entry name="run_debug_py" value="true" type="string"/>
+                    <entry name="runsolver_offline" value="false" type="string"/>
+                    <entry name="show_view_cube" value="2" type="string"/>
+                    <entry name="simplify_bgfg_on_capture" value="1" type="string"/>
+                    <entry name="specular_color_idx" value="0" type="string"/>
+                    <entry name="verbose_check_on_load" value="false" type="string"/>
+                    <entry name="wizard_menu_state" value="true" type="string"/>
+                </section>
+                <section name="Mouse Settings">
+                    <section name="HyperGraph3D">
+                        <entry name="lb_c_idx" value="1" type="string"/>
+                        <entry name="lb_cs_idx" value="5" type="string"/>
+                        <entry name="lb_n_idx" value="7" type="string"/>
+                        <entry name="lb_s_idx" value="10" type="string"/>
+                        <entry name="mb_c_idx" value="2" type="string"/>
+                        <entry name="mb_cs_idx" value="6" type="string"/>
+                        <entry name="mb_n_idx" value="8" type="string"/>
+                        <entry name="mb_s_idx" value="11" type="string"/>
+                        <entry name="pick_tolerance" value="5" type="string"/>
+                        <entry name="rb_c_idx" value="4" type="string"/>
+                        <entry name="rb_cs_idx" value="3" type="string"/>
+                        <entry name="rb_n_idx" value="13" type="string"/>
+                        <entry name="rb_s_idx" value="12" type="string"/>
+                    </section>
+                    <section name="graphiclib">
+                        <entry name="lb_c_idx" value="1" type="string"/>
+                        <entry name="lb_cs_idx" value="5" type="string"/>
+                        <entry name="lb_n_idx" value="7" type="string"/>
+                        <entry name="lb_s_idx" value="10" type="string"/>
+                        <entry name="mb_c_idx" value="2" type="string"/>
+                        <entry name="mb_cs_idx" value="6" type="string"/>
+                        <entry name="mb_n_idx" value="8" type="string"/>
+                        <entry name="mb_s_idx" value="11" type="string"/>
+                        <entry name="pick_tolerance" value="5" type="string"/>
+                        <entry name="rb_c_idx" value="4" type="string"/>
+                        <entry name="rb_cs_idx" value="3" type="string"/>
+                        <entry name="rb_n_idx" value="13" type="string"/>
+                        <entry name="rb_s_idx" value="12" type="string"/>
+                    </section>
+                </section>
+                <section name="settings">
+                    <section name="common">
+                        <section name="application">
+                            <entry name="launcher_show_on_startup" value="1" type="bool"/>
+                        </section>
+                        <section name="graphics">
+                            <entry name="performance_normal" value="0" type="bool"/>
+                        </section>
+                        <section name="report">
+                            <entry name="DefaultHtmlTemplate" value="C:/Program Files/Altair/2025.1/hwdesktop/mv/scripts/tcl/report/templates/htmlTemplate1/Index_Layout.html" type="string"/>
+                            <entry name="DefaultPPTTemplate" value="C:/Program Files/Altair/2025.1/hwdesktop/mv/scripts/tcl/report/templates/pptTemplate.pptx" type="string"/>
+                            <entry name="DefaultWordTemplate" value="C:/Program Files/Altair/2025.1/hwdesktop/mv/scripts/tcl/report/templates/wordTemplate.docx" type="string"/>
+                            <entry name="FilePathStorage" value="Relative" type="string"/>
+                            <entry name="ImageResolution" value="HW Desktop" type="string"/>
+                            <entry name="defaultTemplatetype" value="Document" type="string"/>
+                            <entry name="show_report_after_export" value="1" type="bool"/>
+                        </section>
+                    </section>
+                    <section name="hm">
+                        <section name="appearance">
+                            <entry name="graph_enable-plots" value="0" type="bool"/>
+                            <entry name="graphics_selection_highlight_active_color" value="#FFFFFF" type="string"/>
+                        </section>
+                        <section name="graphics">
+                            <entry name="lighting_mode" value="1" type="int"/>
+                            <entry name="perspective_view" value="0" type="int"/>
+                        </section>
+                        <section name="idmanager">
+                            <entry name="duplicate_ids" value="0" type="bool"/>
+                        </section>
+                        <section name="performance">
+                            <entry name="geom_refine_level" value="1" type="int"/>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+</hwsettings>
