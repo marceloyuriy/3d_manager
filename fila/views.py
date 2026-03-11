@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.utils import timezone
 
@@ -8,7 +8,8 @@ from .models import Pedido3D, PedidoRouter, PedidoCAD
 from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
                     NovoCADForm, EdicaoGestorCADForm,
-                    RegistroUsuarioForm)
+                    RegistroUsuarioForm, PerfilUsuarioForm,
+                    GestaoUsuarioForm)
 
 # --- FUNÇÃO DO SEGURANÇA ---
 def tem_permissao(user, setor):
@@ -258,3 +259,130 @@ def rejeitar_usuario(request, user_id):
     user.delete()
     messages.success(request, f'Solicitação de "{username}" foi rejeitada.')
     return redirect('usuarios_pendentes')
+
+
+@login_required
+def perfil(request):
+    if request.method == 'POST':
+        form = PerfilUsuarioForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('perfil')
+    else:
+        form = PerfilUsuarioForm(instance=request.user)
+
+    return render(request, 'fila/perfil.html', {
+        'form': form,
+        'grupos': request.user.groups.values_list('name', flat=True),
+    })
+
+
+@login_required
+def lista_usuarios(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Acesso restrito ao gestor.')
+        return redirect('lista_fila')
+
+    usuarios = User.objects.filter(is_active=True).order_by('username')
+    pendentes_count = User.objects.filter(is_active=False).count()
+    return render(request, 'fila/gestao_usuarios.html', {
+        'usuarios': usuarios,
+        'pendentes_count': pendentes_count,
+    })
+
+
+@login_required
+def editar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id)
+    if user.is_superuser and user != request.user:
+        messages.error(request, 'Não é possível editar outro superuser.')
+        return redirect('lista_usuarios')
+
+    if request.method == 'POST':
+        form = GestaoUsuarioForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Utilizador "{user.username}" atualizado!')
+            return redirect('lista_usuarios')
+    else:
+        form = GestaoUsuarioForm(instance=user)
+
+    return render(request, 'fila/editar_usuario.html', {
+        'form': form,
+        'usuario': user,
+    })
+
+
+@login_required
+def desativar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id)
+    if user.is_superuser:
+        messages.error(request, 'Não é possível desativar um superuser.')
+        return redirect('lista_usuarios')
+
+    user.is_active = False
+    user.save()
+    messages.success(request, f'Utilizador "{user.username}" foi desativado.')
+    return redirect('lista_usuarios')
+
+
+# ==========================================
+# VIEWS DE GESTÃO DE GRUPOS/SETORES
+# ==========================================
+@login_required
+def lista_grupos(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Acesso restrito ao gestor.')
+        return redirect('lista_fila')
+
+    grupos = Group.objects.all().order_by('name')
+    # Contar membros por grupo
+    grupos_info = []
+    for grupo in grupos:
+        grupos_info.append({
+            'grupo': grupo,
+            'membros_count': grupo.user_set.filter(is_active=True).count(),
+            'membros': grupo.user_set.filter(is_active=True).order_by('username'),
+        })
+
+    pendentes_count = User.objects.filter(is_active=False).count()
+    return render(request, 'fila/gestao_grupos.html', {
+        'grupos_info': grupos_info,
+        'pendentes_count': pendentes_count,
+    })
+
+
+@login_required
+def criar_grupo(request):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+        if not nome:
+            messages.error(request, 'O nome do grupo não pode estar vazio.')
+        elif Group.objects.filter(name=nome).exists():
+            messages.error(request, f'O grupo "{nome}" já existe.')
+        else:
+            Group.objects.create(name=nome)
+            messages.success(request, f'Grupo "{nome}" criado com sucesso!')
+    return redirect('lista_grupos')
+
+
+@login_required
+def eliminar_grupo(request, group_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    grupo = get_object_or_404(Group, id=group_id)
+    nome = grupo.name
+    grupo.delete()
+    messages.success(request, f'Grupo "{nome}" eliminado.')
+    return redirect('lista_grupos')

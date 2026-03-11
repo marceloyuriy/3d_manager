@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gest&atilde;o de Grupos - AeroRiver Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --aero-logo-dark: #334155;
+            --aero-logo-green: #2A9D8F;
+            --aero-accent-green: #2A9D8F;
+            --aero-success-vibrant: #26C088;
+            --aero-danger: #E76F51;
+            --bg-color: #F8FAFC;
+            --card-radius: 16px;
+            --border-color-soft: #F1F5F9;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            padding-bottom: 50px;
+        }
+        .navbar-aero {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid var(--border-color-soft);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 1.25rem 0;
+        }
+        .navbar-brand-custom { font-weight: 700; font-size: 1.25rem; color: #334155; }
+        .hub-title-suffix { color: var(--aero-accent-green); }
+        .btn-outline-dark-aero {
+            color: #334155; border-color: #E2E8F0; font-weight: 500;
+            font-size: 0.85rem; border-radius: 8px;
+        }
+        .btn-outline-dark-aero:hover { background-color: #F8FAFC; border-color: #CBD5E1; }
+        .card-aero {
+            border: none; border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02); background: #ffffff;
+            overflow: hidden;
+        }
+        .card-header-clean {
+            background: transparent; border-bottom: 1px solid var(--border-color-soft);
+            padding: 1.5rem 1.75rem; font-weight: 700; font-size: 1.05rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .back-link {
+            color: var(--aero-accent-green); text-decoration: none; font-weight: 600;
+            font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .back-link:hover { color: #21867a; }
+        .tab-nav {
+            display: flex; gap: 0; margin-bottom: 1.5rem;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .tab-nav a {
+            flex: 1; text-align: center; padding: 0.75rem 1.5rem; font-weight: 600;
+            text-decoration: none; font-size: 0.9rem; transition: all 0.2s;
+            color: #64748B; background: #fff; border: 1px solid #E2E8F0;
+        }
+        .tab-nav a:first-child { border-radius: 12px 0 0 12px; }
+        .tab-nav a:last-child { border-radius: 0 12px 12px 0; }
+        .tab-nav a.active {
+            background-color: var(--aero-accent-green); color: #fff;
+            border-color: var(--aero-accent-green);
+        }
+        .tab-nav a:hover:not(.active) { background-color: #F8FAFC; }
+        .grupo-card {
+            border: 1px solid var(--border-color-soft);
+            border-radius: 12px; padding: 1.25rem 1.5rem;
+            transition: all 0.2s; background: #fff;
+        }
+        .grupo-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .grupo-nome { font-weight: 700; font-size: 1rem; color: var(--aero-logo-dark); }
+        .grupo-count { font-size: 0.8rem; color: #94A3B8; }
+        .badge-membro {
+            background-color: #F0FDFA; color: #1A7F64; border: 1px solid #B2DFDB;
+            padding: 0.25em 0.65em; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+        }
+        .btn-acao-danger-sm {
+            font-size: 0.75rem; border-radius: 6px; padding: 0.25rem 0.6rem;
+            font-weight: 600; color: var(--aero-danger); border: 1px solid var(--aero-danger);
+            background: transparent; text-decoration: none; transition: all 0.2s;
+        }
+        .btn-acao-danger-sm:hover { background-color: #FFF5F3; color: #C85A3D; }
+        .btn-aero-green {
+            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
+            color: white; font-weight: 600; border: none; border-radius: 10px;
+            padding: 0.6rem 1.5rem; transition: all 0.3s ease; font-size: 0.9rem;
+        }
+        .btn-aero-green:hover {
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3); color: white;
+        }
+        .form-control {
+            border-radius: 8px; padding: 0.6rem 1rem; border: 1px solid #E2E8F0;
+            background-color: #F8FAFC; transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: #2A9D8F; background-color: #FFFFFF;
+            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
+        }
+        .empty-state {
+            text-align: center; padding: 3rem 1rem; color: #94A3B8;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-aero mb-4 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
+                <span class="hub-title-suffix" style="font-size: 1.5rem;">✈️ AeroRiver</span> - Gest&atilde;o de Utilizadores
+            </span>
+            <div>
+                <div class="dropdown d-inline">
+                    <button class="btn btn-outline-dark-aero dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ol&aacute;, <strong>{{ request.user.username }}</strong>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 12px;">
+                        <li><a class="dropdown-item py-2" href="{% url 'lista_fila' %}">🏠 Hub de Manufatura</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'perfil' %}">👤 Meu Perfil</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">🔐 Alterar Senha</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item py-2 text-danger">🚪 Sair</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="mb-4">
+            <a href="{% url 'lista_fila' %}" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Voltar ao Hub
+            </a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show shadow-sm border-0 mb-4" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% elif message.tags == 'error' %}#FEF2F2{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% elif message.tags == 'error' %}#DC2626{% else %}#D97706{% endif %};" role="alert">
+                    <strong>
+                        {% if message.tags == 'success' %}&#10003; Sucesso:{% elif message.tags == 'error' %}&#10007; Erro:{% else %}&#9888; Aten&ccedil;&atilde;o:{% endif %}
+                    </strong>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Tabs -->
+        <div class="tab-nav">
+            <a href="{% url 'lista_usuarios' %}">👥 Utilizadores</a>
+            <a href="{% url 'usuarios_pendentes' %}">
+                &#128276; Pendentes
+                {% if pendentes_count %}<span class="badge rounded-pill ms-1" style="background-color: var(--aero-danger); font-size: 0.7rem;">{{ pendentes_count }}</span>{% endif %}
+            </a>
+            <a href="{% url 'lista_grupos' %}" class="active">&#9881; Grupos</a>
+        </div>
+
+        <!-- Criar novo grupo -->
+        <div class="card-aero mb-4">
+            <div class="card-header-clean">
+                <span style="color: var(--aero-accent-green);">&#10010;</span>
+                <span>Criar Novo Grupo</span>
+            </div>
+            <div class="p-4">
+                <form method="post" action="{% url 'criar_grupo' %}" class="d-flex gap-3 align-items-end">
+                    {% csrf_token %}
+                    <div class="flex-grow-1">
+                        <label class="form-label" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; color: #64748B;">NOME DO GRUPO</label>
+                        <input type="text" name="nome" class="form-control" placeholder="Ex: Setor Pintura" required>
+                    </div>
+                    <button type="submit" class="btn btn-aero-green">Criar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista de grupos -->
+        <div class="card-aero">
+            <div class="card-header-clean">
+                <span style="color: var(--aero-accent-green);">&#128101;</span>
+                <span>Grupos Existentes</span>
+                <span class="badge rounded-pill ms-auto" style="background-color: var(--aero-accent-green); font-size: 0.75rem;">{{ grupos_info|length }}</span>
+            </div>
+
+            {% if grupos_info %}
+                <div class="p-4">
+                    <div class="d-flex flex-column gap-3">
+                        {% for item in grupos_info %}
+                        <div class="grupo-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="grupo-nome">{{ item.grupo.name }}</div>
+                                    <div class="grupo-count mt-1">{{ item.membros_count }} membro{{ item.membros_count|pluralize:"s" }} ativo{{ item.membros_count|pluralize:"s" }}</div>
+                                    {% if item.membros %}
+                                        <div class="mt-2 d-flex flex-wrap gap-1">
+                                            {% for membro in item.membros %}
+                                                <span class="badge-membro">{{ membro.username }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <a href="{% url 'eliminar_grupo' item.grupo.id %}"
+                                       class="btn-acao-danger-sm"
+                                       onclick="return confirm('Eliminar o grupo {{ item.grupo.name }}? Os utilizadores n\u00e3o ser\u00e3o eliminados, apenas perder\u00e3o este grupo.')">
+                                        &#128465; Eliminar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p class="mb-0" style="font-weight: 500;">Nenhum grupo criado.</p>
+                    <p class="small">Crie grupos acima para organizar os utilizadores por setor.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
