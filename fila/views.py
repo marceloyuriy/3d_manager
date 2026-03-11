@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils import timezone
 
 from .models import Pedido3D, PedidoRouter, PedidoCAD
 from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
-                    NovoCADForm, EdicaoGestorCADForm)
+                    NovoCADForm, EdicaoGestorCADForm,
+                    RegistroUsuarioForm)
 
 # --- FUNÇÃO DO SEGURANÇA ---
 def tem_permissao(user, setor):
@@ -203,3 +204,57 @@ def deletar_pedido_cad(request, id):
     item.delete()
     messages.success(request, 'Projeto removido da fila CAD.')
     return redirect('lista_cad')
+
+
+# ==========================================
+# VIEWS DE GESTÃO DE USUÁRIOS
+# ==========================================
+def registro(request):
+    if request.user.is_authenticated:
+        return redirect('lista_fila')
+
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            messages.success(request, 'Conta criada com sucesso! Aguarde a aprovação do gestor para aceder ao sistema.')
+            return redirect('login')
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'fila/registro.html', {'form': form})
+
+
+@login_required
+def lista_usuarios_pendentes(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Acesso restrito ao gestor.')
+        return redirect('lista_fila')
+
+    pendentes = User.objects.filter(is_active=False).order_by('-date_joined')
+    return render(request, 'fila/usuarios_pendentes.html', {'pendentes': pendentes})
+
+
+@login_required
+def aprovar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id, is_active=False)
+    user.is_active = True
+    user.save()
+    messages.success(request, f'Utilizador "{user.username}" aprovado com sucesso!')
+    return redirect('usuarios_pendentes')
+
+
+@login_required
+def rejeitar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id, is_active=False)
+    username = user.username
+    user.delete()
+    messages.success(request, f'Solicitação de "{username}" foi rejeitada.')
+    return redirect('usuarios_pendentes')

@@ -20,6 +20,12 @@ urlpatterns = [
     path('cad/editar/<int:id>/', views.editar_pedido_cad, name='editar_pedido_cad'),
     path('cad/deletar/<int:id>/', views.deletar_pedido_cad, name='deletar_pedido_cad'),
 
+    path('registro/', views.registro, name='registro'),
+
+    path('gestao/usuarios/pendentes/', views.lista_usuarios_pendentes, name='usuarios_pendentes'),
+    path('gestao/usuarios/aprovar/<int:user_id>/', views.aprovar_usuario, name='aprovar_usuario'),
+    path('gestao/usuarios/rejeitar/<int:user_id>/', views.rejeitar_usuario, name='rejeitar_usuario'),
+
     path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
