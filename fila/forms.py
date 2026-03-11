@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .models import Pedido3D, PedidoRouter, PedidoCAD
 
 
@@ -51,6 +51,45 @@ class PerfilUsuarioForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+
+
+# ==========================================
+# FORMULÁRIO DE GESTÃO DE USUÁRIO (ADMIN)
+# ==========================================
+class GestaoUsuarioForm(forms.ModelForm):
+    grupos = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        required=False,
+        label='Setores',
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'is_active']
+        labels = {
+            'first_name': 'Nome',
+            'last_name': 'Sobrenome',
+            'email': 'E-mail',
+            'is_active': 'Conta ativa',
+        }
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['grupos'].initial = self.instance.groups.all()
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        if commit:
+            user.groups.set(self.cleaned_data['grupos'])
+        return user
 
 # ==========================================
 # FORMULÁRIOS DA IMPRESSORA 3D

@@ -8,7 +8,8 @@ from .models import Pedido3D, PedidoRouter, PedidoCAD
 from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
                     NovoCADForm, EdicaoGestorCADForm,
-                    RegistroUsuarioForm, PerfilUsuarioForm)
+                    RegistroUsuarioForm, PerfilUsuarioForm,
+                    GestaoUsuarioForm)
 
 # --- FUNÇÃO DO SEGURANÇA ---
 def tem_permissao(user, setor):
@@ -275,3 +276,58 @@ def perfil(request):
         'form': form,
         'grupos': request.user.groups.values_list('name', flat=True),
     })
+
+
+@login_required
+def lista_usuarios(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Acesso restrito ao gestor.')
+        return redirect('lista_fila')
+
+    usuarios = User.objects.filter(is_active=True).order_by('username')
+    pendentes_count = User.objects.filter(is_active=False).count()
+    return render(request, 'fila/gestao_usuarios.html', {
+        'usuarios': usuarios,
+        'pendentes_count': pendentes_count,
+    })
+
+
+@login_required
+def editar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id)
+    if user.is_superuser and user != request.user:
+        messages.error(request, 'Não é possível editar outro superuser.')
+        return redirect('lista_usuarios')
+
+    if request.method == 'POST':
+        form = GestaoUsuarioForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Utilizador "{user.username}" atualizado!')
+            return redirect('lista_usuarios')
+    else:
+        form = GestaoUsuarioForm(instance=user)
+
+    return render(request, 'fila/editar_usuario.html', {
+        'form': form,
+        'usuario': user,
+    })
+
+
+@login_required
+def desativar_usuario(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    user = get_object_or_404(User, id=user_id)
+    if user.is_superuser:
+        messages.error(request, 'Não é possível desativar um superuser.')
+        return redirect('lista_usuarios')
+
+    user.is_active = False
+    user.save()
+    messages.success(request, f'Utilizador "{user.username}" foi desativado.')
+    return redirect('lista_usuarios')
