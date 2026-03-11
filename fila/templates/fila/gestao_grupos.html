@@ -3,7 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gest&atilde;o de Grupos - AeroRiver Hub</title>
+    <title>Gestao de Grupos - AeroRiver Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -69,63 +69,55 @@
         .tab-nav a:hover:not(.active) { background-color: #F8FAFC; }
         .grupo-card {
             border: 1px solid var(--border-color-soft);
-            border-radius: 12px; padding: 1.25rem 1.5rem;
+            border-radius: 12px; padding: 1.5rem;
             transition: all 0.2s; background: #fff;
         }
         .grupo-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-        .grupo-nome { font-weight: 700; font-size: 1rem; color: var(--aero-logo-dark); }
+        .grupo-nome { font-weight: 700; font-size: 1.1rem; color: var(--aero-logo-dark); }
         .grupo-count { font-size: 0.8rem; color: #94A3B8; }
-        .badge-membro {
+        .badge-gestor {
+            background-color: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE;
+            padding: 0.3em 0.75em; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+        }
+        .badge-operador {
             background-color: #F0FDFA; color: #1A7F64; border: 1px solid #B2DFDB;
-            padding: 0.25em 0.65em; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+            padding: 0.3em 0.75em; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
         }
-        .btn-acao-danger-sm {
-            font-size: 0.75rem; border-radius: 6px; padding: 0.25rem 0.6rem;
-            font-weight: 600; color: var(--aero-danger); border: 1px solid var(--aero-danger);
-            background: transparent; text-decoration: none; transition: all 0.2s;
+        .role-section-title {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; color: #94A3B8; margin-bottom: 0.4rem;
         }
-        .btn-acao-danger-sm:hover { background-color: #FFF5F3; color: #C85A3D; }
-        .btn-aero-green {
-            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
-            color: white; font-weight: 600; border: none; border-radius: 10px;
-            padding: 0.6rem 1.5rem; transition: all 0.3s ease; font-size: 0.9rem;
+        .info-box {
+            background: #F0FDFA; border: 1px solid #B2DFDB; border-radius: 12px;
+            padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
         }
-        .btn-aero-green:hover {
-            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3); color: white;
-        }
-        .form-control {
-            border-radius: 8px; padding: 0.6rem 1rem; border: 1px solid #E2E8F0;
-            background-color: #F8FAFC; transition: all 0.2s;
-        }
-        .form-control:focus {
-            border-color: #2A9D8F; background-color: #FFFFFF;
-            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
-        }
-        .empty-state {
-            text-align: center; padding: 3rem 1rem; color: #94A3B8;
-        }
+        .info-box h6 { color: #1A7F64; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .info-box p { color: #475569; font-size: 0.85rem; margin-bottom: 0; }
+        .info-box ul { margin-bottom: 0; padding-left: 1.2rem; }
+        .info-box li { color: #475569; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .grupo-icon { font-size: 1.8rem; }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-light navbar-aero mb-4 shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
-                <span class="hub-title-suffix" style="font-size: 1.5rem;">✈️ AeroRiver</span> - Gest&atilde;o de Utilizadores
+                <span class="hub-title-suffix" style="font-size: 1.5rem;">&#9992;&#65039; AeroRiver</span> - Gestao de Utilizadores
             </span>
             <div>
                 <div class="dropdown d-inline">
                     <button class="btn btn-outline-dark-aero dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ol&aacute;, <strong>{{ request.user.username }}</strong>
+                        Ola, <strong>{{ request.user.username }}</strong>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 12px;">
-                        <li><a class="dropdown-item py-2" href="{% url 'lista_fila' %}">🏠 Hub de Manufatura</a></li>
-                        <li><a class="dropdown-item py-2" href="{% url 'perfil' %}">👤 Meu Perfil</a></li>
-                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">🔐 Alterar Senha</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'lista_fila' %}">&#127968; Hub de Manufatura</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'perfil' %}">&#128100; Meu Perfil</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">&#128272; Alterar Senha</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item py-2 text-danger">🚪 Sair</button>
+                                <button type="submit" class="dropdown-item py-2 text-danger">&#128682; Sair</button>
                             </form>
                         </li>
                     </ul>
@@ -146,7 +138,7 @@
             {% for message in messages %}
                 <div class="alert alert-dismissible fade show shadow-sm border-0 mb-4" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% elif message.tags == 'error' %}#FEF2F2{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% elif message.tags == 'error' %}#DC2626{% else %}#D97706{% endif %};" role="alert">
                     <strong>
-                        {% if message.tags == 'success' %}&#10003; Sucesso:{% elif message.tags == 'error' %}&#10007; Erro:{% else %}&#9888; Aten&ccedil;&atilde;o:{% endif %}
+                        {% if message.tags == 'success' %}&#10003; Sucesso:{% elif message.tags == 'error' %}&#10007; Erro:{% else %}&#9888; Atencao:{% endif %}
                     </strong>
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -156,75 +148,68 @@
 
         <!-- Tabs -->
         <div class="tab-nav">
-            <a href="{% url 'lista_usuarios' %}">👥 Utilizadores</a>
+            <a href="{% url 'lista_usuarios' %}">&#128101; Utilizadores</a>
             <a href="{% url 'usuarios_pendentes' %}">
                 &#128276; Pendentes
                 {% if pendentes_count %}<span class="badge rounded-pill ms-1" style="background-color: var(--aero-danger); font-size: 0.7rem;">{{ pendentes_count }}</span>{% endif %}
             </a>
-            <a href="{% url 'lista_grupos' %}" class="active">&#9881; Grupos</a>
+            <a href="{% url 'lista_grupos' %}" class="active">&#9881; Setores</a>
         </div>
 
-        <!-- Criar novo grupo -->
-        <div class="card-aero mb-4">
-            <div class="card-header-clean">
-                <span style="color: var(--aero-accent-green);">&#10010;</span>
-                <span>Criar Novo Grupo</span>
-            </div>
-            <div class="p-4">
-                <form method="post" action="{% url 'criar_grupo' %}" class="d-flex gap-3 align-items-end">
-                    {% csrf_token %}
-                    <div class="flex-grow-1">
-                        <label class="form-label" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; color: #64748B;">NOME DO GRUPO</label>
-                        <input type="text" name="nome" class="form-control" placeholder="Ex: Setor Pintura" required>
-                    </div>
-                    <button type="submit" class="btn btn-aero-green">Criar</button>
-                </form>
-            </div>
+        <!-- Info box explicativo -->
+        <div class="info-box">
+            <h6>&#128272; Como funciona o sistema de permissoes</h6>
+            <ul>
+                <li><strong>Operador</strong> (usuario normal): Pode <strong>adicionar novos pedidos</strong> apenas nos setores em que foi adicionado.</li>
+                <li><strong>Gestor</strong> (privilegio de staff): Pode <strong>editar, excluir e gerenciar</strong> pedidos nos setores que pertence.</li>
+                <li>Para tornar um usuario <strong>Gestor</strong>, ative o "Privilegio de Gestor" na pagina de edicao do usuario.</li>
+            </ul>
         </div>
 
-        <!-- Lista de grupos -->
-        <div class="card-aero">
-            <div class="card-header-clean">
-                <span style="color: var(--aero-accent-green);">&#128101;</span>
-                <span>Grupos Existentes</span>
-                <span class="badge rounded-pill ms-auto" style="background-color: var(--aero-accent-green); font-size: 0.75rem;">{{ grupos_info|length }}</span>
-            </div>
-
-            {% if grupos_info %}
+        <!-- Lista de setores/grupos fixos -->
+        <div class="d-flex flex-column gap-4">
+            {% for item in grupos_info %}
+            <div class="card-aero">
+                <div class="card-header-clean">
+                    <span class="grupo-icon">
+                        {% if 'CAD' in item.grupo.name %}&#128208;{% elif 'Router' in item.grupo.name %}&#9881;{% else %}&#128424;{% endif %}
+                    </span>
+                    <span class="grupo-nome">{{ item.grupo.name }}</span>
+                    <span class="badge rounded-pill ms-auto" style="background-color: var(--aero-accent-green); font-size: 0.75rem;">
+                        {{ item.membros_count }} membro{{ item.membros_count|pluralize:"s" }}
+                    </span>
+                </div>
                 <div class="p-4">
-                    <div class="d-flex flex-column gap-3">
-                        {% for item in grupos_info %}
-                        <div class="grupo-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="grupo-nome">{{ item.grupo.name }}</div>
-                                    <div class="grupo-count mt-1">{{ item.membros_count }} membro{{ item.membros_count|pluralize:"s" }} ativo{{ item.membros_count|pluralize:"s" }}</div>
-                                    {% if item.membros %}
-                                        <div class="mt-2 d-flex flex-wrap gap-1">
-                                            {% for membro in item.membros %}
-                                                <span class="badge-membro">{{ membro.username }}</span>
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                <div>
-                                    <a href="{% url 'eliminar_grupo' item.grupo.id %}"
-                                       class="btn-acao-danger-sm"
-                                       onclick="return confirm('Eliminar o grupo {{ item.grupo.name }}? Os utilizadores n\u00e3o ser\u00e3o eliminados, apenas perder\u00e3o este grupo.')">
-                                        &#128465; Eliminar
-                                    </a>
-                                </div>
+                    {% if item.membros_count > 0 %}
+                        <!-- Gestores -->
+                        {% if item.membros_gestores %}
+                        <div class="mb-3">
+                            <div class="role-section-title">&#128737; Gestores (podem editar/excluir)</div>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for membro in item.membros_gestores %}
+                                    <span class="badge-gestor">{{ membro.first_name|default:membro.username }} {{ membro.last_name }}</span>
+                                {% endfor %}
                             </div>
                         </div>
-                        {% endfor %}
-                    </div>
+                        {% endif %}
+
+                        <!-- Operadores -->
+                        {% if item.membros_operadores %}
+                        <div>
+                            <div class="role-section-title">&#128100; Operadores (podem adicionar pedidos)</div>
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for membro in item.membros_operadores %}
+                                    <span class="badge-operador">{{ membro.first_name|default:membro.username }} {{ membro.last_name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted small mb-0 text-center py-2">Nenhum membro neste setor. Adicione usuarios na aba <a href="{% url 'lista_usuarios' %}" style="color: var(--aero-accent-green); font-weight: 600;">Utilizadores</a>.</p>
+                    {% endif %}
                 </div>
-            {% else %}
-                <div class="empty-state">
-                    <p class="mb-0" style="font-weight: 500;">Nenhum grupo criado.</p>
-                    <p class="small">Crie grupos acima para organizar os utilizadores por setor.</p>
-                </div>
-            {% endif %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 

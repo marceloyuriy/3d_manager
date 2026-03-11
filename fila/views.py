@@ -11,14 +11,23 @@ from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     RegistroUsuarioForm, PerfilUsuarioForm,
                     GestaoUsuarioForm)
 
-# --- FUNÇÃO DO SEGURANÇA ---
-def tem_permissao(user, setor):
-    if not user.is_authenticated:
-        return False
-    if user.is_superuser: # O Gestor Geral pode tudo!
-        return True
-    # Verifica se o usuário pertence ao grupo 'Setor 3D', 'Setor Router', etc.
+# --- Os 3 grupos fixos do sistema ---
+GRUPOS_FIXOS = ['Setor 3D', 'Setor Router', 'Setor CAD']
+
+# --- FUNÇÕES DE SEGURANÇA ---
+def pode_adicionar(user, setor):
+    """Verifica se o usuário pode adicionar pedidos (Operador do Setor)"""
+    if not user.is_authenticated: return False
+    if user.is_superuser: return True
     return user.groups.filter(name=f'Setor {setor}').exists()
+
+def pode_gerenciar(user, setor):
+    """Verifica se o usuário pode editar/excluir pedidos (Gestor do Setor)"""
+    if not user.is_authenticated: return False
+    if user.is_superuser: return True
+    # Tem que pertencer ao setor E ter a flag de staff (Gestor)
+    return user.is_staff and user.groups.filter(name=f'Setor {setor}').exists()
+
 
 # ==========================================
 # VIEWS DO HUB (LISTAGEM)
@@ -34,9 +43,11 @@ def lista_3d(request):
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': '3D',
-        'pode_editar': tem_permissao(request.user, '3D') # <--- Enviando a permissão pro HTML!
+        'pode_adicionar': pode_adicionar(request.user, '3D'),
+        'pode_editar': pode_gerenciar(request.user, '3D'),
     }
     return render(request, 'fila/lista.html', contexto)
+
 @login_required
 def lista_router(request):
     em_producao = PedidoRouter.objects.filter(status='I').order_by('prazo')
@@ -48,9 +59,11 @@ def lista_router(request):
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': 'Router',
-        'pode_editar': tem_permissao(request.user, 'Router')
+        'pode_adicionar': pode_adicionar(request.user, 'Router'),
+        'pode_editar': pode_gerenciar(request.user, 'Router'),
     }
     return render(request, 'fila/lista.html', contexto)
+
 @login_required
 def lista_cad(request):
     em_producao = PedidoCAD.objects.filter(status='I').order_by('prazo')
@@ -62,7 +75,8 @@ def lista_cad(request):
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': 'CAD',
-        'pode_editar': tem_permissao(request.user, 'CAD')
+        'pode_adicionar': pode_adicionar(request.user, 'CAD'),
+        'pode_editar': pode_gerenciar(request.user, 'CAD'),
     }
     return render(request, 'fila/lista.html', contexto)
 
@@ -72,8 +86,8 @@ def lista_cad(request):
 # ==========================================
 @login_required
 def novo_pedido_3d(request):
-    if not tem_permissao(request.user, '3D'):
-        messages.error(request, 'Acesso Negado: Você não tem o crachá do Setor 3D.')
+    if not pode_adicionar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado: Você não pertence ao Setor 3D.')
         return redirect('lista_fila')
 
     if request.method == 'POST':
@@ -82,14 +96,17 @@ def novo_pedido_3d(request):
             pedido = form.save(commit=False)
             pedido.solicitante = request.user.username
             pedido.save()
+            messages.success(request, 'Pedido 3D adicionado à fila!')
             return redirect('lista_fila')
     else:
         form = NovaImpressao3DForm()
-    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - 3D'})
+    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - Impressão 3D'})
 
 @login_required
 def editar_pedido_3d(request, id):
-    if not tem_permissao(request.user, '3D'): return redirect('lista_fila')
+    if not pode_gerenciar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor 3D podem editar pedidos.')
+        return redirect('lista_fila')
     item = get_object_or_404(Pedido3D, id=id)
     if request.method == 'POST':
         form = EdicaoGestor3DForm(request.POST, request.FILES, instance=item)
@@ -108,7 +125,9 @@ def editar_pedido_3d(request, id):
 
 @login_required
 def deletar_pedido_3d(request, id):
-    if not tem_permissao(request.user, '3D'): return redirect('lista_fila')
+    if not pode_gerenciar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor 3D podem excluir pedidos.')
+        return redirect('lista_fila')
     item = get_object_or_404(Pedido3D, id=id)
     item.delete()
     messages.success(request, 'Pedido removido da fila 3D.')
@@ -120,8 +139,8 @@ def deletar_pedido_3d(request, id):
 # ==========================================
 @login_required
 def novo_pedido_router(request):
-    if not tem_permissao(request.user, 'Router'):
-        messages.error(request, 'Acesso Negado: Você não tem o crachá do Setor Router.')
+    if not pode_adicionar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado: Você não pertence ao Setor Router.')
         return redirect('lista_router')
 
     if request.method == 'POST':
@@ -130,14 +149,17 @@ def novo_pedido_router(request):
             pedido = form.save(commit=False)
             pedido.solicitante = request.user.username
             pedido.save()
+            messages.success(request, 'Pedido Router adicionado à fila!')
             return redirect('lista_router')
     else:
         form = NovoRouterForm()
-    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - Router'})
+    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - Router CNC'})
 
 @login_required
 def editar_pedido_router(request, id):
-    if not tem_permissao(request.user, 'Router'): return redirect('lista_router')
+    if not pode_gerenciar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor Router podem editar pedidos.')
+        return redirect('lista_router')
     item = get_object_or_404(PedidoRouter, id=id)
     if request.method == 'POST':
         form = EdicaoGestorRouterForm(request.POST, request.FILES, instance=item)
@@ -154,7 +176,9 @@ def editar_pedido_router(request, id):
 
 @login_required
 def deletar_pedido_router(request, id):
-    if not tem_permissao(request.user, 'Router'): return redirect('lista_router')
+    if not pode_gerenciar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor Router podem excluir pedidos.')
+        return redirect('lista_router')
     item = get_object_or_404(PedidoRouter, id=id)
     item.delete()
     messages.success(request, 'Pedido removido da fila Router.')
@@ -166,8 +190,8 @@ def deletar_pedido_router(request, id):
 # ==========================================
 @login_required
 def novo_pedido_cad(request):
-    if not tem_permissao(request.user, 'CAD'):
-        messages.error(request, 'Acesso Negado: Você não tem o crachá do Setor CAD.')
+    if not pode_adicionar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado: Você não pertence ao Setor CAD.')
         return redirect('lista_cad')
 
     if request.method == 'POST':
@@ -176,14 +200,17 @@ def novo_pedido_cad(request):
             pedido = form.save(commit=False)
             pedido.solicitante = request.user.username
             pedido.save()
+            messages.success(request, 'Projeto CAD adicionado à fila!')
             return redirect('lista_cad')
     else:
         form = NovoCADForm()
-    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - CAD'})
+    return render(request, 'fila/form.html', {'form': form, 'titulo': 'Novo Pedido - Projeto CAD'})
 
 @login_required
 def editar_pedido_cad(request, id):
-    if not tem_permissao(request.user, 'CAD'): return redirect('lista_cad')
+    if not pode_gerenciar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor CAD podem editar pedidos.')
+        return redirect('lista_cad')
     item = get_object_or_404(PedidoCAD, id=id)
     if request.method == 'POST':
         form = EdicaoGestorCADForm(request.POST, request.FILES, instance=item)
@@ -200,7 +227,9 @@ def editar_pedido_cad(request, id):
 
 @login_required
 def deletar_pedido_cad(request, id):
-    if not tem_permissao(request.user, 'CAD'): return redirect('lista_cad')
+    if not pode_gerenciar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado: Apenas gestores do Setor CAD podem excluir pedidos.')
+        return redirect('lista_cad')
     item = get_object_or_404(PedidoCAD, id=id)
     item.delete()
     messages.success(request, 'Projeto removido da fila CAD.')
@@ -272,9 +301,23 @@ def perfil(request):
     else:
         form = PerfilUsuarioForm(instance=request.user)
 
+    # Montar info dos setores do usuário
+    user_groups = request.user.groups.values_list('name', flat=True)
+    setores_info = []
+    for grupo_nome in GRUPOS_FIXOS:
+        setor_nome = grupo_nome.replace('Setor ', '')
+        pertence = grupo_nome in user_groups
+        eh_gestor = request.user.is_staff and pertence
+        setores_info.append({
+            'nome': setor_nome,
+            'pertence': pertence,
+            'eh_gestor': eh_gestor,
+        })
+
     return render(request, 'fila/perfil.html', {
         'form': form,
-        'grupos': request.user.groups.values_list('name', flat=True),
+        'grupos': user_groups,
+        'setores_info': setores_info,
     })
 
 
@@ -342,14 +385,20 @@ def lista_grupos(request):
         messages.error(request, 'Acesso restrito ao gestor.')
         return redirect('lista_fila')
 
-    grupos = Group.objects.all().order_by('name')
-    # Contar membros por grupo
+    # Auto-criar os 3 grupos fixos se não existirem
+    for nome in GRUPOS_FIXOS:
+        Group.objects.get_or_create(name=nome)
+
+    grupos = Group.objects.filter(name__in=GRUPOS_FIXOS).order_by('name')
     grupos_info = []
     for grupo in grupos:
+        membros = grupo.user_set.filter(is_active=True).order_by('username')
         grupos_info.append({
             'grupo': grupo,
-            'membros_count': grupo.user_set.filter(is_active=True).count(),
-            'membros': grupo.user_set.filter(is_active=True).order_by('username'),
+            'membros_count': membros.count(),
+            'membros': membros,
+            'membros_gestores': membros.filter(is_staff=True),
+            'membros_operadores': membros.filter(is_staff=False),
         })
 
     pendentes_count = User.objects.filter(is_active=False).count()
@@ -361,28 +410,17 @@ def lista_grupos(request):
 
 @login_required
 def criar_grupo(request):
+    """Mantida por compatibilidade mas os grupos agora são fixos"""
     if not request.user.is_superuser:
         return redirect('lista_fila')
-
-    if request.method == 'POST':
-        nome = request.POST.get('nome', '').strip()
-        if not nome:
-            messages.error(request, 'O nome do grupo não pode estar vazio.')
-        elif Group.objects.filter(name=nome).exists():
-            messages.error(request, f'O grupo "{nome}" já existe.')
-        else:
-            Group.objects.create(name=nome)
-            messages.success(request, f'Grupo "{nome}" criado com sucesso!')
+    messages.info(request, 'Os grupos do sistema são fixos: Setor 3D, Setor Router e Setor CAD.')
     return redirect('lista_grupos')
 
 
 @login_required
 def eliminar_grupo(request, group_id):
+    """Não permite eliminar os grupos fixos"""
     if not request.user.is_superuser:
         return redirect('lista_fila')
-
-    grupo = get_object_or_404(Group, id=group_id)
-    nome = grupo.name
-    grupo.delete()
-    messages.success(request, f'Grupo "{nome}" eliminado.')
+    messages.error(request, 'Os grupos do sistema são fixos e não podem ser eliminados.')
     return redirect('lista_grupos')

@@ -114,7 +114,6 @@
             </a>
         </div>
 
-        <!-- Info somente leitura -->
         <div class="card-aero mb-4">
             <div class="card-header-clean">
                 <span style="color: var(--aero-accent-green);">&#128100;</span>
@@ -136,7 +135,6 @@
             </div>
         </div>
 
-        <!-- Formulário editável -->
         <div class="card-aero">
             <div class="card-header-clean">
                 <span style="color: var(--aero-accent-green);">&#9998;</span>
@@ -163,25 +161,37 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">SETORES</label>
-                        <div class="mt-1">
+                        <label class="form-label">SETORES (o utilizador pode adicionar pedidos nestes setores)</label>
+                        <div class="mt-1" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.75rem 1rem;">
                             {% for checkbox in form.grupos %}
                                 <div class="form-check">
                                     {{ checkbox.tag }}
-                                    <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                                    <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                        {% if 'CAD' in checkbox.choice_label %}&#128208;{% elif 'Router' in checkbox.choice_label %}&#9881;{% else %}&#128424;{% endif %}
+                                        {{ checkbox.choice_label }}
+                                    </label>
                                 </div>
                             {% empty %}
-                                <p class="text-muted small">Nenhum grupo criado. Crie grupos no painel admin.</p>
+                                <p class="text-muted small mb-0">Erro: grupos do sistema nao encontrados.</p>
                             {% endfor %}
                         </div>
+                        <small class="text-muted">Marque os setores nos quais este utilizador pode criar novos pedidos.</small>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 d-flex flex-column gap-3">
                         <div class="form-check form-switch">
                             {{ form.is_active }}
                             <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
                                 <strong>Conta ativa</strong>
                                 <span class="text-muted small d-block">Desativar impede o utilizador de aceder ao sistema.</span>
+                            </label>
+                        </div>
+
+                        <div class="form-check form-switch">
+                            {{ form.is_staff }}
+                            <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">
+                                <strong style="color: var(--aero-logo-green);">&#128737; Privilegio de Gestor</strong>
+                                <span class="text-muted small d-block">Permite <strong>editar, excluir e gerenciar</strong> pedidos nos setores que pertence. Sem este privilegio, o utilizador apenas pode <strong>adicionar</strong> novos pedidos.</span>
                             </label>
                         </div>
                     </div>
