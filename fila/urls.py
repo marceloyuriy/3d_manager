@@ -21,6 +21,7 @@ urlpatterns = [
     path('cad/deletar/<int:id>/', views.deletar_pedido_cad, name='deletar_pedido_cad'),
 
     path('registro/', views.registro, name='registro'),
+    path('perfil/', views.perfil, name='perfil'),
 
     path('gestao/usuarios/pendentes/', views.lista_usuarios_pendentes, name='usuarios_pendentes'),
     path('gestao/usuarios/aprovar/<int:user_id>/', views.aprovar_usuario, name='aprovar_usuario'),

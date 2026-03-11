@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Perfil - AeroRiver Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --aero-logo-dark: #334155;
+            --aero-logo-green: #2A9D8F;
+            --aero-accent-green: #2A9D8F;
+            --bg-color: #F8FAFC;
+            --card-radius: 16px;
+            --border-color-soft: #F1F5F9;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+            padding-bottom: 50px;
+        }
+        .navbar-aero {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid var(--border-color-soft);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 1.25rem 0;
+        }
+        .navbar-brand-custom { font-weight: 700; font-size: 1.25rem; color: #334155; }
+        .hub-title-suffix { color: var(--aero-accent-green); }
+        .btn-outline-dark-aero {
+            color: #334155; border-color: #E2E8F0; font-weight: 500;
+            font-size: 0.85rem; border-radius: 8px;
+        }
+        .btn-outline-dark-aero:hover { background-color: #F8FAFC; border-color: #CBD5E1; }
+        .card-aero {
+            border: none; border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02); background: #ffffff;
+            overflow: hidden;
+        }
+        .card-header-clean {
+            background: transparent; border-bottom: 1px solid var(--border-color-soft);
+            padding: 1.5rem 1.75rem; font-weight: 700; font-size: 1.05rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .form-label {
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; color: #64748B;
+        }
+        .form-control {
+            border-radius: 8px; padding: 0.7rem 1rem; border: 1px solid #E2E8F0;
+            background-color: #F8FAFC; transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: #2A9D8F; background-color: #FFFFFF;
+            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
+        }
+        .form-control-plaintext {
+            padding: 0.7rem 0; font-size: 0.95rem; color: #475569;
+        }
+        .btn-aero-green {
+            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
+            color: white; font-weight: 600; border: none; border-radius: 10px;
+            padding: 0.75rem 2rem; transition: all 0.3s ease;
+        }
+        .btn-aero-green:hover {
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3); color: white;
+        }
+        .back-link {
+            color: var(--aero-accent-green); text-decoration: none; font-weight: 600;
+            font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .back-link:hover { color: #21867a; }
+        .badge-grupo {
+            background-color: #F0FDFA; color: #1A7F64; border: 1px solid #B2DFDB;
+            padding: 0.4em 0.9em; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+        .info-row {
+            display: flex; align-items: center; padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color-soft);
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-size: 0.8rem; font-weight: 600; color: #94A3B8; min-width: 140px; }
+        .info-value { color: #475569; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-aero mb-4 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
+                <span class="hub-title-suffix" style="font-size: 1.5rem;">✈️ AeroRiver</span> - Meu Perfil
+            </span>
+            <div>
+                <div class="dropdown d-inline">
+                    <button class="btn btn-outline-dark-aero dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ol&aacute;, <strong>{{ request.user.username }}</strong>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 12px;">
+                        <li><a class="dropdown-item py-2" href="{% url 'lista_fila' %}">🏠 Hub de Manufatura</a></li>
+                        {% if request.user.is_superuser %}
+                        <li><a class="dropdown-item py-2" href="{% url 'usuarios_pendentes' %}">👥 Gest&atilde;o de Utilizadores</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">🔐 Alterar Senha</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item py-2 text-danger">🚪 Sair</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 700px;">
+        <div class="mb-4">
+            <a href="{% url 'lista_fila' %}" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Voltar ao Hub
+            </a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible fade show shadow-sm border-0 mb-4" style="border-radius: 12px; background-color: #E6FFFA; color: #1A7F64;" role="alert">
+                    <strong>&#10003; Sucesso:</strong> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Info do Utilizador (somente leitura) -->
+        <div class="card-aero mb-4">
+            <div class="card-header-clean">
+                <span style="color: var(--aero-accent-green);">&#128100;</span>
+                <span>Informa&ccedil;&otilde;es da Conta</span>
+            </div>
+            <div class="px-4 py-3">
+                <div class="info-row">
+                    <span class="info-label">Utilizador</span>
+                    <span class="info-value"><strong>{{ request.user.username }}</strong></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Membro desde</span>
+                    <span class="info-value">{{ request.user.date_joined|date:"d/m/Y" }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Setores</span>
+                    <span class="info-value">
+                        {% if request.user.is_superuser %}
+                            <span class="badge-grupo">Gestor Geral</span>
+                        {% elif grupos %}
+                            {% for grupo in grupos %}
+                                <span class="badge-grupo">{{ grupo }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted" style="font-size: 0.85rem;">Nenhum setor atribu&iacute;do</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário editável -->
+        <div class="card-aero">
+            <div class="card-header-clean">
+                <span style="color: var(--aero-accent-green);">&#9998;</span>
+                <span>Editar Dados Pessoais</span>
+            </div>
+            <div class="p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">NOME</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">SOBRENOME</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">E-MAIL</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-aero-green">Guardar Altera&ccedil;&otilde;es</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

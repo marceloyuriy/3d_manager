@@ -8,7 +8,7 @@ from .models import Pedido3D, PedidoRouter, PedidoCAD
 from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
                     NovoCADForm, EdicaoGestorCADForm,
-                    RegistroUsuarioForm)
+                    RegistroUsuarioForm, PerfilUsuarioForm)
 
 # --- FUNÇÃO DO SEGURANÇA ---
 def tem_permissao(user, setor):
@@ -258,3 +258,20 @@ def rejeitar_usuario(request, user_id):
     user.delete()
     messages.success(request, f'Solicitação de "{username}" foi rejeitada.')
     return redirect('usuarios_pendentes')
+
+
+@login_required
+def perfil(request):
+    if request.method == 'POST':
+        form = PerfilUsuarioForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('perfil')
+    else:
+        form = PerfilUsuarioForm(instance=request.user)
+
+    return render(request, 'fila/perfil.html', {
+        'form': form,
+        'grupos': request.user.groups.values_list('name', flat=True),
+    })

@@ -33,6 +33,25 @@ class RegistroUsuarioForm(UserCreationForm):
         self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Crie uma senha'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Repita a senha'})
 
+
+# ==========================================
+# FORMULÁRIO DE PERFIL DO USUÁRIO
+# ==========================================
+class PerfilUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        labels = {
+            'first_name': 'Nome',
+            'last_name': 'Sobrenome',
+            'email': 'E-mail',
+        }
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
 # ==========================================
 # FORMULÁRIOS DA IMPRESSORA 3D
 # ==========================================
