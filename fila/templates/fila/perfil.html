@@ -147,16 +147,35 @@
                     <span class="info-value">{{ request.user.date_joined|date:"d/m/Y" }}</span>
                 </div>
                 <div class="info-row">
+                    <span class="info-label">Nivel de acesso</span>
+                    <span class="info-value">
+                        {% if request.user.is_superuser %}
+                            <span class="badge-grupo" style="background-color: #FEF3C7; color: #D97706; border-color: #FDE68A;">Administrador</span>
+                        {% elif request.user.is_staff %}
+                            <span class="badge-grupo" style="background-color: #EFF6FF; color: #2563EB; border-color: #BFDBFE;">Gestor</span>
+                        {% else %}
+                            <span class="badge-grupo">Operador</span>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="info-row">
                     <span class="info-label">Setores</span>
                     <span class="info-value">
                         {% if request.user.is_superuser %}
-                            <span class="badge-grupo">Gestor Geral</span>
-                        {% elif grupos %}
-                            {% for grupo in grupos %}
-                                <span class="badge-grupo">{{ grupo }}</span>
+                            <span class="badge-grupo">Todos os setores</span>
+                        {% elif setores_info %}
+                            {% for setor in setores_info %}
+                                {% if setor.pertence %}
+                                    <span class="badge-grupo{% if setor.eh_gestor %}" style="background-color: #EFF6FF; color: #2563EB; border-color: #BFDBFE;{% endif %}">
+                                        {{ setor.nome }}{% if setor.eh_gestor %} (Gestor){% endif %}
+                                    </span>
+                                {% endif %}
                             {% endfor %}
+                            {% if not grupos %}
+                                <span class="text-muted" style="font-size: 0.85rem;">Nenhum setor atribuido. Contacte o administrador.</span>
+                            {% endif %}
                         {% else %}
-                            <span class="text-muted" style="font-size: 0.85rem;">Nenhum setor atribu&iacute;do</span>
+                            <span class="text-muted" style="font-size: 0.85rem;">Nenhum setor atribuido</span>
                         {% endif %}
                     </span>
                 </div>

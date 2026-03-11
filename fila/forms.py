@@ -57,8 +57,10 @@ class PerfilUsuarioForm(forms.ModelForm):
 # FORMULÁRIO DE GESTÃO DE USUÁRIO (ADMIN)
 # ==========================================
 class GestaoUsuarioForm(forms.ModelForm):
+    GRUPOS_FIXOS = ['Setor 3D', 'Setor Router', 'Setor CAD']
+
     grupos = forms.ModelMultipleChoiceField(
-        queryset=Group.objects.all(),
+        queryset=Group.objects.none(),  # Será preenchido no __init__
         required=False,
         label='Setores',
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
@@ -66,24 +68,30 @@ class GestaoUsuarioForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'is_active']
+        fields = ['first_name', 'last_name', 'email', 'is_active', 'is_staff'] # <-- Adicione o is_staff aqui
         labels = {
             'first_name': 'Nome',
             'last_name': 'Sobrenome',
             'email': 'E-mail',
-            'is_active': 'Conta ativa',
+            'is_active': 'Conta ativa (Permite login)',
+            'is_staff': 'É Gestor? (Permite editar/excluir pedidos)', # <-- Nova label
         }
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_staff': forms.CheckboxInput(attrs={'class': 'form-check-input'}), # <-- Novo widget
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Garantir que os 3 grupos fixos existam e filtrar apenas eles
+        for nome in self.GRUPOS_FIXOS:
+            Group.objects.get_or_create(name=nome)
+        self.fields['grupos'].queryset = Group.objects.filter(name__in=self.GRUPOS_FIXOS).order_by('name')
         if self.instance.pk:
-            self.fields['grupos'].initial = self.instance.groups.all()
+            self.fields['grupos'].initial = self.instance.groups.filter(name__in=self.GRUPOS_FIXOS)
 
     def save(self, commit=True):
         user = super().save(commit=commit)
