@@ -141,17 +141,16 @@
             {% endfor %}
         {% endif %}
 
-        <!-- Tabs: Ativos / Pendentes -->
+        <!-- Tabs -->
         <div class="tab-nav">
-            <a href="{% url 'lista_usuarios' %}">
-                👥 Utilizadores Ativos
-            </a>
+            <a href="{% url 'lista_usuarios' %}">👥 Utilizadores</a>
             <a href="{% url 'usuarios_pendentes' %}" class="active">
                 &#128276; Pendentes
                 {% if pendentes %}
                     <span class="badge rounded-pill ms-1" style="background-color: #fff; color: var(--aero-accent-green); font-size: 0.7rem;">{{ pendentes|length }}</span>
                 {% endif %}
             </a>
+            <a href="{% url 'lista_grupos' %}">&#9881; Grupos</a>
         </div>
 
         <div class="card-aero">

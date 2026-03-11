@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.utils import timezone
 
@@ -331,3 +331,58 @@ def desativar_usuario(request, user_id):
     user.save()
     messages.success(request, f'Utilizador "{user.username}" foi desativado.')
     return redirect('lista_usuarios')
+
+
+# ==========================================
+# VIEWS DE GESTÃO DE GRUPOS/SETORES
+# ==========================================
+@login_required
+def lista_grupos(request):
+    if not request.user.is_superuser:
+        messages.error(request, 'Acesso restrito ao gestor.')
+        return redirect('lista_fila')
+
+    grupos = Group.objects.all().order_by('name')
+    # Contar membros por grupo
+    grupos_info = []
+    for grupo in grupos:
+        grupos_info.append({
+            'grupo': grupo,
+            'membros_count': grupo.user_set.filter(is_active=True).count(),
+            'membros': grupo.user_set.filter(is_active=True).order_by('username'),
+        })
+
+    pendentes_count = User.objects.filter(is_active=False).count()
+    return render(request, 'fila/gestao_grupos.html', {
+        'grupos_info': grupos_info,
+        'pendentes_count': pendentes_count,
+    })
+
+
+@login_required
+def criar_grupo(request):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
+        if not nome:
+            messages.error(request, 'O nome do grupo não pode estar vazio.')
+        elif Group.objects.filter(name=nome).exists():
+            messages.error(request, f'O grupo "{nome}" já existe.')
+        else:
+            Group.objects.create(name=nome)
+            messages.success(request, f'Grupo "{nome}" criado com sucesso!')
+    return redirect('lista_grupos')
+
+
+@login_required
+def eliminar_grupo(request, group_id):
+    if not request.user.is_superuser:
+        return redirect('lista_fila')
+
+    grupo = get_object_or_404(Group, id=group_id)
+    nome = grupo.name
+    grupo.delete()
+    messages.success(request, f'Grupo "{nome}" eliminado.')
+    return redirect('lista_grupos')

@@ -30,6 +30,10 @@ urlpatterns = [
     path('gestao/usuarios/editar/<int:user_id>/', views.editar_usuario, name='editar_usuario'),
     path('gestao/usuarios/desativar/<int:user_id>/', views.desativar_usuario, name='desativar_usuario'),
 
+    path('gestao/grupos/', views.lista_grupos, name='lista_grupos'),
+    path('gestao/grupos/criar/', views.criar_grupo, name='criar_grupo'),
+    path('gestao/grupos/eliminar/<int:group_id>/', views.eliminar_grupo, name='eliminar_grupo'),
+
     path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
