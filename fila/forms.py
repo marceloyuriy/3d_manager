@@ -1,5 +1,37 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Pedido3D, PedidoRouter, PedidoCAD
+
+
+# ==========================================
+# FORMULÁRIO DE REGISTRO DE USUÁRIO
+# ==========================================
+class RegistroUsuarioForm(UserCreationForm):
+    first_name = forms.CharField(
+        max_length=30, required=True, label='Nome',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu nome'}),
+    )
+    last_name = forms.CharField(
+        max_length=30, required=True, label='Sobrenome',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu sobrenome'}),
+    )
+    email = forms.EmailField(
+        required=True, label='E-mail',
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'seu@email.com'}),
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome de utilizador'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Crie uma senha'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Repita a senha'})
 
 # ==========================================
 # FORMULÁRIOS DA IMPRESSORA 3D

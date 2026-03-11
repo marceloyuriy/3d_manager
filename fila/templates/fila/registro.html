@@ -3,74 +3,160 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Nova Conta - AeroRiver</title>
+    <title>Criar Conta - AeroRiver Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --aero-logo-dark: #334155;
-            --aero-logo-green: #2A9D8F;
-            --aero-accent-blue: #00B4D8;
-            --bg-color: #F8FAFC;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: #334155;
+            background-color: #F8FAFC;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            margin: 0;
             padding: 2rem 0;
+            color: #334155;
         }
         .auth-card {
             background: #ffffff;
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            padding: 3rem 2.5rem;
             width: 100%;
             max-width: 480px;
-            padding: 3rem 2.5rem;
         }
-        .btn-aero-primary {
-            background: linear-gradient(135deg, var(--aero-accent-blue) 0%, #0394D2 100%);
+        .aero-title {
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .aero-title span { color: #2A9D8F; }
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #64748B;
+        }
+        .form-control {
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            border: 1px solid #E2E8F0;
+            background-color: #F8FAFC;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: #2A9D8F;
+            background-color: #FFFFFF;
+            box-shadow: 0 0 0 0.25rem rgba(42, 157, 143, 0.15);
+        }
+        .btn-aero-green {
+            background: linear-gradient(135deg, #2A9D8F 0%, #21867a 100%);
             color: white;
             font-weight: 600;
             border: none;
             border-radius: 10px;
-            padding: 0.8rem;
+            padding: 0.9rem;
+            width: 100%;
+            font-size: 1.05rem;
             transition: all 0.3s ease;
         }
-        .btn-aero-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3); color: white; }
-        .form-control { border-radius: 8px; padding: 0.5rem 0.8rem; border-color: #E2E8F0; }
-        .form-control:focus { border-color: var(--aero-accent-blue); box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.15); }
-        .helptext { font-size: 0.75rem; color: #94A3B8; display: block; margin-top: 4px; }
-        ul.errorlist { color: #DC2626; font-size: 0.8rem; padding-left: 1rem; }
+        .btn-aero-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3);
+            color: white;
+        }
+        .info-box {
+            background-color: #F0FDFA;
+            border-left: 4px solid #2A9D8F;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            font-size: 0.85rem;
+            color: #1A7F64;
+            margin-bottom: 1.5rem;
+        }
+        .helptext { font-size: 0.72rem; color: #94A3B8; display: block; margin-top: 2px; }
+        ul.errorlist { color: #DC2626; font-size: 0.8rem; padding-left: 1rem; list-style: none; margin: 4px 0 0 0; }
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94A3B8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .login-link a { color: #2A9D8F; font-weight: 600; text-decoration: none; }
+        .login-link a:hover { color: #21867a; }
     </style>
 </head>
 <body>
     <div class="auth-card">
-        <div class="text-center mb-4">
-            <img src="{% static 'img/Logo.png' %}" alt="Logo AeroRiver" height="45" style="object-fit: contain;">
+        <div class="aero-title">✈️ <span>AeroRiver</span> Hub</div>
+        <p class="text-center text-muted mb-4" style="font-size: 0.9rem;">Criar Conta de Operador</p>
+
+        <div class="info-box">
+            Ap&oacute;s o registo, a sua conta ser&aacute; analisada pelo gestor antes de poder aceder ao sistema.
         </div>
 
-        <h5 class="fw-bold mb-4 text-center" style="color: var(--aero-logo-dark);">Criar Conta de Operador</h5>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" style="font-size: 0.85rem; border-radius: 8px; border: none; background-color: #E6FFFA; color: #1A7F64;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-        <form method="post">
+        <form method="post" novalidate>
             {% csrf_token %}
 
-            <div class="mb-2">
-                {{ form.as_p }}
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label class="form-label">NOME</label>
+                    {{ form.first_name }}
+                    {{ form.first_name.errors }}
+                </div>
+                <div class="col-6">
+                    <label class="form-label">SOBRENOME</label>
+                    {{ form.last_name }}
+                    {{ form.last_name.errors }}
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-aero-primary w-100 mt-4 mb-3">Concluir Registo</button>
-
-            <div class="text-center small">
-                <span class="text-muted">Já faz parte da equipa?</span>
-                <a href="{% url 'login' %}" style="color: var(--aero-logo-green); font-weight: 600; text-decoration: none;">Faça o Login</a>
+            <div class="mb-3">
+                <label class="form-label">UTILIZADOR</label>
+                {{ form.username }}
+                {% if form.username.help_text %}<span class="helptext">{{ form.username.help_text }}</span>{% endif %}
+                {{ form.username.errors }}
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">E-MAIL</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">SENHA</label>
+                {{ form.password1 }}
+                {% if form.password1.help_text %}<span class="helptext">{{ form.password1.help_text }}</span>{% endif %}
+                {{ form.password1.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">CONFIRMAR SENHA</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-aero-green mt-2">Solicitar Conta</button>
         </form>
+
+        <div class="login-link">
+            J&aacute; faz parte da equipa? <a href="{% url 'login' %}">Fa&ccedil;a o Login</a>
+        </div>
     </div>
 </body>
 </html>
