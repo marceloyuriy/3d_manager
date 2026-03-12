@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from .models import Pedido3D, PedidoRouter, PedidoCAD
+from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
 
 
 # ==========================================
@@ -185,3 +187,17 @@ class EdicaoGestorCADForm(forms.ModelForm):
             'arquivo_impressao': forms.FileInput(attrs={'class': 'form-control'}),
             'link_fusion': forms.URLInput(attrs={'class': 'form-control'}),
         }
+
+
+class LoginFormCustomizado(AuthenticationForm):
+    """
+    Formulário de login customizado para dar mensagens amigáveis
+    quando o usuário acertar a senha mas a conta estiver aguardando aprovação.
+    """
+    def confirm_login_allowed(self, user):
+        # Esta função do Django só é chamada SE a senha digitada estiver CORRETA.
+        if not user.is_active:
+            raise ValidationError(
+                "A sua conta já foi criada, mas ainda está aguardando a aprovação do gestor. Por favor, aguarde.",
+                code='inactive',
+            )

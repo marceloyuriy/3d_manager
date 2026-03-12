@@ -1,6 +1,6 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
-
+from fila.forms import LoginFormCustomizado
 from . import views
 
 urlpatterns = [
@@ -34,7 +34,7 @@ urlpatterns = [
     path('gestao/grupos/criar/', views.criar_grupo, name='criar_grupo'),
     path('gestao/grupos/eliminar/<int:group_id>/', views.eliminar_grupo, name='eliminar_grupo'),
 
-    path('login/', auth_views.LoginView.as_view(template_name='fila/login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='fila/login.html',form_class=LoginFormCustomizado), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
     path('alterar-senha/', auth_views.PasswordChangeView.as_view(template_name='fila/alterar_senha.html'), name='password_change'),
