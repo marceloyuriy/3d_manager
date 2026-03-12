@@ -96,13 +96,13 @@ DEFAULT_FROM_EMAIL = os.getenv('DJANGO_DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or '
 if AXES_INSTALLED:
     AUTHENTICATION_BACKENDS = [
         'axes.backends.AxesStandaloneBackend',
-        'django.contrib.auth.backends.ModelBackend',
+        'fila.backends.BackendIgnoraInativo',
     ]
     AXES_FAILURE_LIMIT = 5
     AXES_COOLOFF_TIME = 1
     AXES_LOCKOUT_TEMPLATE = 'fila/lockout.html'
 else:
-    AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+    AUTHENTICATION_BACKENDS = ['fila.backends.BackendIgnoraInativo']
 
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
