@@ -189,6 +189,40 @@ class EdicaoGestorCADForm(forms.ModelForm):
         }
 
 
+# ==========================================
+# FORMULÁRIOS DE OPERAÇÕES (UPLOAD / PENDÊNCIA)
+# ==========================================
+class UploadArquivo3DForm(forms.ModelForm):
+    class Meta:
+        model = Pedido3D
+        fields = ['arquivo_impressao']
+        widgets = {
+            'arquivo_impressao': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+class UploadArquivoRouterForm(forms.ModelForm):
+    class Meta:
+        model = PedidoRouter
+        fields = ['arquivo_impressao']
+        widgets = {
+            'arquivo_impressao': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+class UploadArquivoCADForm(forms.ModelForm):
+    class Meta:
+        model = PedidoCAD
+        fields = ['arquivo_impressao']
+        widgets = {
+            'arquivo_impressao': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+class PendenciaForm(forms.Form):
+    observacao_pendencia = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Descreva o que está pendente...'}),
+        label='Observação de Pendência',
+    )
+
+
 class LoginFormCustomizado(AuthenticationForm):
     """
     Formulário de login customizado para dar mensagens amigáveis

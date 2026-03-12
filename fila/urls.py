@@ -20,6 +20,29 @@ urlpatterns = [
     path('cad/editar/<int:id>/', views.editar_pedido_cad, name='editar_pedido_cad'),
     path('cad/deletar/<int:id>/', views.deletar_pedido_cad, name='deletar_pedido_cad'),
 
+    # Operações Em Desenvolvimento (Operador)
+    path('3d/upload/<int:id>/', views.upload_arquivo_3d, name='upload_arquivo_3d'),
+    path('3d/transferir/<int:id>/', views.transferir_para_fila_3d, name='transferir_para_fila_3d'),
+    path('3d/deletar-dev/<int:id>/', views.deletar_dev_3d, name='deletar_dev_3d'),
+
+    path('router/upload/<int:id>/', views.upload_arquivo_router, name='upload_arquivo_router'),
+    path('router/transferir/<int:id>/', views.transferir_para_fila_router, name='transferir_para_fila_router'),
+    path('router/deletar-dev/<int:id>/', views.deletar_dev_router, name='deletar_dev_router'),
+
+    path('cad/upload/<int:id>/', views.upload_arquivo_cad, name='upload_arquivo_cad'),
+    path('cad/transferir/<int:id>/', views.transferir_para_fila_cad, name='transferir_para_fila_cad'),
+    path('cad/deletar-dev/<int:id>/', views.deletar_dev_cad, name='deletar_dev_cad'),
+
+    # Pendências (Gestor)
+    path('3d/pendencia/<int:id>/', views.gerar_pendencia_3d, name='gerar_pendencia_3d'),
+    path('3d/retornar-dev/<int:id>/', views.retornar_dev_3d, name='retornar_dev_3d'),
+
+    path('router/pendencia/<int:id>/', views.gerar_pendencia_router, name='gerar_pendencia_router'),
+    path('router/retornar-dev/<int:id>/', views.retornar_dev_router, name='retornar_dev_router'),
+
+    path('cad/pendencia/<int:id>/', views.gerar_pendencia_cad, name='gerar_pendencia_cad'),
+    path('cad/retornar-dev/<int:id>/', views.retornar_dev_cad, name='retornar_dev_cad'),
+
     path('registro/', views.registro, name='registro'),
     path('perfil/', views.perfil, name='perfil'),
 

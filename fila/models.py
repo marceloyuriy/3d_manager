@@ -10,8 +10,9 @@ PRIORIDADE_CHOICES = [
     ]
 
 STATUS_CHOICES = [
-        ('F', 'Na Fila'),
-        ('I', 'Em Produção'), # Ajustei o nome para servir tanto para 3D quanto Router/CAD
+        ('D', 'Em Desenvolvimento'),
+        ('F', 'Pronto para Iniciar'),
+        ('I', 'Em Produção'),
         ('P', 'Pendente de Informação'),
         ('C', 'Concluído'),
         ('E', 'Cancelado/Erro'),
@@ -26,17 +27,15 @@ class Pedido3D(models.Model):
     prazo = models.DateField(verbose_name="Prazo para Execução")
     previsao_conclusao = models.DateField(verbose_name='Previsão de Conclusão (Gestor)', null=True, blank=True)
     prioridade = models.CharField(max_length=1, choices=PRIORIDADE_CHOICES, default='N', verbose_name="Prioridade")
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='F', verbose_name="Status Atual")
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='D', verbose_name="Status Atual")
 
     arquivo_impressao = models.FileField(upload_to='arquivos_3d/', verbose_name="Arquivo (STL/GCODE)", blank=True, null=True)
     link_fusion = models.URLField(verbose_name="Link do Fusion 360", blank=True, null=True)
+    observacao_pendencia = models.TextField(verbose_name="Observação de Pendência", blank=True, null=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name="Data de Solicitação")
     data_conclusao = models.DateTimeField(verbose_name="Data/Hora de Conclusão", blank=True, null=True)
 
     def clean(self):
-        if not self.arquivo_impressao and not self.link_fusion:
-            raise ValidationError("Atenção: Você deve fornecer um Arquivo ou um Link do Fusion para prosseguir.")
-
         if self.prazo and self.prazo < date.today():
             raise ValidationError({'prazo': 'A data de prazo não pode estar no passado. Por favor, escolha hoje ou uma data futura.'})
 
@@ -53,17 +52,15 @@ class PedidoRouter(models.Model):
     prazo = models.DateField(verbose_name="Prazo para Execução")
     previsao_conclusao = models.DateField(verbose_name='Previsão de Conclusão (Gestor)', null=True, blank=True)
     prioridade = models.CharField(max_length=1, choices=PRIORIDADE_CHOICES, default='N', verbose_name="Prioridade")
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='F', verbose_name="Status Atual")
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='D', verbose_name="Status Atual")
 
     arquivo_impressao = models.FileField(upload_to='arquivos_router/', verbose_name="Arquivo (DXF/Vectric)", blank=True, null=True)
     link_fusion = models.URLField(verbose_name="Link do Projeto", blank=True, null=True)
+    observacao_pendencia = models.TextField(verbose_name="Observação de Pendência", blank=True, null=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name="Data de Solicitação")
     data_conclusao = models.DateTimeField(verbose_name="Data/Hora de Conclusão", blank=True, null=True)
 
     def clean(self):
-        if not self.arquivo_impressao and not self.link_fusion:
-            raise ValidationError("Atenção: Você deve fornecer um Arquivo ou um Link do Projeto para prosseguir.")
-
         if self.prazo and self.prazo < date.today():
             raise ValidationError({'prazo': 'A data de prazo não pode estar no passado. Por favor, escolha hoje ou uma data futura.'})
 
@@ -80,17 +77,15 @@ class PedidoCAD(models.Model):
     prazo = models.DateField(verbose_name="Prazo para Execução")
     previsao_conclusao = models.DateField(verbose_name='Previsão de Conclusão (Gestor)', null=True, blank=True)
     prioridade = models.CharField(max_length=1, choices=PRIORIDADE_CHOICES, default='N', verbose_name="Prioridade")
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='F', verbose_name="Status Atual")
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='D', verbose_name="Status Atual")
 
     arquivo_impressao = models.FileField(upload_to='arquivos_cad/', verbose_name="Arquivo de Referência (PDF/Imagem)", blank=True, null=True)
     link_fusion = models.URLField(verbose_name="Link de Referência", blank=True, null=True)
+    observacao_pendencia = models.TextField(verbose_name="Observação de Pendência", blank=True, null=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name="Data de Solicitação")
     data_conclusao = models.DateTimeField(verbose_name="Data/Hora de Conclusão", blank=True, null=True)
 
     def clean(self):
-        if not self.arquivo_impressao and not self.link_fusion:
-            raise ValidationError("Atenção: Você deve fornecer um Arquivo ou um Link de referência para prosseguir.")
-
         if self.prazo and self.prazo < date.today():
             raise ValidationError({'prazo': 'A data de prazo não pode estar no passado. Por favor, escolha hoje ou uma data futura.'})
 

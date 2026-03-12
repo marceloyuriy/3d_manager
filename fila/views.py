@@ -8,6 +8,8 @@ from .models import Pedido3D, PedidoRouter, PedidoCAD
 from .forms import (NovaImpressao3DForm, EdicaoGestor3DForm,
                     NovoRouterForm, EdicaoGestorRouterForm,
                     NovoCADForm, EdicaoGestorCADForm,
+                    UploadArquivo3DForm, UploadArquivoRouterForm, UploadArquivoCADForm,
+                    PendenciaForm,
                     RegistroUsuarioForm, PerfilUsuarioForm,
                     GestaoUsuarioForm)
 
@@ -34,12 +36,14 @@ def pode_gerenciar(user, setor):
 # ==========================================
 @login_required
 def lista_3d(request):
+    em_desenvolvimento = Pedido3D.objects.filter(status='D').order_by('prazo')
     em_producao = Pedido3D.objects.filter(status='I').order_by('prazo')
     fila_espera = Pedido3D.objects.filter(status='F').order_by('prazo')
-    pendentes = Pedido3D.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    pendentes = Pedido3D.objects.filter(status='P').order_by('-data_criacao')
     concluidos = Pedido3D.objects.filter(status='C').order_by('-data_conclusao')[:10]
 
     contexto = {
+        'em_desenvolvimento': em_desenvolvimento,
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': '3D',
@@ -50,12 +54,14 @@ def lista_3d(request):
 
 @login_required
 def lista_router(request):
+    em_desenvolvimento = PedidoRouter.objects.filter(status='D').order_by('prazo')
     em_producao = PedidoRouter.objects.filter(status='I').order_by('prazo')
     fila_espera = PedidoRouter.objects.filter(status='F').order_by('prazo')
-    pendentes = PedidoRouter.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    pendentes = PedidoRouter.objects.filter(status='P').order_by('-data_criacao')
     concluidos = PedidoRouter.objects.filter(status='C').order_by('-data_conclusao')[:10]
 
     contexto = {
+        'em_desenvolvimento': em_desenvolvimento,
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': 'Router',
@@ -66,12 +72,14 @@ def lista_router(request):
 
 @login_required
 def lista_cad(request):
+    em_desenvolvimento = PedidoCAD.objects.filter(status='D').order_by('prazo')
     em_producao = PedidoCAD.objects.filter(status='I').order_by('prazo')
     fila_espera = PedidoCAD.objects.filter(status='F').order_by('prazo')
-    pendentes = PedidoCAD.objects.filter(status__in=['P', 'E']).order_by('-data_criacao')
+    pendentes = PedidoCAD.objects.filter(status='P').order_by('-data_criacao')
     concluidos = PedidoCAD.objects.filter(status='C').order_by('-data_conclusao')[:10]
 
     contexto = {
+        'em_desenvolvimento': em_desenvolvimento,
         'em_producao': em_producao, 'fila_espera': fila_espera,
         'pendentes': pendentes, 'concluidos': concluidos,
         'setor_ativo': 'CAD',
@@ -233,6 +241,222 @@ def deletar_pedido_cad(request, id):
     item = get_object_or_404(PedidoCAD, id=id)
     item.delete()
     messages.success(request, 'Projeto removido da fila CAD.')
+    return redirect('lista_cad')
+
+
+# ==========================================
+# VIEWS DE OPERAÇÕES EM DESENVOLVIMENTO (OPERADOR)
+# ==========================================
+
+# --- Upload de Arquivo (Em Desenvolvimento) ---
+@login_required
+def upload_arquivo_3d(request, id):
+    if not pode_adicionar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_fila')
+    item = get_object_or_404(Pedido3D, id=id, status='D')
+    if request.method == 'POST':
+        form = UploadArquivo3DForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Arquivo atualizado para "{item.nome_peca}".')
+            return redirect('lista_fila')
+    else:
+        form = UploadArquivo3DForm(instance=item)
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Upload - {item.nome_peca}'})
+
+@login_required
+def upload_arquivo_router(request, id):
+    if not pode_adicionar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_router')
+    item = get_object_or_404(PedidoRouter, id=id, status='D')
+    if request.method == 'POST':
+        form = UploadArquivoRouterForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Arquivo atualizado para "{item.nome_peca}".')
+            return redirect('lista_router')
+    else:
+        form = UploadArquivoRouterForm(instance=item)
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Upload - {item.nome_peca}'})
+
+@login_required
+def upload_arquivo_cad(request, id):
+    if not pode_adicionar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_cad')
+    item = get_object_or_404(PedidoCAD, id=id, status='D')
+    if request.method == 'POST':
+        form = UploadArquivoCADForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Arquivo atualizado para "{item.nome_peca}".')
+            return redirect('lista_cad')
+    else:
+        form = UploadArquivoCADForm(instance=item)
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Upload - {item.nome_peca}'})
+
+# --- Transferir para Pronto para Iniciar ---
+@login_required
+def transferir_para_fila_3d(request, id):
+    if not pode_adicionar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_fila')
+    item = get_object_or_404(Pedido3D, id=id, status='D')
+    item.status = 'F'
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" transferido para Pronto para Iniciar.')
+    return redirect('lista_fila')
+
+@login_required
+def transferir_para_fila_router(request, id):
+    if not pode_adicionar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_router')
+    item = get_object_or_404(PedidoRouter, id=id, status='D')
+    item.status = 'F'
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" transferido para Pronto para Iniciar.')
+    return redirect('lista_router')
+
+@login_required
+def transferir_para_fila_cad(request, id):
+    if not pode_adicionar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_cad')
+    item = get_object_or_404(PedidoCAD, id=id, status='D')
+    item.status = 'F'
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" transferido para Pronto para Iniciar.')
+    return redirect('lista_cad')
+
+# --- Excluir Em Desenvolvimento (Operador) ---
+@login_required
+def deletar_dev_3d(request, id):
+    if not pode_adicionar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_fila')
+    item = get_object_or_404(Pedido3D, id=id, status='D')
+    item.delete()
+    messages.success(request, 'Pedido removido.')
+    return redirect('lista_fila')
+
+@login_required
+def deletar_dev_router(request, id):
+    if not pode_adicionar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_router')
+    item = get_object_or_404(PedidoRouter, id=id, status='D')
+    item.delete()
+    messages.success(request, 'Pedido removido.')
+    return redirect('lista_router')
+
+@login_required
+def deletar_dev_cad(request, id):
+    if not pode_adicionar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_cad')
+    item = get_object_or_404(PedidoCAD, id=id, status='D')
+    item.delete()
+    messages.success(request, 'Pedido removido.')
+    return redirect('lista_cad')
+
+
+# ==========================================
+# VIEWS DE PENDÊNCIA (GESTOR)
+# ==========================================
+
+# --- Gerar Pendência ---
+@login_required
+def gerar_pendencia_3d(request, id):
+    if not pode_gerenciar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_fila')
+    item = get_object_or_404(Pedido3D, id=id)
+    if request.method == 'POST':
+        form = PendenciaForm(request.POST)
+        if form.is_valid():
+            item.observacao_pendencia = form.cleaned_data['observacao_pendencia']
+            item.status = 'P'
+            item.save()
+            messages.success(request, f'Pendência registrada para "{item.nome_peca}".')
+            return redirect('lista_fila')
+    else:
+        form = PendenciaForm()
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Pendência - {item.nome_peca}'})
+
+@login_required
+def gerar_pendencia_router(request, id):
+    if not pode_gerenciar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_router')
+    item = get_object_or_404(PedidoRouter, id=id)
+    if request.method == 'POST':
+        form = PendenciaForm(request.POST)
+        if form.is_valid():
+            item.observacao_pendencia = form.cleaned_data['observacao_pendencia']
+            item.status = 'P'
+            item.save()
+            messages.success(request, f'Pendência registrada para "{item.nome_peca}".')
+            return redirect('lista_router')
+    else:
+        form = PendenciaForm()
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Pendência - {item.nome_peca}'})
+
+@login_required
+def gerar_pendencia_cad(request, id):
+    if not pode_gerenciar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_cad')
+    item = get_object_or_404(PedidoCAD, id=id)
+    if request.method == 'POST':
+        form = PendenciaForm(request.POST)
+        if form.is_valid():
+            item.observacao_pendencia = form.cleaned_data['observacao_pendencia']
+            item.status = 'P'
+            item.save()
+            messages.success(request, f'Pendência registrada para "{item.nome_peca}".')
+            return redirect('lista_cad')
+    else:
+        form = PendenciaForm()
+    return render(request, 'fila/form.html', {'form': form, 'titulo': f'Pendência - {item.nome_peca}'})
+
+# --- Retornar para Desenvolvimento ---
+@login_required
+def retornar_dev_3d(request, id):
+    if not pode_gerenciar(request.user, '3D'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_fila')
+    item = get_object_or_404(Pedido3D, id=id, status='P')
+    item.status = 'D'
+    item.observacao_pendencia = ''
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" retornou para Em Desenvolvimento.')
+    return redirect('lista_fila')
+
+@login_required
+def retornar_dev_router(request, id):
+    if not pode_gerenciar(request.user, 'Router'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_router')
+    item = get_object_or_404(PedidoRouter, id=id, status='P')
+    item.status = 'D'
+    item.observacao_pendencia = ''
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" retornou para Em Desenvolvimento.')
+    return redirect('lista_router')
+
+@login_required
+def retornar_dev_cad(request, id):
+    if not pode_gerenciar(request.user, 'CAD'):
+        messages.error(request, 'Acesso Negado.')
+        return redirect('lista_cad')
+    item = get_object_or_404(PedidoCAD, id=id, status='P')
+    item.status = 'D'
+    item.observacao_pendencia = ''
+    item.save()
+    messages.success(request, f'"{item.nome_peca}" retornou para Em Desenvolvimento.')
     return redirect('lista_cad')
 
 
