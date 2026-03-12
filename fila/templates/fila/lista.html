@@ -11,9 +11,11 @@
         :root {
             --aero-logo-dark: #334155;
             --aero-logo-green: #2A9D8F;
-            --aero-accent-green: #2A9D8F; /* Transformamos o azul em verde! */
+            --aero-accent-green: #2A9D8F;
             --aero-success-vibrant: #26C088;
             --aero-danger: #E76F51;
+            --aero-dev-blue: #3B82F6;
+            --aero-pending-amber: #F59E0B;
             --bg-color: #F8FAFC;
             --card-radius: 16px;
             --border-color-soft: #F1F5F9;
@@ -35,9 +37,6 @@
 
         .navbar-brand-custom { font-weight: 700; font-size: 1.25rem; color: #334155; }
         .hub-title-suffix { color: var(--aero-accent-green); }
-
-        .operator-welcome { color: #64748B; font-size: 0.9rem; }
-        .operator-welcome strong { color: #334155; }
 
         .btn-outline-dark-aero {
             color: #334155;
@@ -64,7 +63,6 @@
         }
         .btn-aero-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(42, 157, 143, 0.3); color: white; }
 
-        /* --- ESTILO DOS BOTÕES DO HUB --- */
         .btn-hub {
             color: #64748B;
             border: 1px solid #CBD5E1;
@@ -73,10 +71,7 @@
             font-weight: 600;
             transition: all 0.2s;
         }
-        .btn-hub:hover {
-            background-color: #F1F5F9;
-            color: #334155;
-        }
+        .btn-hub:hover { background-color: #F1F5F9; color: #334155; }
         .btn-hub.active {
             background-color: var(--aero-accent-green);
             color: #FFFFFF;
@@ -92,52 +87,55 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             overflow: hidden;
         }
-        .card-aero:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.04); }
+        .card-aero:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.04); }
 
         .card-header-clean {
             background: transparent;
             border-bottom: 1px solid var(--border-color-soft);
-            padding: 1.5rem 1.75rem;
+            padding: 1.25rem 1.5rem;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
+        .title-dev { color: var(--aero-dev-blue); }
+        .title-pronto { color: #64748B; }
         .title-producao { color: var(--aero-accent-green); }
-        .title-espera { color: #64748B; }
-        .title-pendente { color: var(--aero-danger); }
+        .title-pendente { color: var(--aero-pending-amber); }
         .title-concluido { color: var(--aero-success-vibrant); }
 
         .status-led { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; }
+        .led-blue { background-color: var(--aero-dev-blue); box-shadow: 0 0 10px var(--aero-dev-blue); }
         .led-green { background-color: var(--aero-accent-green); box-shadow: 0 0 10px var(--aero-accent-green); }
+        .led-amber { background-color: var(--aero-pending-amber); box-shadow: 0 0 8px var(--aero-pending-amber); }
 
         .table-aero { margin-bottom: 0; width: 100%; }
         .table-aero th {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: #94A3B8;
             border-bottom: 2px solid var(--border-color-soft);
             background: transparent;
-            padding: 1rem 1.75rem;
+            padding: 0.8rem 1.25rem;
         }
         .table-aero td {
             vertical-align: middle;
             border-bottom: 1px solid #F1F5F9;
-            font-size: 0.95rem;
-            padding: 1.1rem 1.75rem;
+            font-size: 0.9rem;
+            padding: 0.9rem 1.25rem;
             color: #475569;
         }
         .table-aero tr:last-child td { border-bottom: none; }
         .table-aero tbody tr:hover { background-color: #FBFDFE; }
 
         .badge-aero-pill {
-            padding: 0.45em 1em;
+            padding: 0.4em 0.9em;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
         }
         .badge-pill-urgente { background-color: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
@@ -146,53 +144,84 @@
         .badge-pill-baixa { background-color: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
 
         .btn-acao-aero {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             border-radius: 6px;
-            padding: 0.35rem 0.7rem;
+            padding: 0.3rem 0.6rem;
             font-weight: 600;
             transition: all 0.2s;
             text-decoration: none;
         }
-        .btn-acao-green {
-            color: var(--aero-accent-green);
-            border: 1px solid var(--aero-accent-green);
-            background-color: transparent;
-        }
+        .btn-acao-green { color: var(--aero-accent-green); border: 1px solid var(--aero-accent-green); background-color: transparent; }
         .btn-acao-green:hover { background-color: #E6FFFA; color: #21867a; }
-
-        .btn-acao-danger {
-            color: var(--aero-danger);
-            border: 1px solid var(--aero-danger);
-            background-color: transparent;
-        }
+        .btn-acao-danger { color: var(--aero-danger); border: 1px solid var(--aero-danger); background-color: transparent; }
         .btn-acao-danger:hover { background-color: #FFF5F3; color: #C85A3D; }
+        .btn-acao-blue { color: var(--aero-dev-blue); border: 1px solid var(--aero-dev-blue); background-color: transparent; }
+        .btn-acao-blue:hover { background-color: #EFF6FF; color: #2563EB; }
+        .btn-acao-amber { color: var(--aero-pending-amber); border: 1px solid var(--aero-pending-amber); background-color: transparent; }
+        .btn-acao-amber:hover { background-color: #FFFBEB; color: #D97706; }
 
+        /* Seta de fluxo entre colunas */
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CBD5E1;
+            font-size: 1.5rem;
+            padding: 0 0.5rem;
+        }
+        .flow-arrow-down {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CBD5E1;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+        }
+
+        .pendencia-text {
+            font-size: 0.8rem;
+            color: #92400E;
+            background: #FFFBEB;
+            padding: 0.4rem 0.7rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--aero-pending-amber);
+            margin-top: 0.3rem;
+        }
+
+        .count-badge {
+            background: rgba(0,0,0,0.06);
+            color: inherit;
+            font-size: 0.75rem;
+            padding: 0.2em 0.6em;
+            border-radius: 10px;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-light navbar-aero mb-4 shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
             <span class="navbar-brand-custom mb-0 d-flex align-items-center gap-3">
-                <span class="hub-title-suffix" style="font-size: 1.5rem;">✈️ AeroRiver</span> - Hub de Manufatura
+                <span class="hub-title-suffix" style="font-size: 1.5rem;">AeroRiver</span> - Hub de Manufatura
             </span>
 
             <div>
                 <div class="dropdown d-inline">
                     <button class="btn btn-outline-dark-aero dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Olá, <strong>{{ request.user.username }}</strong>
+                        Ol&aacute;, <strong>{{ request.user.username }}</strong>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 12px;">
                         {% if request.user.is_superuser %}
-                        <li><a class="dropdown-item py-2" href="{% url 'lista_usuarios' %}">👥 Gest&atilde;o de Utilizadores</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'lista_usuarios' %}">Gest&atilde;o de Utilizadores</a></li>
                         <li><hr class="dropdown-divider"></li>
                         {% endif %}
-                        <li><a class="dropdown-item py-2" href="{% url 'perfil' %}">👤 Meu Perfil</a></li>
-                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">🔐 Alterar Senha</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'perfil' %}">Meu Perfil</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'password_change' %}">Alterar Senha</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{% url 'logout' %}" method="post" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item py-2 text-danger">🚪 Sair</button>
+                                <button type="submit" class="dropdown-item py-2 text-danger">Sair</button>
                             </form>
                         </li>
                     </ul>
@@ -201,7 +230,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid px-4">
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 mb-4" style="border-radius: 12px; background-color: {% if message.tags == 'success' %}#E6FFFA{% else %}#FFFBEB{% endif %}; color: {% if message.tags == 'success' %}#1A7F64{% else %}#D97706{% endif %};" role="alert">
@@ -210,7 +239,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         Sucesso:
                         {% else %}
-                        ⚠ Atenção:
+                        Aten&ccedil;&atilde;o:
                         {% endif %}
                     </strong>
                     {{ message }}
@@ -222,58 +251,73 @@
         <div class="d-flex justify-content-center mb-4 mt-2">
             <div class="btn-group shadow-sm" role="group" aria-label="Seletor de Filas" style="border-radius: 12px; overflow: hidden;">
                 <a href="{% url 'lista_fila' %}" class="btn btn-hub {% if setor_ativo == '3D' %}active{% endif %}">
-                    🖨️ Impressão 3D
+                    Impress&atilde;o 3D
                 </a>
                 <a href="{% url 'lista_router' %}" class="btn btn-hub {% if setor_ativo == 'Router' %}active{% endif %}">
-                    ⚙️ Router CNC
+                    Router CNC
                 </a>
                 <a href="{% url 'lista_cad' %}" class="btn btn-hub {% if setor_ativo == 'CAD' %}active{% endif %}">
-                    📐 Projeto CAD
+                    Projeto CAD
                 </a>
             </div>
         </div>
 
         {% if pode_adicionar %}
-            <a href="{% if setor_ativo == '3D' %}{% url 'novo_pedido_3d' %}{% elif setor_ativo == 'Router' %}{% url 'novo_pedido_router' %}{% else %}{% url 'novo_pedido_cad' %}{% endif %}" class="btn btn-aero-primary mb-5 w-100 shadow-sm">
+            <a href="{% if setor_ativo == '3D' %}{% url 'novo_pedido_3d' %}{% elif setor_ativo == 'Router' %}{% url 'novo_pedido_router' %}{% else %}{% url 'novo_pedido_cad' %}{% endif %}" class="btn btn-aero-primary mb-4 w-100 shadow-sm">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                Adicionar Novo Pedido à Fila {{ setor_ativo }}
+                Adicionar Novo Pedido &agrave; Fila {{ setor_ativo }}
             </a>
         {% endif %}
 
-        <div class="row g-4 mb-5">
+        {# ========== LAYOUT DE FLUXO ========== #}
+        <div class="row g-3 mb-4">
 
-            <div class="col-lg-6">
-                <div class="card card-aero h-100">
-                    <div class="card-header-clean title-producao">
-                        <span class="status-led led-green"></span> Em Produção
+            {# ===== COLUNA ESQUERDA: EM DESENVOLVIMENTO ===== #}
+            <div class="col-lg-5 d-flex">
+                <div class="card card-aero w-100">
+                    <div class="card-header-clean title-dev">
+                        <span class="status-led led-blue"></span> Em Desenvolvimento
+                        <span class="count-badge ms-auto">{{ em_desenvolvimento|length }}</span>
                     </div>
                     <div class="card-body p-0">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
                             <table class="table table-aero">
-                                <thead><tr><th>Peça / Projeto</th><th>Prazo</th><th>Ações</th></tr></thead>
+                                <thead><tr><th>Pe&ccedil;a / Projeto</th><th>Prazo</th><th>Arquivo</th><th>A&ccedil;&otilde;es</th></tr></thead>
                                 <tbody>
-                                    {% for item in em_producao %}
+                                    {% for item in em_desenvolvimento %}
                                     <tr>
                                         <td class="fw-bold text-dark">{{ item.nome_peca }}</td>
                                         <td>{{ item.prazo|date:"d/m/Y" }}</td>
                                         <td>
-                                            {% if pode_editar %}
-                                                <div class="d-flex gap-2">
-                                                    {% if setor_ativo == '3D' %}
-                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% elif setor_ativo == 'Router' %}
-                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% else %}
-                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% endif %}
-                                                </div>
+                                            {% if item.arquivo_impressao %}
+                                                <span class="badge-aero-pill" style="background:#E0F2FE;color:#0369A1;border:1px solid #BAE6FD;">Sim</span>
+                                            {% else %}
+                                                <span class="badge-aero-pill" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;">N&atilde;o</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if pode_adicionar %}
+                                            <div class="d-flex gap-1 flex-wrap">
+                                                {% if setor_ativo == '3D' %}
+                                                    <a href="{% url 'upload_arquivo_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue" title="Upload">Upload</a>
+                                                    <a href="{% url 'transferir_para_fila_3d' item.id %}" class="btn btn-acao-aero btn-acao-green" title="Avan&ccedil;ar">Avan&ccedil;ar</a>
+                                                    <a href="{% url 'deletar_dev_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger" title="Excluir" onclick="return confirm('Tem certeza?')">Excluir</a>
+                                                {% elif setor_ativo == 'Router' %}
+                                                    <a href="{% url 'upload_arquivo_router' item.id %}" class="btn btn-acao-aero btn-acao-blue" title="Upload">Upload</a>
+                                                    <a href="{% url 'transferir_para_fila_router' item.id %}" class="btn btn-acao-aero btn-acao-green" title="Avan&ccedil;ar">Avan&ccedil;ar</a>
+                                                    <a href="{% url 'deletar_dev_router' item.id %}" class="btn btn-acao-aero btn-acao-danger" title="Excluir" onclick="return confirm('Tem certeza?')">Excluir</a>
+                                                {% else %}
+                                                    <a href="{% url 'upload_arquivo_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue" title="Upload">Upload</a>
+                                                    <a href="{% url 'transferir_para_fila_cad' item.id %}" class="btn btn-acao-aero btn-acao-green" title="Avan&ccedil;ar">Avan&ccedil;ar</a>
+                                                    <a href="{% url 'deletar_dev_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger" title="Excluir" onclick="return confirm('Tem certeza?')">Excluir</a>
+                                                {% endif %}
+                                            </div>
                                             {% endif %}
                                         </td>
                                     </tr>
-                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Nenhum item em produção neste setor.</td></tr> {% endfor %}
+                                    {% empty %}
+                                    <tr><td colspan="4" class="text-center text-muted py-5">Nenhum item em desenvolvimento.</td></tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -281,111 +325,201 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="card card-aero h-100">
-                    <div class="card-header-clean title-espera">
-                        ⏳ Fila de Espera
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-aero">
-                                <thead><tr><th>Prioridade</th><th>Peça / Projeto</th><th>Prazo</th><th>Ações</th></tr></thead>
-                                <tbody>
-                                    {% for item in fila_espera %}
-                                    <tr>
-                                        <td>
-                                            {% if item.prioridade == 'U' %}<span class="badge-aero-pill badge-pill-urgente">Urgente</span>
-                                            {% elif item.prioridade == 'A' %}<span class="badge-aero-pill badge-pill-alta">Alta</span>
-                                            {% elif item.prioridade == 'B' %}<span class="badge-aero-pill badge-pill-baixa">Baixa</span>
-                                            {% else %}<span class="badge-aero-pill badge-pill-normal">Normal</span>{% endif %}
-                                        </td>
-                                        <td class="fw-medium">{{ item.nome_peca }}</td>
-                                        <td>{{ item.prazo|date:"d/m/Y" }}</td>
-                                        <td>
-                                            {% if pode_editar %}
-                                                <div class="d-flex gap-2">
-                                                    {% if setor_ativo == '3D' %}
-                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% elif setor_ativo == 'Router' %}
-                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% else %}
-                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% endif %}
-                                                </div>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% empty %} <tr><td colspan="4" class="text-center text-muted py-5">Nenhum item na fila de produção.</td></tr> {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            {# ===== SETA DE FLUXO ===== #}
+            <div class="col-auto d-none d-lg-flex flow-arrow">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </div>
 
-            <div class="col-lg-6">
-                <div class="card card-aero h-100">
-                    <div class="card-header-clean title-pendente">
-                        ⚠ Pendentes / Erro
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-aero">
-                                <thead><tr><th>Status</th><th>Peça / Projeto</th><th>Ações</th></tr></thead>
-                                <tbody>
-                                    {% for item in pendentes %}
-                                    <tr>
-                                        <td><span class="fw-bold" style="color: var(--aero-danger);">{{ item.get_status_display }}</span></td>
-                                        <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
-                                        <td>
-                                            {% if pode_editar %}
-                                                <div class="d-flex gap-2">
-                                                    {% if setor_ativo == '3D' %}
-                                                        <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% elif setor_ativo == 'Router' %}
-                                                        <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% else %}
-                                                        <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
-                                                        <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
-                                                    {% endif %}
-                                                </div>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Produção fluindo sem impedimentos.</td></tr> {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {# ===== COLUNA DIREITA: FLUXO RESTANTE ===== #}
+            <div class="col-lg">
+                <div class="row g-3">
 
-            <div class="col-lg-6">
-                <div class="card card-aero h-100">
-                    <div class="card-header-clean title-concluido">
-                        ✔ Últimos Concluídos
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-aero">
-                                <thead><tr><th>Peça / Projeto</th><th>Solicitante</th><th>Conclusão</th></tr></thead>
-                                <tbody>
-                                    {% for item in concluidos %}
-                                    <tr>
-                                        <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
-                                        <td>{{ item.solicitante }}</td>
-                                        <td class="text-muted">{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
-                                    </tr>
-                                    {% empty %} <tr><td colspan="3" class="text-center text-muted py-5">Nenhuma peça concluída esta semana.</td></tr> {% endfor %}
-                                </tbody>
-                            </table>
+                    {# --- Pronto para Iniciar --- #}
+                    <div class="col-12">
+                        <div class="card card-aero">
+                            <div class="card-header-clean title-pronto">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                Pronto para Iniciar
+                                <span class="count-badge ms-auto">{{ fila_espera|length }}</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-aero">
+                                        <thead><tr><th>Prioridade</th><th>Pe&ccedil;a / Projeto</th><th>Prazo</th><th>A&ccedil;&otilde;es</th></tr></thead>
+                                        <tbody>
+                                            {% for item in fila_espera %}
+                                            <tr>
+                                                <td>
+                                                    {% if item.prioridade == 'U' %}<span class="badge-aero-pill badge-pill-urgente">Urgente</span>
+                                                    {% elif item.prioridade == 'A' %}<span class="badge-aero-pill badge-pill-alta">Alta</span>
+                                                    {% elif item.prioridade == 'B' %}<span class="badge-aero-pill badge-pill-baixa">Baixa</span>
+                                                    {% else %}<span class="badge-aero-pill badge-pill-normal">Normal</span>{% endif %}
+                                                </td>
+                                                <td class="fw-medium">{{ item.nome_peca }}</td>
+                                                <td>{{ item.prazo|date:"d/m/Y" }}</td>
+                                                <td>
+                                                    {% if pode_editar %}
+                                                    <div class="d-flex gap-1">
+                                                        {% if setor_ativo == '3D' %}
+                                                            <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_3d' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend&ecirc;ncia</a>
+                                                            <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% elif setor_ativo == 'Router' %}
+                                                            <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_router' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend&ecirc;ncia</a>
+                                                            <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% else %}
+                                                            <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_cad' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend&ecirc;ncia</a>
+                                                            <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr><td colspan="4" class="text-center text-muted py-4">Nenhum item pronto para iniciar.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        <div class="flow-arrow-down">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                        </div>
+                    </div>
+
+                    {# --- Em Produc&atilde;o + Pend&ecirc;ncias (lado a lado) --- #}
+                    <div class="col-md-6">
+                        <div class="card card-aero h-100">
+                            <div class="card-header-clean title-producao">
+                                <span class="status-led led-green"></span> Em Produ&ccedil;&atilde;o
+                                <span class="count-badge ms-auto">{{ em_producao|length }}</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-aero">
+                                        <thead><tr><th>Pe&ccedil;a / Projeto</th><th>Prazo</th><th>A&ccedil;&otilde;es</th></tr></thead>
+                                        <tbody>
+                                            {% for item in em_producao %}
+                                            <tr>
+                                                <td class="fw-bold text-dark">{{ item.nome_peca }}</td>
+                                                <td>{{ item.prazo|date:"d/m/Y" }}</td>
+                                                <td>
+                                                    {% if pode_editar %}
+                                                    <div class="d-flex gap-1">
+                                                        {% if setor_ativo == '3D' %}
+                                                            <a href="{% url 'editar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_3d' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend.</a>
+                                                            <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% elif setor_ativo == 'Router' %}
+                                                            <a href="{% url 'editar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_router' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend.</a>
+                                                            <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% else %}
+                                                            <a href="{% url 'editar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-green">Editar</a>
+                                                            <a href="{% url 'gerar_pendencia_cad' item.id %}" class="btn btn-acao-aero btn-acao-amber">Pend.</a>
+                                                            <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr><td colspan="3" class="text-center text-muted py-4">Nenhum item em produ&ccedil;&atilde;o.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card card-aero h-100">
+                            <div class="card-header-clean title-pendente">
+                                <span class="status-led led-amber"></span> Pend&ecirc;ncias
+                                <span class="count-badge ms-auto">{{ pendentes|length }}</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-aero">
+                                        <thead><tr><th>Pe&ccedil;a / Projeto</th><th>A&ccedil;&otilde;es</th></tr></thead>
+                                        <tbody>
+                                            {% for item in pendentes %}
+                                            <tr>
+                                                <td>
+                                                    <div class="fw-bold text-dark">{{ item.nome_peca }}</div>
+                                                    {% if item.observacao_pendencia %}
+                                                    <div class="pendencia-text">{{ item.observacao_pendencia }}</div>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if pode_editar %}
+                                                    <div class="d-flex gap-1 flex-wrap">
+                                                        {% if setor_ativo == '3D' %}
+                                                            <a href="{% url 'retornar_dev_3d' item.id %}" class="btn btn-acao-aero btn-acao-blue">Retornar</a>
+                                                            <a href="{% url 'deletar_pedido_3d' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% elif setor_ativo == 'Router' %}
+                                                            <a href="{% url 'retornar_dev_router' item.id %}" class="btn btn-acao-aero btn-acao-blue">Retornar</a>
+                                                            <a href="{% url 'deletar_pedido_router' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% else %}
+                                                            <a href="{% url 'retornar_dev_cad' item.id %}" class="btn btn-acao-aero btn-acao-blue">Retornar</a>
+                                                            <a href="{% url 'deletar_pedido_cad' item.id %}" class="btn btn-acao-aero btn-acao-danger">Excluir</a>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr><td colspan="2" class="text-center text-muted py-4">Sem pend&ecirc;ncias.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="flow-arrow-down">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                        </div>
+                    </div>
+
+                    {# --- Conclu&iacute;dos --- #}
+                    <div class="col-12">
+                        <div class="card card-aero">
+                            <div class="card-header-clean title-concluido">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                &Uacute;ltimos Conclu&iacute;dos
+                                <span class="count-badge ms-auto">{{ concluidos|length }}</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-aero">
+                                        <thead><tr><th>Pe&ccedil;a / Projeto</th><th>Solicitante</th><th>Conclus&atilde;o</th></tr></thead>
+                                        <tbody>
+                                            {% for item in concluidos %}
+                                            <tr>
+                                                <td class="fw-medium text-dark">{{ item.nome_peca }}</td>
+                                                <td>{{ item.solicitante }}</td>
+                                                <td class="text-muted">{{ item.data_conclusao|date:"d/m/Y H:i" }}</td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr><td colspan="3" class="text-center text-muted py-4">Nenhuma pe&ccedil;a conclu&iacute;da recentemente.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -393,7 +527,7 @@
 
         <div class="text-center mt-5 pt-4 pb-4" style="border-top: 1px solid #E2E8F0;">
             <p class="small text-muted mb-0" style="font-size: 0.85rem;">
-                &copy; 2026 AeroRiver Hub &bull; Desenvolvido com 💻 por <span style="color: #2A9D8F; font-weight: 600;">Marcelo Yuri</span>
+                &copy; 2026 AeroRiver Hub &bull; Desenvolvido com por <span style="color: #2A9D8F; font-weight: 600;">Marcelo Yuri</span>
             </p>
         </div>
 
