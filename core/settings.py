@@ -15,7 +15,7 @@ def _module_exists(module_name: str) -> bool:
 
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-uw&w59$22$=pv)rda0)__8*bgxh(l)7a^angbkfha0h5!0$qx-')
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',') if host.strip()]
 
 AXES_INSTALLED = _module_exists('axes')
